@@ -33,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "import" */ "../views/Graph.vue")
-  },
+  }
 ];
 
 const router = createRouter({

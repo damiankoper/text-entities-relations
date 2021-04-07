@@ -1,5 +1,4 @@
-<template>
-</template>
+<template> xx </template>
 
 <script lang="ts">
 import { defineComponent, onUnmounted } from "vue";

@@ -1,38 +1,35 @@
 <template>
-  <div id="footer">
+  <el-footer class="footer">
+    <div>
       <p>
         <span>
-        © Made with love and paszyn
+          © Made with love and paszyn
         </span>
       </p>
-  </div>
+    </div>
+  </el-footer>
 </template>
 
-<style>
-  #footer {
-   position:absolute;
-   bottom:0;
-   width:100%;
-   height:40px; 
-   background: LightGrey;
-  }
-
-  #footer p {
-    margin-left: 5px;
-    font-size: 15px;
-    text-align: left;
-    color: black;
-  }
- </style>
+<style scoped>
+p {
+  font-size: 15px;
+  text-align: center;
+  color: black;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background: LightGrey;
+  z-index: 100;
+}
+</style>
 
 <script lang="ts">
-import { defineComponent, onUnmounted } from "vue";
-import { NerInterfaceService } from "core";
+import { defineComponent } from "vue";
 export default defineComponent({
   name: "Footer",
-  props: {
-    
-  },
-  
+  props: {}
 });
 </script>

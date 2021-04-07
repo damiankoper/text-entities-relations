@@ -1,13 +1,13 @@
 {
   "folders": [
     {
+      "path": "packages/front"
+    },
+    {
       "path": "."
     },
     {
       "path": "packages/core"
-    },
-    {
-      "path": "packages/front"
     }
   ],
   "settings": {}

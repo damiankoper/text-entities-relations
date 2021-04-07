@@ -48,4 +48,5 @@ export class NerInterfaceService {
         pool.terminate(); // terminate all workers when done
       });
   } */
+  }
 }
