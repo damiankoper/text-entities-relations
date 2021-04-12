@@ -6,7 +6,6 @@ import { ChunkList } from "../Models/ChunkList";
 
 export class ResultProcessor {
   private _onError: SimpleEventDispatcher<string>;
-  private chunkListCreator = new ChunkListCreator();
 
   constructor(_onError: SimpleEventDispatcher<string>) {
     this._onError = _onError;
@@ -17,9 +16,9 @@ export class ResultProcessor {
     return new Promise((resolve, reject) => {
       axios.get(URL).then(
         (response) => {
-          this.chunkListCreator = new ChunkListCreator();
+          const chunkListCreator = new ChunkListCreator();
           const NERData = response.data;
-          const result = this.chunkListCreator.createChunkList(NERData);
+          const result = chunkListCreator.createChunkList(NERData);
           resolve(result);
         },
         () => {
