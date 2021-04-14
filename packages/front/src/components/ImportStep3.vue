@@ -64,7 +64,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "ImportStep3Component",
+  name: "ImportStep3",
   props: {}
 });
 </script>

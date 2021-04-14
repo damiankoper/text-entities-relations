@@ -1,11 +1,17 @@
 <template>
   <router-view />
+  <Footer />
 </template>
 
-<script>
-export default {
-  name: "App"
-};
+<script lang="ts">
+import { defineComponent } from "vue";
+import Footer from "@/components/Footer.vue";
+export default defineComponent({
+  name: "App",
+  components: {
+    Footer
+  }
+});
 </script>
 
 <style>

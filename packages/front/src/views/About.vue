@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header class="header-content">
-      <HeaderComponent />
+      <Header />
     </el-header>
     <el-main>
       <div class="about">
@@ -14,7 +14,6 @@
       </div>
     </el-main>
   </el-container>
-  <FooterComponent />
 </template>
 
 <style scoped>
@@ -25,14 +24,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import FooterComponent from "@/components/FooterComponent.vue";
-import HeaderComponent from "@/components/HeaderComponent.vue";
+import Header from "@/components/Header.vue";
 
 export default defineComponent({
   name: "About",
   components: {
-    FooterComponent,
-    HeaderComponent
+    Header
   }
 });
 </script>

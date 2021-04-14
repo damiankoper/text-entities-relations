@@ -7,7 +7,7 @@
           Wybierz plik
         </el-button>
         <el-dialog v-model="dialogVisible" :before-close="handleClose">
-          <TriggerUploadFileComponent />
+          <TriggerUploadFile />
         </el-dialog>
       </div>
     </div>
@@ -37,11 +37,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import TriggerUploadFileComponent from "@/components/TriggerUploadFileComponent.vue";
+import TriggerUploadFile from "@/components/TriggerUploadFile.vue";
 export default defineComponent({
-  name: "ImportStep1Component",
+  name: "ImportStep1",
   components: {
-    TriggerUploadFileComponent
+    TriggerUploadFile
   },
   data() {
     return {

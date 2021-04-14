@@ -26,7 +26,6 @@
         </div>
       </div>
     </el-main>
-    <FooterComponent />
   </el-container>
 </template>
 
@@ -41,12 +40,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import FooterComponent from "@/components/FooterComponent.vue";
 
 export default defineComponent({
-  name: "Home",
-  components: {
-    FooterComponent
-  }
+  name: "Home"
 });
 </script>

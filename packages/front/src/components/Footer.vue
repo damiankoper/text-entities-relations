@@ -13,7 +13,7 @@
 <style scoped>
 p {
   font-size: 15px;
-  text-align: center;
+  text-align: left;
   color: black;
 }
 .footer {

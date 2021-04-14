@@ -3,7 +3,7 @@
     <el-main style="padding: 0px; text-align: left">
       <img src="@/assets/trans_logo.png" width="90" height="50" />
     </el-main>
-    <UndoComponent />
+    <Undo />
   </el-container>
   <div class="separator"></div>
 </template>
@@ -23,11 +23,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import UndoComponent from "@/components/UndoComponent.vue";
+import Undo from "@/components/Undo.vue";
 export default defineComponent({
   name: "Header",
   components: {
-    UndoComponent
+    Undo
   }
 });
 </script>

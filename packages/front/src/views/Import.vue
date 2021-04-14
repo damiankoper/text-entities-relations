@@ -1,7 +1,7 @@
 <template>
   <el-container class="import-root">
     <el-header class="header-content">
-      <HeaderComponent />
+      <Header />
     </el-header>
     <b class="title">Import</b>
     <el-container>
@@ -15,15 +15,14 @@
       </el-aside>
       <el-container>
         <el-main class="import-content">
-          <ImportStep1Component v-if="activeStep == 1" class="single-step" />
+          <ImportStep1 v-if="activeStep == 1" class="single-step" />
 
-          <ImportStep2Component v-if="activeStep == 2" class="single-step" />
+          <ImportStep2 v-if="activeStep == 2" class="single-step" />
 
-          <ImportStep3Component v-if="activeStep == 3" class="single-step" />
+          <ImportStep3 v-if="activeStep == 3" class="single-step" />
         </el-main>
       </el-container>
     </el-container>
-    <FooterComponent />
   </el-container>
 </template>
 
@@ -54,24 +53,22 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ImportStep1Component from "@/components/ImportStep1Component.vue";
-import ImportStep2Component from "@/components/ImportStep2Component.vue";
-import ImportStep3Component from "@/components/ImportStep3Component.vue";
-import FooterComponent from "@/components/FooterComponent.vue";
-import HeaderComponent from "@/components/HeaderComponent.vue";
+import ImportStep1 from "@/components/ImportStep1.vue";
+import ImportStep2 from "@/components/ImportStep2.vue";
+import ImportStep3 from "@/components/ImportStep3.vue";
+import Header from "@/components/Header.vue";
 
 export default defineComponent({
   name: "Import",
   components: {
-    ImportStep1Component,
-    ImportStep2Component,
-    ImportStep3Component,
-    FooterComponent,
-    HeaderComponent
+    ImportStep1,
+    ImportStep2,
+    ImportStep3,
+    Header
   },
   data() {
     return {
-      activeStep: 1
+      activeStep: 3
     };
   }
 });

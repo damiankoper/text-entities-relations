@@ -11,9 +11,10 @@
       <el-menu-item index="2" :span="8">Filtry</el-menu-item>
       <el-menu-item index="3" :span="8">Eksport</el-menu-item>
     </el-menu>
-    <ExportComponent />
-    <TerComponent />
-    <FilterComponent />
+
+    <Ter v-if="activeIndex == 1" />
+    <Filter v-if="activeIndex == 2" />
+    <Export v-if="activeIndex == 3" />
   </div>
 </template>
 
@@ -26,19 +27,20 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ExportComponent from "@/components/ExportComponent.vue";
-import TerComponent from "@/components/TerComponent.vue";
-import FilterComponent from "@/components/FilterComponent.vue";
+import Export from "@/components/Export.vue";
+import Ter from "@/components/Ter.vue";
+import Filter from "@/components/Filter.vue";
 export default defineComponent({
+  name: "GraphOptions",
   components: {
-    TerComponent,
-    ExportComponent,
-    FilterComponent
+    Ter,
+    Export,
+    Filter
   },
-  name: "GraphOptionsComponent",
   props: {
     nodes: Array
   },
+
   data() {
     return {
       activeIndex: "1"
@@ -46,7 +48,7 @@ export default defineComponent({
   },
   methods: {
     handleSelect(key: string, keyPath: string) {
-      console.log(key, keyPath);
+      this.activeIndex = key;
     }
   }
 });

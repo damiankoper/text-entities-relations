@@ -1,20 +1,17 @@
 <template>
   <el-container>
     <el-header class="header-content">
-      <HeaderComponent />
+      <Header />
     </el-header>
     <el-container>
-      <el-container>
-        <el-main>
-          <GraphComponent />
-        </el-main>
-        <el-aside width="300px">
-          <GraphOptionsComponent />
-        </el-aside>
-      </el-container>
+      <el-main>
+        <Graph />
+      </el-main>
+      <el-aside width="300px">
+        <GraphOptions />
+      </el-aside>
     </el-container>
-    <SliderComponent />
-    <FooterComponent />
+    <Slider />
   </el-container>
 </template>
 
@@ -26,20 +23,18 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import GraphComponent from "@/components/GraphComponent.vue";
-import FooterComponent from "@/components/FooterComponent.vue";
-import HeaderComponent from "@/components/HeaderComponent.vue";
-import SliderComponent from "@/components/SliderComponent.vue";
-import GraphOptionsComponent from "@/components/GraphOptionsComponent.vue";
+import Graph from "@/components/Graph.vue";
+import Header from "@/components/Header.vue";
+import Slider from "@/components/Slider.vue";
+import GraphOptions from "@/components/GraphOptions.vue";
 
 export default defineComponent({
   name: "Graph",
   components: {
-    GraphComponent,
-    FooterComponent,
-    HeaderComponent,
-    SliderComponent,
-    GraphOptionsComponent
+    Graph,
+    Header,
+    Slider,
+    GraphOptions
   }
 });
 </script>
