@@ -1,41 +1,38 @@
 <template>
   <div class="box">
-    <el-container>
-      <b class="title">Analiza</b>
-      <el-main>
+    <h2 class="title">Analiza</h2>
+    <div class="progress-wrapper">
+      <el-row>
         <el-col :span="12">
-          <el-row>
-            <el-progress
-              type="circle"
-              :percentage="100"
-              status="success"
-            ></el-progress>
-          </el-row>
-          <el-row>
-            <b>Parametry NER</b>
-          </el-row>
+          <el-progress
+            type="circle"
+            :percentage="100"
+            status="success"
+            width="180"
+          ></el-progress>
+          <h1>Parametry NER</h1>
         </el-col>
         <el-col :span="12">
-          <el-row>
-            <el-progress
-              type="circle"
-              :percentage="100"
-              status="success"
-            ></el-progress>
-          </el-row>
-          <el-row>
-            <b>Parametry TER</b>
-          </el-row>
+          <el-progress
+            type="circle"
+            :percentage="100"
+            status="success"
+            width="180"
+          ></el-progress>
+          <h1>Parametry TER</h1>
         </el-col>
-      </el-main>
-    </el-container>
-    <el-button type="primary" disabled icon="el-icon-arrow-left">
-      wstecz
-    </el-button>
-    <el-button type="primary" disabled>
-      Przejdź do wizualizacji
-      <i class="el-icon-arrow-right el-icon-right"></i>
-    </el-button>
+      </el-row>
+    </div>
+
+    <div class="buttons-wrapper">
+      <el-button type="primary" disabled icon="el-icon-arrow-left">
+        wstecz
+      </el-button>
+      <el-button type="primary" disabled>
+        Przejdź do wizualizacji
+        <i class="el-icon-arrow-right el-icon-right"></i>
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -43,6 +40,24 @@
 .box {
   border-radius: 0px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+}
+.title {
+  text-align: left;
+  padding-top: 10px;
+  padding-left: 10px;
+  height: 10%;
+}
+.buttons-wrapper {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+.progress-wrapper {
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+.progress {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 </style>
 
