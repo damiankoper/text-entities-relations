@@ -68,7 +68,7 @@ export default defineComponent({
   },
   data() {
     return {
-      activeStep: 3
+      activeStep: 1
     };
   }
 });
