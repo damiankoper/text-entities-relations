@@ -14,7 +14,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "Graph",
+  name: "GraphComponent",
   props: {
     nodes: Array
   }

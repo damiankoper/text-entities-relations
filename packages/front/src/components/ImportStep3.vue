@@ -8,7 +8,6 @@
             type="circle"
             :percentage="100"
             status="success"
-            width="180"
           ></el-progress>
           <h1>Parametry NER</h1>
         </el-col>
@@ -17,7 +16,6 @@
             type="circle"
             :percentage="100"
             status="success"
-            width="180"
           ></el-progress>
           <h1>Parametry TER</h1>
         </el-col>

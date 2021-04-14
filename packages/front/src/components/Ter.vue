@@ -1,45 +1,54 @@
 <template>
-  <div class="box">
-    <div class="box-content">
-      <h2 class="title">Parametry TER</h2>
-      <el-container class="button-content">
-        <el-col :span="12">
-          <el-row>
-            <el-input placeholder="Okno" v-model="inputTer1" />
-          </el-row>
-          <el-row>
-            <el-input placeholder="Overlap" v-model="inputTer2" />
-          </el-row>
-          <el-row>
-            <el-button type="primary">
-              Ponów analizę
-            </el-button>
-          </el-row>
-        </el-col>
-        <el-col :span="6">
-          <el-row>
-            <el-select v-model="value1" placeholder="Jednostka">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-row>
-          <el-row>
-            <el-select v-model="value2" placeholder="Jednostka">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-row>
-        </el-col>
-      </el-container>
-    </div>
+  <div>
+    <h2 class="title">Parametry TER</h2>
+    <el-container class="button-content">
+      <el-col :span="12">
+        <el-row :offset="1">
+          <el-input placeholder="Okno" v-model="inputTer1" />
+        </el-row>
+        <el-row :offset="1">
+          <el-input placeholder="Overlap" v-model="inputTer2" />
+        </el-row>
+        <el-row :offset="1">
+          <el-popconfirm
+            confirmButtonText="OK"
+            cancelButtonText="Cancel"
+            hideIcon="true"
+            confirmButtonType="info plane"
+            cancelButtonType="info plane"
+            title="Wszystkie zmiany zostaną nadpisane!"
+          >
+            <template #reference>
+              <el-button type="primary" plain>
+                Ponów analizę
+              </el-button>
+            </template>
+          </el-popconfirm>
+        </el-row>
+      </el-col>
+      <el-col :span="6">
+        <el-row :offset="1">
+          <el-select v-model="value1" placeholder="Jednostka">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-row>
+        <el-row :offset="1">
+          <el-select v-model="value2" placeholder="Jednostka">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-row>
+      </el-col>
+    </el-container>
   </div>
 </template>
 

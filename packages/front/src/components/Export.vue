@@ -1,8 +1,15 @@
 <template>
   <div class="box">
-    <el-button>Pobierz TER</el-button>
-    <el-button>Pobierz GEPHI</el-button>
-    <el-button>Pobierz CSV</el-button>
+    <el-tooltip
+      class="item"
+      effect="dark"
+      content="Format pozwala na wczytanie z powrotem do aplikacji i kontynuowanie pracy"
+      placement="left"
+    >
+      <el-button type="primary" plain>Pobierz TER</el-button>
+    </el-tooltip>
+    <el-button type="primary" plain>Pobierz GEPHI</el-button>
+    <el-button type="primary" plain>Pobierz CSV</el-button>
   </div>
 </template>
 

@@ -1,11 +1,12 @@
 <template>
   <el-container>
     <el-header class="header-content">
+      <!-- <el-header> -->
       <Header />
     </el-header>
     <el-container>
       <el-main>
-        <Graph />
+        <GraphComponent />
       </el-main>
       <el-aside width="300px">
         <GraphOptions />
@@ -23,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Graph from "@/components/Graph.vue";
+import GraphComponent from "@/components/GraphComponent.vue";
 import Header from "@/components/Header.vue";
 import Slider from "@/components/Slider.vue";
 import GraphOptions from "@/components/GraphOptions.vue";
@@ -31,7 +32,7 @@ import GraphOptions from "@/components/GraphOptions.vue";
 export default defineComponent({
   name: "Graph",
   components: {
-    Graph,
+    GraphComponent,
     Header,
     Slider,
     GraphOptions

@@ -1,29 +1,14 @@
 <template>
-  <div class="box">
-    <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      style="padding: revert"
-      mode="horizontal"
-      @select="handleSelect"
-    >
-      <el-menu-item index="1" :span="8">TER</el-menu-item>
-      <el-menu-item index="2" :span="8">Filtry</el-menu-item>
-      <el-menu-item index="3" :span="8">Eksport</el-menu-item>
-    </el-menu>
-
-    <Ter v-if="activeIndex == 1" />
-    <Filter v-if="activeIndex == 2" />
-    <Export v-if="activeIndex == 3" />
+  <div>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="Ter" name="Ter"><Ter /></el-tab-pane>
+      <el-tab-pane label="Filtry" name="Filter"><Filter /></el-tab-pane>
+      <el-tab-pane label="Eksport" name="Export"><Export /></el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
-<style>
-.box {
-  border-radius: 0px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-}
-</style>
+<style scoped></style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -43,13 +28,9 @@ export default defineComponent({
 
   data() {
     return {
-      activeIndex: "1"
+      activeName: "Ter"
     };
   },
-  methods: {
-    handleSelect(key: string, keyPath: string) {
-      this.activeIndex = key;
-    }
-  }
+  methods: {}
 });
 </script>
