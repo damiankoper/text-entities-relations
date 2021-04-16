@@ -3,25 +3,27 @@
     <el-header class="header-content">
       <Header />
     </el-header>
-    <b class="title">Import</b>
+    <h1 class="title">Import</h1>
     <el-container>
-      <el-aside class="aside-bar">
-        <el-steps direction="vertical" :active="activeStep">
-          <el-step title="Dane wejściowe"></el-step>
-          <el-step title="Ustaw parametry"></el-step>
-          <el-step title="Analiza"></el-step>
-          <el-step title="Wizualizacja"></el-step>
-        </el-steps>
-      </el-aside>
-      <el-container>
-        <el-main class="import-content">
-          <ImportStep1 v-if="activeStep == 1" class="single-step" />
+      <el-row class="row-content">
+        <el-col :span="4" class="aside-bar">
+          <el-steps direction="vertical" :active="activeStep">
+            <el-step title="Dane wejściowe"></el-step>
+            <el-step title="Ustaw parametry"></el-step>
+            <el-step title="Analiza"></el-step>
+            <el-step title="Wizualizacja"></el-step>
+          </el-steps>
+        </el-col>
+        <el-col :span="20" class="column">
+          <el-main class="import-content">
+            <ImportStep1 v-if="activeStep == 1" class="single-step" />
 
-          <ImportStep2 v-if="activeStep == 2" class="single-step" />
+            <ImportStep2 v-if="activeStep == 2" class="single-step" />
 
-          <ImportStep3 v-if="activeStep == 3" class="single-step" />
-        </el-main>
-      </el-container>
+            <ImportStep3 v-if="activeStep == 3" class="single-step" />
+          </el-main>
+        </el-col>
+      </el-row>
     </el-container>
   </el-container>
 </template>
@@ -38,8 +40,17 @@
   overflow: visible;
   padding: 0px;
 }
+.row-content {
+  width: 100%;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.column {
+  display: flex;
+}
 .aside-bar {
-  min-height: 375px;
+  min-height: 400px;
   width: 200px;
   overflow: visible;
 }
@@ -68,7 +79,7 @@ export default defineComponent({
   },
   data() {
     return {
-      activeStep: 1
+      activeStep: 3
     };
   }
 });

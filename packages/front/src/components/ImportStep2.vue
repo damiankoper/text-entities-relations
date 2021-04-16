@@ -31,7 +31,7 @@
           <el-col :span="12">
             <el-input placeholder="Please input" v-model="inputTer1" />
           </el-col>
-          <el-col :span="6">
+          <el-col :span="6" :offset="1">
             <el-select v-model="value2" placeholder="Jednostka">
               <el-option
                 v-for="item in options"

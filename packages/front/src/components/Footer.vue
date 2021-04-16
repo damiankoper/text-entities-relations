@@ -13,6 +13,7 @@
 <style scoped>
 p {
   font-size: 15px;
+  margin-top: 10px;
   text-align: left;
   color: black;
 }

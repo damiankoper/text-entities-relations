@@ -46,11 +46,11 @@
   font-size: 30px;
 }
 .buttons-wrapper {
-  padding-top: 20px;
+  padding-top: 80px;
   padding-bottom: 10px;
 }
 .progress-wrapper {
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 30px;
 }
 .progress {
