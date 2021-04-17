@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <el-row :gutter="15">
-      <el-col :span="4">
+      <el-col :span="4" class="column">
         <el-switch
           v-model="switchValue"
           active-color="#13ce66"
@@ -13,8 +13,8 @@
       <el-col :span="16"
         ><el-slider v-model="sliderValues" range :max="100"></el-slider
       ></el-col>
-      <el-col :span="4"
-        ><el-select v-model="value" placeholder="Select">
+      <el-col :span="4" margin-right="5px">
+        <el-select v-model="value" placeholder="Select">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -27,10 +27,15 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .box {
   border-radius: 0px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.column {
+  margin-top: 10px;
 }
 </style>
 

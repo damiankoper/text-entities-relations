@@ -1,32 +1,16 @@
 <template>
-  <div>
+  <div class="box">
     <h2 class="title">Parametry TER</h2>
-    <el-container class="button-content">
-      <el-col :span="12">
+    <el-container>
+      <el-col :span="16">
         <el-row :offset="1">
           <el-input placeholder="Okno" v-model="inputTer1" />
         </el-row>
         <el-row :offset="1">
           <el-input placeholder="Overlap" v-model="inputTer2" />
         </el-row>
-        <el-row :offset="1">
-          <el-popconfirm
-            confirmButtonText="OK"
-            cancelButtonText="Cancel"
-            hideIcon="true"
-            confirmButtonType="info plane"
-            cancelButtonType="info plane"
-            title="Wszystkie zmiany zostaną nadpisane!"
-          >
-            <template #reference>
-              <el-button type="primary" plain>
-                Ponów analizę
-              </el-button>
-            </template>
-          </el-popconfirm>
-        </el-row>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="8">
         <el-row :offset="1">
           <el-select v-model="value1" placeholder="Jednostka">
             <el-option
@@ -49,6 +33,20 @@
         </el-row>
       </el-col>
     </el-container>
+    <el-popconfirm
+      confirmButtonText="OK"
+      cancelButtonText="Cancel"
+      hideIcon="true"
+      confirmButtonType="info plane"
+      cancelButtonType="info plane"
+      title="Wszystkie zmiany zostaną nadpisane!"
+    >
+      <template #reference>
+        <el-button type="primary" plain>
+          Ponów analizę
+        </el-button>
+      </template>
+    </el-popconfirm>
   </div>
 </template>
 
@@ -57,17 +55,24 @@
   border-radius: 0px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   display: flex;
+  flex-direction: column;
+  padding-right: 5px;
 }
-.box-content {
-  width: 95%;
-}
+
 .box .el-button {
+  margin-top: 5px;
+  margin-right: 10px;
   width: 100%;
 }
-.button-content {
-  width: 100%;
-  margin: auto 0;
+.box .el-input {
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
+
+.box .el-select {
+  margin-bottom: 5px;
+}
+
 .title {
   text-align: left;
   padding-top: 10px;

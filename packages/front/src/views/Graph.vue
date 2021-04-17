@@ -8,7 +8,7 @@
       <el-main>
         <GraphComponent />
       </el-main>
-      <el-aside width="300px">
+      <el-aside class="aside-bar">
         <GraphOptions />
       </el-aside>
     </el-container>
@@ -19,6 +19,11 @@
 <style scoped>
 .header-content {
   padding: 0px;
+}
+.aside-bar {
+  min-height: 470px;
+  width: 200px;
+  overflow: visible;
 }
 </style>
 

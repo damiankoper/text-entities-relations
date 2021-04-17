@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-right: 5px;
 }
 .box .el-button {
   margin: 5px 2px;

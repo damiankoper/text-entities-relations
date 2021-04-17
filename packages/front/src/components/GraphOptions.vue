@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName">
       <el-tab-pane label="Ter" name="Ter"><Ter /></el-tab-pane>
       <el-tab-pane label="Filtry" name="Filter"><Filter /></el-tab-pane>
       <el-tab-pane label="Eksport" name="Export"><Export /></el-tab-pane>
@@ -8,7 +8,16 @@
   </div>
 </template>
 
-<style scoped></style>
+<style>
+.el-tabs__nav-scroll > .el-tabs__nav {
+  width: 100%;
+}
+
+.el-tabs__nav > .el-tabs__item {
+  width: 33%;
+  text-align: center;
+}
+</style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
