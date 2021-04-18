@@ -1,7 +1,7 @@
 <template>
-  <div class="box">
+  <el-card>
     Graph Component
-  </div>
+  </el-card>
 </template>
 
 <style scoped>

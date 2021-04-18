@@ -1,85 +1,115 @@
 <template>
-  <el-container class="import-root">
-    <el-header class="header-content">
-      <Header />
-    </el-header>
-    <h1 class="title">Import</h1>
-    <el-container>
-      <el-row class="row-content">
-        <el-col :span="4" class="aside-bar">
-          <el-steps direction="vertical" :active="activeStep">
-            <el-step title="Dane wejściowe"></el-step>
-            <el-step title="Ustaw parametry"></el-step>
-            <el-step title="Analiza"></el-step>
-            <el-step title="Wizualizacja"></el-step>
-          </el-steps>
+  <el-container direction="vertical">
+    <Header />
+    <el-main class="import">
+      <el-row type="flex" justify="center">
+        <el-col :span="18">
+          <h1 class="title">Import</h1>
         </el-col>
-        <el-col :span="20" class="column">
-          <el-main class="import-content">
-            <ImportStep1 v-if="activeStep == 1" class="single-step" />
-
-            <ImportStep2 v-if="activeStep == 2" class="single-step" />
-
-            <ImportStep3 v-if="activeStep == 3" class="single-step" />
-          </el-main>
+        <el-col :span="18">
+          <el-row gutter="12">
+            <el-col :span="24" :lg="5" class="aside-bar">
+              <el-steps
+                :direction="'vertical'"
+                :active="activeStep"
+                style="height: 200px"
+              >
+                <el-step title="Dane wejściowe"></el-step>
+                <el-step title="Ustaw parametry"></el-step>
+                <el-step title="Analiza"></el-step>
+                <el-step title="Wizualizacja"></el-step>
+              </el-steps>
+            </el-col>
+            <el-col :span="24" :lg="19">
+              <ImportFile v-if="activeStep == 0" @submit="onFileSubmit" />
+              <ImportParams
+                v-if="activeStep == 1"
+                @submit="onParamsSubmit"
+                @back="activeStep--"
+              />
+              <ImportAnalyse
+                v-if="activeStep == 2"
+                :nerProgress="nerProgress"
+                :terProgress="terProgress"
+                :inProgress="nerInProgress"
+                :error="error"
+                @back="activeStep--"
+                @submit="onAnalyseSubmit"
+              />
+            </el-col>
+          </el-row>
         </el-col>
       </el-row>
-    </el-container>
+    </el-main>
+    <Footer />
   </el-container>
 </template>
 
-<style scoped>
-.title {
-  text-align: left;
-  font-size: 30px;
-}
-.import-root {
-  padding-bottom: 60px;
-}
-.import-content {
-  overflow: visible;
-  padding: 0px;
-}
-.row-content {
-  width: 100%;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 15px;
-}
-.column {
-  display: flex;
-}
-.aside-bar {
-  min-height: 400px;
-  width: 200px;
-  overflow: visible;
-}
-.single-step {
-  height: 100%;
-}
-.header-content {
-  padding: 0px;
+<style lang="scss" scoped>
+.import {
+  min-height: calc(100vh - 52px - 32px); // 100% - header - footer
+
+  .title {
+    text-align: left;
+    font-size: 36px;
+  }
+  .el-col {
+    margin-bottom: 24px;
+  }
 }
 </style>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import ImportStep1 from "@/components/ImportStep1.vue";
-import ImportStep2 from "@/components/ImportStep2.vue";
-import ImportStep3 from "@/components/ImportStep3.vue";
+import { defineComponent, ref, reactive } from "vue";
+import ImportFile from "@/components/import/ImportFile.vue";
+import ImportParams, { Params } from "@/components/import/ImportParams.vue";
+import ImportAnalyse, { Progress } from "@/components/import/ImportAnalyse.vue";
 import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
-  name: "Import",
+  emits: ["irs"],
   components: {
-    ImportStep1,
-    ImportStep2,
-    ImportStep3,
-    Header
+    ImportFile,
+    ImportParams,
+    ImportAnalyse,
+    Header,
+    Footer
   },
-  data() {
+  setup(_, { emit }) {
+    const activeStep = ref(0);
+    const file = ref<File | null>(null);
+    const params = ref<Params | null>(null);
+    const { push } = useRouter();
+
+    const nerProgress = reactive<Progress>({ status: "", percentage: 25 });
+    const terProgress = reactive<Progress>({ status: "", percentage: 0 });
+    const nerInProgress = ref(false);
+    const error = ref<string | null>(null);
+    const irs = ref("irs_structure_here");
+
     return {
-      activeStep: 3
+      activeStep,
+      nerProgress,
+      terProgress,
+      nerInProgress,
+      error,
+      onFileSubmit(f: File) {
+        file.value = f;
+        activeStep.value = 1;
+      },
+      onParamsSubmit(p: Params) {
+        params.value = p;
+        activeStep.value = 2;
+        // MUI IMPORTANTE
+        // entrypoint for NerInterface here
+        irs.value = "returned from NerInterface after analyse";
+      },
+      onAnalyseSubmit() {
+        emit("irs", irs.value);
+        push("graph");
+      }
     };
   }
 });

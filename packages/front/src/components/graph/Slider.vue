@@ -1,41 +1,36 @@
 <template>
-  <div class="box">
-    <el-row :gutter="15">
-      <el-col :span="4" class="column">
-        <el-switch
-          v-model="switchValue"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-        >
-        </el-switch>
-        Statyczny
-      </el-col>
-      <el-col :span="16"
-        ><el-slider v-model="sliderValues" range :max="100"></el-slider
-      ></el-col>
-      <el-col :span="4" margin-right="5px">
-        <el-select v-model="value" placeholder="Select">
+  <el-container direction="vertical">
+    <el-divider style="margin: 0; margin-bottom: -1px" />
+
+    <el-row class="slider" type="flex" align="middle" justify="center">
+      <div style="margin:0 16px;">
+        <el-switch v-model="switchValue"> </el-switch>
+        &nbsp;&nbsp;Statyczny
+      </div>
+
+      <div style="flex-grow: 1">
+        <el-slider style="flex-grow:1" v-model="sliderValues" range :max="100">
+        </el-slider>
+      </div>
+      <div style="margin:0 16px;">
+        <el-select v-model="value" placeholder="Select" size="mini">
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
             :value="item.value"
           >
-          </el-option> </el-select
-      ></el-col>
+          </el-option>
+        </el-select>
+      </div>
     </el-row>
-  </div>
+  </el-container>
 </template>
 
-<style scoped>
-.box {
-  border-radius: 0px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.column {
-  margin-top: 10px;
+<style lang="scss" scoped>
+.slider {
+  margin: 0 0 !important;
+  height: 40px;
 }
 </style>
 

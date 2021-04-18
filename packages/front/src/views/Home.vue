@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container direction="vertical">
     <el-main class="home">
       <el-row :gutter="24" align="middle" class="logo">
         <el-col :span="8">
@@ -19,7 +19,7 @@
           </router-link>
         </el-col>
         <el-col :span="12">
-          <el-button class="home-button" @click="$router.push('import')">
+          <el-button class="home-button" @click="$router.push('graph')">
             Importuj z pliku *.ter
           </el-button>
         </el-col>
@@ -29,7 +29,7 @@
             class="home-button"
             @click="$router.push('graph')"
           >
-            Przywróć poprzednią wersję
+            Przywróć poprzednią sesję
           </el-button>
         </el-col>
       </el-row>

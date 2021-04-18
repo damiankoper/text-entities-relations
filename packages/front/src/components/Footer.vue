@@ -6,11 +6,7 @@
 
 <style scoped>
 .footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
   background: #ebeef5;
-  z-index: 100;
   display: flex;
   align-items: center;
 }

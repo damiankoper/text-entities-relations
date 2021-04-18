@@ -1,25 +1,14 @@
-<template class="header">
-  <el-container>
-    <el-main class="logo-wrapper">
-      <img src="@/assets/trans_logo.png" width="90" height="50" />
-    </el-main>
-    <Undo />
-  </el-container>
-  <el-divider style="margin:12px 0" />
+<template>
+  <el-header height="52px" class="header">
+    <router-link class="header" to="/">
+      <el-image :src="logoImg" class="header-img" />
+      <span class="header-text">TER</span>
+    </router-link>
+    <span style="width:100%"></span>
+    <Undo v-if="showGraphOptions" />
+  </el-header>
+  <el-divider style="margin: 0; margin-top: -1px" />
 </template>
-
-<style scoped>
-.logo-wrapper {
-  padding-bottom: 0px;
-  padding-top: 0px;
-  text-align: left;
-}
-.header {
-  top: 0;
-  width: 100%;
-  height: 20px;
-}
-</style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -28,6 +17,34 @@ export default defineComponent({
   name: "Header",
   components: {
     Undo
+  },
+  props: {
+    showGraphOptions: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup() {
+    return { logoImg: require("@/assets/books.svg") };
   }
 });
 </script>
+
+<style scoped lang="scss">
+.header {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none !important;
+  &-img {
+    height: 40px;
+    width: 40px;
+    margin-right: 12px;
+  }
+
+  &-text {
+    font-weight: 900;
+    font-size: 40px;
+  }
+}
+</style>

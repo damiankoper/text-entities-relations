@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <el-tabs v-model="activeName">
-      <el-tab-pane label="Ter" name="Ter"><Ter /></el-tab-pane>
-      <el-tab-pane label="Filtry" name="Filter"><Filter /></el-tab-pane>
-      <el-tab-pane label="Eksport" name="Export"><Export /></el-tab-pane>
-    </el-tabs>
-  </div>
+  <el-tabs v-model="activeName">
+    <el-tab-pane label="Ter" name="Ter"><Ter /></el-tab-pane>
+    <el-tab-pane label="Filtry" name="Filter"><Filter /></el-tab-pane>
+    <el-tab-pane label="Eksport" name="Export"><Export /></el-tab-pane>
+  </el-tabs>
 </template>
 
 <style>

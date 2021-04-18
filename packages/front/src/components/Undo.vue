@@ -1,15 +1,14 @@
 <template>
-  <el-button class="undo-button">&lt; undo</el-button>
-  <el-button class="undo-button">redo &gt;</el-button>
+  <el-button size="medium" icon="el-icon-back" title="Cofnij" round></el-button>
+  <el-button
+    size="medium"
+    icon="el-icon-right"
+    title="Przywróć"
+    round
+  ></el-button>
 </template>
 
-<style>
-.undo-button {
-  width: 80px;
-  height: 20px;
-  margin-right: 10px;
-}
-</style>
+<style></style>
 
 <script lang="ts">
 import { defineComponent } from "vue";

@@ -1,11 +1,8 @@
 <template>
-  <el-container>
-    <el-header class="header-content">
-      <!-- <el-header> -->
-      <Header />
-    </el-header>
+  <el-container direction="vertical">
+    <Header :showGraphOptions="true" />
     <el-container>
-      <el-main>
+      <el-main class="graph">
         <GraphComponent />
       </el-main>
       <el-aside class="aside-bar">
@@ -13,26 +10,32 @@
       </el-aside>
     </el-container>
     <Slider />
+    <Footer />
   </el-container>
 </template>
 
-<style scoped>
-.header-content {
-  padding: 0px;
+<style lang="scss" scoped>
+.graph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: calc(
+    100vh - 52px - 40px - 32px
+  ); // 100% - header - slider - footer
 }
 .aside-bar {
-  min-height: 470px;
-  width: 200px;
   overflow: visible;
 }
 </style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import GraphComponent from "@/components/GraphComponent.vue";
+import GraphComponent from "@/components/graph/GraphComponent.vue";
 import Header from "@/components/Header.vue";
-import Slider from "@/components/Slider.vue";
-import GraphOptions from "@/components/GraphOptions.vue";
+import Slider from "@/components/graph/Slider.vue";
+import GraphOptions from "@/components/graph/GraphOptions.vue";
+import Footer from "@/components/Footer.vue";
 
 export default defineComponent({
   name: "Graph",
@@ -40,7 +43,8 @@ export default defineComponent({
     GraphComponent,
     Header,
     Slider,
-    GraphOptions
+    GraphOptions,
+    Footer
   }
 });
 </script>
