@@ -1,29 +1,18 @@
 <template>
-  <el-footer class="footer">
-    <div>
-      <p>
-        <span>
-          © Made with love and paszyn
-        </span>
-      </p>
-    </div>
+  <el-footer class="footer" height="32px">
+    &copy; TER {{ new Date().getFullYear() }}. All rights reserved.
   </el-footer>
 </template>
 
 <style scoped>
-p {
-  font-size: 15px;
-  margin-top: 10px;
-  text-align: left;
-  color: black;
-}
 .footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 15px;
-  background: LightGrey;
+  background: #ebeef5;
   z-index: 100;
+  display: flex;
+  align-items: center;
 }
 </style>
 
