@@ -1,25 +1,28 @@
-import { ChunkCreator } from "./ChunkCreator";
-import { SentenceCreator } from "./SentenceCreator";
+import { ChunkCreator } from "./ChunkCreator.service";
+import { SentenceCreator } from "./SentenceCreator.service";
 import { Sentence } from "../Models/Sentence";
+import { TokenCreator } from "./TokenCreator.service";
+jest.mock("./SentenceCreator.service");
 
 describe("ChunkCreator", () => {
-  let chunkCreator: ChunkCreator;
+  const mockSentenceCreator = new SentenceCreator(
+    {} as TokenCreator
+  ) as jest.Mocked<SentenceCreator>;
+  const chunkCreator = new ChunkCreator(mockSentenceCreator);
 
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
-    chunkCreator = new ChunkCreator();
+    chunkCreator.reset();
   });
 
   it("should create one chunk and push it into array", () => {
-    const spy = jest.spyOn(SentenceCreator.prototype, "createSentence");
     const testSentence: Sentence = {
       tokens: [],
       sentenceGlobalIndex: 0,
       sentenceIndex: 0,
     };
-    spy.mockReturnValue(testSentence);
-    const chunkCounter = 0;
+    mockSentenceCreator.createSentence.mockReturnValue(testSentence);
     const chunk = {
       sentence: [
         {
@@ -54,21 +57,19 @@ describe("ChunkCreator", () => {
         },
       ],
     };
-    const newChunk = chunkCreator.createChunk(chunkCounter, chunk);
+    const newChunk = chunkCreator.createChunk(chunk);
 
     expect(newChunk.chunkIndex).toBe(0);
-    expect(spy).toHaveBeenCalledTimes(2);
+    expect(mockSentenceCreator.createSentence).toHaveBeenCalledTimes(2);
   });
 
   it("should create two chunks and push them into array", () => {
-    const spy = jest.spyOn(SentenceCreator.prototype, "createSentence");
     const testSentence: Sentence = {
       tokens: [],
       sentenceGlobalIndex: 0,
       sentenceIndex: 0,
     };
-    spy.mockReturnValue(testSentence);
-    let chunkCounter = 0;
+    mockSentenceCreator.createSentence.mockReturnValue(testSentence);
     const chunk = {
       sentence: [
         {
@@ -104,11 +105,10 @@ describe("ChunkCreator", () => {
       ],
     };
 
-    chunkCreator.createChunk(chunkCounter, chunk);
-    chunkCounter++;
-    const newChunk = chunkCreator.createChunk(chunkCounter, chunk);
+    chunkCreator.createChunk(chunk);
+    const newChunk = chunkCreator.createChunk(chunk);
 
     expect(newChunk.chunkIndex).toBe(1);
-    expect(spy).toHaveBeenCalledTimes(4);
+    expect(mockSentenceCreator.createSentence).toHaveBeenCalledTimes(4);
   });
 });
