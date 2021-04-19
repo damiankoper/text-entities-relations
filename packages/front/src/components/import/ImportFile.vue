@@ -25,7 +25,7 @@
     </el-row>
     <el-row type="flex" justify="end">
       <el-button :disabled="!file" type="primary" @click="submit"
-        >Dalej</el-button
+        > Dalej </el-button
       >
     </el-row>
   </el-card>

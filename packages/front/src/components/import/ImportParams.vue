@@ -75,7 +75,7 @@ export interface Params {
 }
 
 export default defineComponent({
-  emits: ["submit"],
+  emits: ["submit", "back"],
   setup() {
     const params = reactive({
       ner: {
@@ -91,6 +91,7 @@ export default defineComponent({
     return {
       params,
       languages: [
+        // TODO: Enumy od Mateusza
         { value: "pl", label: "Polski" },
         { value: "en", label: "Angielski" },
         { value: "de", label: "Niemiecki" },
