@@ -18,7 +18,7 @@ export class ResultProcessor {
       axios.get(URL).then(
         (response) => {
           const NERData = response.data;
-          const result = chunkListCreator.createChunkList(NERData);
+          const result = this.chunkListCreator.createChunkList(NERData);
           resolve(result);
         },
         () => {
