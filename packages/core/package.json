@@ -45,8 +45,11 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "buffer": "^6.0.3",
     "reflect-metadata": "^0.1.13",
+    "stream-browserify": "^3.0.0",
     "strongly-typed-events": "^2.1.5",
+    "timers-browserify": "^2.0.12",
     "typedi": "^0.10.0",
     "workerpool": "^6.1.2",
     "xml2js": "^0.4.23"
