@@ -1,5 +1,5 @@
 import { Position } from "./Position";
 
-export interface EntityOccurence extends Position {
+export interface EntityOccurrence extends Position {
   name: string;
 }
