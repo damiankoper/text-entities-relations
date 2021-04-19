@@ -2,7 +2,7 @@ import { APIUrls, baseURL } from "../Constants";
 import axios from "axios";
 import { TaskHandler } from "./TaskHandler.service";
 import { Service } from "typedi";
-import { NEREventDispatcher } from "./NEREventDispatcher.service";
+import { NerEventDispatcher } from "./NerEventDispatcher.service";
 
 @Service()
 export class FileProcessor {
@@ -14,7 +14,7 @@ export class FileProcessor {
 
   constructor(
     private taskHandler: TaskHandler,
-    private eventDispatcher: NEREventDispatcher
+    private eventDispatcher: NerEventDispatcher
   ) {}
 
   public process(

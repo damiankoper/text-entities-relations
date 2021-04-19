@@ -2,7 +2,7 @@ import Container, { Service } from "typedi";
 import { ISimpleEvent } from "strongly-typed-events";
 import { ChunkList } from "../Models/ChunkList";
 import { FileProcessor } from "./FileProcessor.service";
-import { NEREventDispatcher } from "./NEREventDispatcher.service";
+import { NerEventDispatcher } from "./NerEventDispatcher.service";
 import { TaskHandler } from "./TaskHandler.service";
 import { TaskObserver } from "./TaskObserver.service";
 import { ResultProcessor } from "./ResultProcessor.service";
@@ -19,7 +19,7 @@ import { TokenCreator } from "./TokenCreator.service";
 export class NerInterfaceService {
   constructor(
     private fileProcessor: FileProcessor,
-    private eventDispatcher: NEREventDispatcher
+    private eventDispatcher: NerEventDispatcher
   ) {}
 
   get onProgress(): ISimpleEvent<number> {
@@ -35,7 +35,7 @@ export class NerInterfaceService {
   }
 
   static get(): NerInterfaceService {
-    const eventDispatcher = new NEREventDispatcher();
+    const eventDispatcher = new NerEventDispatcher();
     const tokenCreator = new TokenCreator();
     const sentenceCreator = new SentenceCreator(tokenCreator);
     const chunkCreator = new ChunkCreator(sentenceCreator);
@@ -48,7 +48,7 @@ export class NerInterfaceService {
     const taskHandler = new TaskHandler(taskObserver, eventDispatcher);
     const fileProcessor = new FileProcessor(taskHandler, eventDispatcher);
 
-    Container.set(NEREventDispatcher, eventDispatcher);
+    Container.set(NerEventDispatcher, eventDispatcher);
     Container.set(TokenCreator, tokenCreator);
     Container.set(SentenceCreator, sentenceCreator);
     Container.set(ChunkCreator, chunkCreator);

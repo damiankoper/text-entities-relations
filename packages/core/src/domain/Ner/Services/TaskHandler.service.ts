@@ -2,7 +2,7 @@ import { APIUrls, baseURL } from "../Constants";
 import axios from "axios";
 import { TaskObserver } from "./TaskObserver.service";
 import { Service } from "typedi";
-import { NEREventDispatcher } from "./NEREventDispatcher.service";
+import { NerEventDispatcher } from "./NerEventDispatcher.service";
 
 @Service()
 export class TaskHandler {
@@ -15,7 +15,7 @@ export class TaskHandler {
 
   constructor(
     private taskObserver: TaskObserver,
-    private eventDispatcher: NEREventDispatcher
+    private eventDispatcher: NerEventDispatcher
   ) {}
 
   public startTaskArchive(fileHandle: string, language: string): Promise<null> {

@@ -3,7 +3,7 @@ import { ChunkList } from "../Models/ChunkList";
 import { Service } from "typedi";
 
 @Service()
-export class NEREventDispatcher {
+export class NerEventDispatcher {
   private _onError = new SimpleEventDispatcher<string>();
   private _onProgress = new SimpleEventDispatcher<number>();
   private _onSuccess = new SimpleEventDispatcher<ChunkList>();

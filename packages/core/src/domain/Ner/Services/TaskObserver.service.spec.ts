@@ -2,15 +2,15 @@ import { TaskObserver } from "./TaskObserver.service";
 import { ResultProcessor } from "./ResultProcessor.service";
 import { ChunkList } from "../Models/ChunkList";
 import axios from "axios";
-import { NEREventDispatcher } from "./NEREventDispatcher.service";
+import { NerEventDispatcher } from "./NerEventDispatcher.service";
 import { ChunkListCreator } from "./ChunkListCreator.service";
 import { Chunk } from "../Models/Chunk";
-jest.mock("./NEREventDispatcher.service");
+jest.mock("./NerEventDispatcher.service");
 jest.mock("./ResultProcessor.service");
 jest.mock("axios");
 
 describe("TaskObserver", () => {
-  const mockEventDispatcher = new NEREventDispatcher() as jest.Mocked<NEREventDispatcher>;
+  const mockEventDispatcher = new NerEventDispatcher() as jest.Mocked<NerEventDispatcher>;
   const mockResultProcessor = new ResultProcessor(
     {} as ChunkListCreator,
     mockEventDispatcher

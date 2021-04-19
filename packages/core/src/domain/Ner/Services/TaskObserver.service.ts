@@ -3,7 +3,7 @@ import axios from "axios";
 import { ChunkList } from "../Models/ChunkList";
 import { ResultProcessor } from "./ResultProcessor.service";
 import { Service } from "typedi";
-import { NEREventDispatcher } from "./NEREventDispatcher.service";
+import { NerEventDispatcher } from "./NerEventDispatcher.service";
 
 @Service()
 export class TaskObserver {
@@ -11,7 +11,7 @@ export class TaskObserver {
 
   constructor(
     private resultProcessor: ResultProcessor,
-    private eventDispatcher: NEREventDispatcher
+    private eventDispatcher: NerEventDispatcher
   ) {}
 
   private timeout(ms: number) {
