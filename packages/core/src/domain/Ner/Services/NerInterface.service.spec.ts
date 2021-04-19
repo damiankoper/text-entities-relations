@@ -24,7 +24,7 @@ describe("NerInterfaceService", () => {
   });
 
   it("should start processing file", async () => {
-    const file = Buffer.from("", "base64");
+    const file = Buffer.from("", "base64") as Blob;
     const fileType = "zip";
     const language = Language.PL;
     mockFileProcessor.process.mockResolvedValue(null);

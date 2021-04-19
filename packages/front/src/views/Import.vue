@@ -7,7 +7,7 @@
           <h1 class="title">Import</h1>
         </el-col>
         <el-col :span="18">
-          <el-row gutter="12">
+          <el-row :gutter="12">
             <el-col :span="24" :lg="5" class="aside-bar">
               <el-steps
                 :direction="'vertical'"
@@ -60,13 +60,15 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, onUnmounted } from "vue";
 import ImportFile from "@/components/import/ImportFile.vue";
 import ImportParams, { Params } from "@/components/import/ImportParams.vue";
 import ImportAnalyse, { Progress } from "@/components/import/ImportAnalyse.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import { useRouter } from "vue-router";
+import { ChunkList } from "core/lib/domain/Ner/Models/ChunkList";
+import { NerInterfaceService } from "core";
 
 export default defineComponent({
   emits: ["irs"],
@@ -83,10 +85,27 @@ export default defineComponent({
     const params = ref<Params | null>(null);
     const { push } = useRouter();
 
+    const nerChunkList = ref<ChunkList>([]);
+    const nerInterface = NerInterfaceService.get();
+    const onProgressUnsub = nerInterface.onProgress.sub((progress: number) => {
+      console.log(progress);
+    });
+    const onSuccessUnsub = nerInterface.onSuccess.sub(
+      (chunkList: ChunkList) => {
+        nerChunkList.value = chunkList;
+        console.log(chunkList);
+      }
+    );
+    onUnmounted(() => {
+      onProgressUnsub();
+      onSuccessUnsub();
+    });
+
     const nerProgress = reactive<Progress>({ status: "", percentage: 25 });
     const terProgress = reactive<Progress>({ status: "", percentage: 0 });
     const nerInProgress = ref(false);
     const error = ref<string | null>(null);
+
     const irs = ref("irs_structure_here");
 
     return {
@@ -99,12 +118,19 @@ export default defineComponent({
         file.value = f;
         activeStep.value = 1;
       },
-      onParamsSubmit(p: Params) {
+      async onParamsSubmit(p: Params) {
         params.value = p;
         activeStep.value = 2;
         // MUI IMPORTANTE
         // entrypoint for NerInterface here
-        irs.value = "returned from NerInterface after analyse";
+        if (file.value) {
+          nerInterface.processFile(
+            file.value,
+            "nie zip", // TODO: enum
+            params.value.ner.lang
+          );
+          //irs.value = "returned from NerInterface after analyse";
+        }
       },
       onAnalyseSubmit() {
         emit("irs", irs.value);

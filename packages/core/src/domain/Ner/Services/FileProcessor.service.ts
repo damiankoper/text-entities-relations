@@ -18,7 +18,7 @@ export class FileProcessor {
   ) {}
 
   public process(
-    file: Buffer,
+    file: Blob,
     fileType: string,
     language: string
   ): Promise<null> {

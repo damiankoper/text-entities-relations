@@ -61,8 +61,10 @@ export class NerInterfaceService {
   }
 
   public processFile(
-    file: Buffer,
+    file: Blob,
+    // TODO: Enum instead of string
     fileType: string,
+    // TODO: Enum instead of string
     language: string
   ): Promise<null> {
     return new Promise(async (resolve, reject) => {
