@@ -125,9 +125,9 @@ export default defineComponent({
         // entrypoint for NerInterface here
         if (file.value) {
           nerInterface.processFile(
-            file.value,
-            "nie zip", // TODO: enum
-            params.value.ner.lang
+            file.value as any,
+            "file" as any, // TODO: enum
+            "pl" as any
           );
           //irs.value = "returned from NerInterface after analyse";
         }

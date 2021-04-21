@@ -12,23 +12,17 @@ export class ResultProcessor {
     private eventDispatcher: NerEventDispatcher
   ) {}
 
-  public processResult(resultHandle: string): Promise<ChunkList> {
+  public async processResult(resultHandle: string): Promise<ChunkList> {
     const URL = baseURL + APIUrls.RESULT + resultHandle;
-    return new Promise((resolve, reject) => {
-      axios.get(URL).then(
-        (response) => {
-          const NERData = response.data;
-          const result = this.chunkListCreator.createChunkList(NERData);
-          resolve(result);
-        },
-        () => {
-          this.eventDispatcher.dispatchError(
-            "Error while fetching result data"
-          );
-          reject(null);
-        }
-      );
-    });
+    try {
+      const response = await axios.get(URL);
+      const NERData = response.data;
+      const result = this.chunkListCreator.createChunkList(NERData);
+      return result;
+    } catch (error) {
+      this.eventDispatcher.dispatchFetchingError();
+      throw [];
+    }
   }
 
   public reset(): void {

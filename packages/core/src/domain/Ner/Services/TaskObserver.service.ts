@@ -18,41 +18,41 @@ export class TaskObserver {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  public observeTask(taskHandle: string): Promise<null> {
+  public async observeTask(taskHandle: string): Promise<null> {
     const URL = baseURL + APIUrls.STATUS + taskHandle;
-    return new Promise((resolve, reject) => {
-      axios.get(URL).then(
-        async (response) => {
-          const data = response.data;
-          if (data.status === Status.PROCESSING) {
-            this.eventDispatcher.dispatchProgress(data.value);
-            await this.timeout(this.interval);
-            await this.observeTask(taskHandle);
-          } else if (data.status === Status.DONE) {
-            this.eventDispatcher.dispatchProgress(1);
-            const result: ChunkList = [];
-            this.resultProcessor.reset();
-            for (const resultFile of data.value) {
-              const resultHandle = resultFile["fileID"];
-              const newResult = await this.resultProcessor.processResult(
-                resultHandle
-              );
-              result.push(...newResult);
-            }
-            this.eventDispatcher.dispatchSuccess(result);
-          } else if (data.status === Status.ERROR) {
-            this.eventDispatcher.dispatchError("Error while processing task");
-            reject(null);
-          }
-          resolve(null);
-        },
-        () => {
-          this.eventDispatcher.dispatchError(
-            "Error while checking task status"
+    let data;
+    while (true) {
+      try {
+        const response = await axios.get(URL);
+        data = response.data;
+        if (data.status != Status.PROCESSING) break;
+        this.eventDispatcher.dispatchProgress(data.value);
+        await this.timeout(this.interval);
+      } catch (error) {
+        this.eventDispatcher.dispatchTaskCheckingError();
+        throw null;
+      }
+    }
+    if (data.status === Status.ERROR) {
+      this.eventDispatcher.dispatchProcessingError();
+      throw null;
+    } else if (data.status === Status.DONE) {
+      this.eventDispatcher.dispatchProgress(1);
+      const result: ChunkList = [];
+      this.resultProcessor.reset();
+      for (const resultFile of data.value) {
+        const resultHandle = resultFile["fileID"];
+        try {
+          const newResult = await this.resultProcessor.processResult(
+            resultHandle
           );
-          reject(null);
+          result.push(...newResult);
+        } catch (error) {
+          throw null;
         }
-      );
-    });
+      }
+      this.eventDispatcher.dispatchSuccess(result);
+    }
+    return null;
   }
 }

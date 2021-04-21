@@ -58,7 +58,7 @@ describe("TaskHandler", () => {
 
   it("should hit APIUrls.START URL and tell it to use document file", async () => {
     const fileHandle = "/test";
-    const language = "pl";
+    const language = Language.PL;
     const NERData = {
       data: "00d43a5d-336a-4725-9e2f-9830650f6f90",
     };
@@ -87,20 +87,33 @@ describe("TaskHandler", () => {
   });
 
   it("should try to hit APIUrls.START URL and miss", async () => {
-    mockEventDispatcher.dispatchError.mockReturnValue();
+    mockEventDispatcher.dispatchTaskStartingError.mockReturnValue();
     mockTaskObserver.observeTask.mockResolvedValue(null);
     const spyAxios = jest.spyOn(axios, "post");
     spyAxios.mockRejectedValue(new Error("test"));
     const fileHandle = "/test";
-    const language = "pl";
-    taskHandler.startTaskArchive(fileHandle, language).then(
-      (resolve) => {
-        expect(resolve).toBeNull();
-      },
-      () => {
-        expect(mockTaskObserver.observeTask).not.toHaveBeenCalled();
-        expect(mockEventDispatcher.dispatchError).toHaveBeenCalled();
-      }
-    );
+    const language = Language.PL;
+    try {
+      await taskHandler.startTaskArchive(fileHandle, language);
+    } catch (error) {
+      expect(mockTaskObserver.observeTask).not.toHaveBeenCalled();
+      expect(mockEventDispatcher.dispatchTaskStartingError).toHaveBeenCalled();
+    }
+  });
+
+  it("should try to observe task and get ERROR", async () => {
+    const NERData = {
+      data: "00d43a5d-336a-4725-9e2f-9830650f6f90",
+    };
+    mockTaskObserver.observeTask.mockRejectedValue(null);
+    const spyAxios = jest.spyOn(axios, "post");
+    spyAxios.mockResolvedValue(NERData);
+    const fileHandle = "/test";
+    const language = Language.PL;
+    try {
+      await taskHandler.startTaskArchive(fileHandle, language);
+    } catch (error) {
+      expect(error).toBe(null);
+    }
   });
 });

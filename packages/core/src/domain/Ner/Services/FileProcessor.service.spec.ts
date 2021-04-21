@@ -4,6 +4,7 @@ import axios from "axios";
 import { TaskObserver } from "./TaskObserver.service";
 import { Language } from "../Models/Language";
 import { NerEventDispatcher } from "./NerEventDispatcher.service";
+import { FileType } from "../Models/FileType";
 jest.mock("./NerEventDispatcher.service");
 jest.mock("./TaskHandler.service");
 jest.mock("axios");
@@ -16,6 +17,12 @@ describe("FileProcessor", () => {
   ) as jest.Mocked<TaskHandler>;
   const fileProcessor = new FileProcessor(mockTaskHandler, mockEventDispatcher);
   jest.mock("axios");
+  const properHeader = {
+    headers: {
+      "Content-Type": "application/octet-stream",
+    },
+  };
+  const file = new ArrayBuffer(0);
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -23,14 +30,8 @@ describe("FileProcessor", () => {
   });
 
   it("should hit APIUrls.UPLOAD URL and start task for archive", async () => {
-    const file = Buffer.from("", "base64");
-    const properHeader = {
-      headers: {
-        "Content-Type": "application/octet-stream",
-      },
-    };
-    const fileType = "zip";
-    const language = "pl";
+    const fileType = FileType.ARCHIVE;
+    const language = Language.PL;
     const NERData = {
       data: "/users/default/9d0c0893-5c00-4ca8-8479-77f467c0fb4c",
     };
@@ -49,14 +50,8 @@ describe("FileProcessor", () => {
   });
 
   it("should hit APIUrls.UPLOAD URL and start task for document", async () => {
-    const file = Buffer.from("", "base64");
-    const properHeader = {
-      headers: {
-        "Content-Type": "application/octet-stream",
-      },
-    };
-    const fileType = "pdf";
-    const language = "pl";
+    const fileType = FileType.DOCUMENT;
+    const language = Language.PL;
     const NERData = {
       data: "/users/default/9d0c0893-5c00-4ca8-8479-77f467c0fb4c",
     };
@@ -75,23 +70,52 @@ describe("FileProcessor", () => {
   });
 
   it("should try to hit APIUrls.UPLOAD URL and miss", async () => {
-    const file = Buffer.from("", "base64");
-    const fileType = "zip";
+    const fileType = FileType.ARCHIVE;
     const language = Language.PL;
     mockTaskHandler.startTaskArchive.mockResolvedValue(null);
-    mockTaskHandler.startTaskDocument.mockResolvedValue(null);
-    mockEventDispatcher.dispatchError.mockReturnValue();
+    mockEventDispatcher.dispatchUploadingError.mockReturnValue();
     const spyAxios = jest.spyOn(axios, "post");
     spyAxios.mockRejectedValue(new Error("test"));
-    fileProcessor.process(file, fileType, language).then(
-      (resolve) => {
-        expect(resolve).toBeNull();
-      },
-      () => {
-        expect(mockTaskHandler.startTaskArchive).not.toHaveBeenCalled();
-        expect(mockTaskHandler.startTaskDocument).not.toHaveBeenCalled();
-        expect(mockEventDispatcher.dispatchError).toHaveBeenCalled();
-      }
-    );
+    try {
+      await fileProcessor.process(file, fileType, language);
+    } catch (error) {
+      expect(mockTaskHandler.startTaskArchive).not.toHaveBeenCalled();
+      expect(mockTaskHandler.startTaskDocument).not.toHaveBeenCalled();
+      expect(mockEventDispatcher.dispatchUploadingError).toHaveBeenCalled();
+    }
+  });
+
+  it("should try to analyze archive and get ERROR", async () => {
+    const NERData = {
+      data: "/users/default/9d0c0893-5c00-4ca8-8479-77f467c0fb4c",
+    };
+    const file = new ArrayBuffer(0);
+    const fileType = FileType.ARCHIVE;
+    const language = Language.PL;
+    mockTaskHandler.startTaskArchive.mockRejectedValue(null);
+    const spyAxios = jest.spyOn(axios, "post");
+    spyAxios.mockResolvedValue(NERData);
+    try {
+      await fileProcessor.process(file, fileType, language);
+    } catch (error) {
+      expect(error).toBe(null);
+    }
+  });
+
+  it("should try to analyze document and get ERROR", async () => {
+    const NERData = {
+      data: "/users/default/9d0c0893-5c00-4ca8-8479-77f467c0fb4c",
+    };
+    const file = new ArrayBuffer(0);
+    const fileType = FileType.DOCUMENT;
+    const language = Language.PL;
+    mockTaskHandler.startTaskDocument.mockRejectedValue(null);
+    const spyAxios = jest.spyOn(axios, "post");
+    spyAxios.mockResolvedValue(NERData);
+    try {
+      await fileProcessor.process(file, fileType, language);
+    } catch (error) {
+      expect(error).toBe(null);
+    }
   });
 });

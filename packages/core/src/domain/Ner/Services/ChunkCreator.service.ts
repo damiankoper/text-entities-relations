@@ -22,7 +22,8 @@ export class ChunkCreator {
           sentenceInChunkCounter,
           sentence
         );
-        newChunk.sentences.push(newSentence);
+        if (newSentence.tokens.length !== 0)
+          newChunk.sentences.push(newSentence);
         sentenceInChunkCounter++;
       }
     }

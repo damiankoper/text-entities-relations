@@ -10,6 +10,8 @@ import { ChunkListCreator } from "./ChunkListCreator.service";
 import { ChunkCreator } from "./ChunkCreator.service";
 import { SentenceCreator } from "./SentenceCreator.service";
 import { TokenCreator } from "./TokenCreator.service";
+import { Language } from "../Models/Language";
+import { FileType } from "../Models/FileType";
 
 /**
  * Responsible for sending and obtaining results of NER processing.
@@ -60,22 +62,16 @@ export class NerInterfaceService {
     return Container.get(NerInterfaceService);
   }
 
-  public processFile(
-    file: Blob,
-    // TODO: Enum instead of string
-    fileType: string,
-    // TODO: Enum instead of string
-    language: string
+  public async processFile(
+    file: ArrayBuffer,
+    fileType: FileType,
+    language: Language
   ): Promise<null> {
-    return new Promise(async (resolve, reject) => {
-      this.fileProcessor.process(file, fileType, language).then(
-        () => {
-          resolve(null);
-        },
-        () => {
-          reject(null);
-        }
-      );
-    });
+    try {
+      await this.fileProcessor.process(file, fileType, language);
+      return null;
+    } catch (error) {
+      return null;
+    }
   }
 }

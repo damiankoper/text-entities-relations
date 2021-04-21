@@ -112,20 +112,60 @@ describe("TaskObserver", () => {
   });
 
   it("should try to hit proper APIUrls.STATUS URL and miss", async () => {
-    mockEventDispatcher.dispatchError.mockReturnValue();
+    mockEventDispatcher.dispatchTaskCheckingError.mockReturnValue();
     const testChunkList: ChunkList = [];
     mockResultProcessor.processResult.mockResolvedValue(testChunkList);
     const spyAxios = jest.spyOn(axios, "get");
     spyAxios.mockRejectedValue(new Error("test"));
     const taskHandle = "test";
-    taskObserver.observeTask(taskHandle).then(
-      (resolve) => {
-        expect(resolve).toBeNull();
+    try {
+      await taskObserver.observeTask(taskHandle);
+    } catch (error) {
+      expect(mockEventDispatcher.dispatchTaskCheckingError).toHaveBeenCalled();
+      expect(mockResultProcessor.processResult).not.toHaveBeenCalled();
+    }
+  });
+
+  it("should try to hit proper APIUrls.STATUS URL and get ERROR", async () => {
+    const dataError = {
+      data: { value: "Error info", status: "ERROR" },
+    };
+    mockEventDispatcher.dispatchProcessingError.mockReturnValue();
+    const testChunkList: ChunkList = [];
+    mockResultProcessor.processResult.mockResolvedValue(testChunkList);
+    const spyAxios = jest.spyOn(axios, "get");
+    spyAxios.mockResolvedValue(dataError);
+    const taskHandle = "test";
+    try {
+      await taskObserver.observeTask(taskHandle);
+    } catch (error) {
+      expect(mockEventDispatcher.dispatchProcessingError).toHaveBeenCalled();
+      expect(mockResultProcessor.processResult).not.toHaveBeenCalled();
+    }
+  });
+
+  it("should try to work on data but get an error", async () => {
+    const dataDone = {
+      data: {
+        value: [
+          {
+            name: "file1",
+            fileID: "/requests/spacy/c3c13c84-3578-43bb-840b-ba14c5fa1b99",
+          },
+        ],
+        status: "DONE",
       },
-      () => {
-        expect(mockEventDispatcher.dispatchError).toHaveBeenCalled();
-        expect(mockResultProcessor.processResult).not.toHaveBeenCalled();
-      }
-    );
+    };
+    mockResultProcessor.processResult.mockRejectedValue(null);
+    mockEventDispatcher.dispatchProgress.mockReturnValue();
+    mockEventDispatcher.dispatchSuccess.mockReturnValue();
+    const spyAxios = jest.spyOn(axios, "get");
+    spyAxios.mockResolvedValue(dataDone);
+    const taskHandle = "test";
+    try {
+      await taskObserver.observeTask(taskHandle);
+    } catch (error) {
+      expect(error).toBe(null);
+    }
   });
 });

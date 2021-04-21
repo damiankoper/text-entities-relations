@@ -15,7 +15,7 @@ export class ChunkListCreator {
       if (result.chunkList.chunk) {
         for (const chunk of result.chunkList.chunk) {
           const newChunk = this.chunkCreator.createChunk(chunk);
-          chunkList.push(newChunk);
+          if (newChunk.sentences.length !== 0) chunkList.push(newChunk);
         }
       }
     });

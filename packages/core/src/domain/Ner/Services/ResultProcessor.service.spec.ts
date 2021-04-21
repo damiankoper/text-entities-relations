@@ -44,20 +44,17 @@ describe("ResultProcessor", () => {
   });
 
   it("should try to hit proper APIUrls.RESULT URL and miss", async () => {
-    mockEventDispatcher.dispatchError.mockReturnValue();
+    mockEventDispatcher.dispatchFetchingError.mockReturnValue();
     const testChunkList: ChunkList = [];
     mockChunkListCreator.createChunkList.mockReturnValue(testChunkList);
     const spyAxios = jest.spyOn(axios, "get");
     spyAxios.mockRejectedValue(new Error("test"));
     const resultHandle = "/test";
-    resultProcessor.processResult(resultHandle).then(
-      (resolve) => {
-        expect(resolve).toBeNull();
-      },
-      () => {
-        expect(mockEventDispatcher.dispatchError).toHaveBeenCalled();
-        expect(mockChunkListCreator.createChunkList).not.toHaveBeenCalled();
-      }
-    );
+    try {
+      await resultProcessor.processResult(resultHandle);
+    } catch (error) {
+      expect(mockEventDispatcher.dispatchFetchingError).toHaveBeenCalled();
+      expect(mockChunkListCreator.createChunkList).not.toHaveBeenCalled();
+    }
   });
 });
