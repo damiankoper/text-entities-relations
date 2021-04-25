@@ -19,7 +19,10 @@
           </router-link>
         </el-col>
         <el-col :span="12">
-          <el-button class="home-button" @click="$router.push('graph')">
+          <el-button
+            class="home-button"
+            @click="terFileInput ? terFileInput.click() : null"
+          >
             Importuj z pliku *.ter
           </el-button>
         </el-col>
@@ -35,6 +38,13 @@
       </el-row>
     </el-main>
     <Footer />
+    <input
+      ref="terFileInput"
+      type="file"
+      @input="onTerFile"
+      accept=".ter"
+      style="display:none"
+    />
   </el-container>
 </template>
 
@@ -67,14 +77,26 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import Footer from "@/components/Footer.vue";
 
 export default defineComponent({
   components: { Footer },
   name: "Home",
-  setup() {
-    return { logoImg: require("@/assets/books.svg") };
+  emits: ["irs"],
+  setup(_, { emit }) {
+    const terFileInput = ref<HTMLInputElement | null>(null);
+    return {
+      logoImg: require("@/assets/books.svg"),
+      terFileInput,
+      async onTerFile() {
+        if (terFileInput.value?.files) {
+          const file = terFileInput.value.files[0];
+          const irsJson = await file.text();
+          emit("irs", JSON.parse(irsJson));
+        }
+      }
+    };
   }
 });
 </script>

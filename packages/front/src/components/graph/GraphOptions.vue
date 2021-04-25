@@ -1,6 +1,6 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane label="Ter" name="Ter"><Ter /></el-tab-pane>
+    <el-tab-pane label="TER" name="TER"><Ter /></el-tab-pane>
     <el-tab-pane label="Filtry" name="Filter"><Filter /></el-tab-pane>
     <el-tab-pane label="Eksport" name="Export"><Export /></el-tab-pane>
   </el-tabs>
@@ -35,7 +35,7 @@ export default defineComponent({
 
   data() {
     return {
-      activeName: "Ter"
+      activeName: "TER"
     };
   },
   methods: {}

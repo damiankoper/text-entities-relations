@@ -13,5 +13,12 @@ module.exports = {
       });
       return [pathConfigs];
     });
+    
+    config
+    .plugin('html')
+    .tap(args => {
+      args[0].title = 'TER | Text entities relations'
+      return args
+    })
   }
 };

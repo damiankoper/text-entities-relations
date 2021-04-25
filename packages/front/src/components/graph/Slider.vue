@@ -41,7 +41,7 @@ export default defineComponent({
   props: {},
   data() {
     return {
-      sliderValues: [14, 38],
+      sliderValues: [0, 100],
       switchValue: true,
       options: [
         {

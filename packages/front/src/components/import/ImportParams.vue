@@ -54,10 +54,10 @@
 
 <style lang="scss" scoped>
 .title {
-  font-size: 24px;
+  margin: 0;
 }
 .section-title {
-  font-size: 20px;
+  margin: 0;
   font-weight: 700;
   margin-bottom: 16px;
 }
@@ -68,10 +68,17 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { Language } from "core";
 
 export interface Params {
-  ner: { lang: string };
+  ner: { lang: Language };
   ter: { window: number; overlap: number; unit: string };
+}
+
+export enum TextUnit {
+  WORD = "word",
+  SENTENCE = "sentence",
+  CHUNK = "chunk"
 }
 
 export default defineComponent({
@@ -79,28 +86,28 @@ export default defineComponent({
   setup() {
     const params = reactive({
       ner: {
-        lang: "pl"
+        lang: Language.PL
       },
       ter: {
         window: 20,
         overlap: 10,
-        unit: "sentence"
+        unit: TextUnit.SENTENCE
       }
     });
 
     return {
       params,
       languages: [
-        // TODO: Enumy od Mateusza
-        { value: "pl", label: "Polski" },
-        { value: "en", label: "Angielski" },
-        { value: "de", label: "Niemiecki" },
-        { value: "es", label: "Hiszpański" }
+        { value: Language.PL, label: "Polski" },
+        { value: Language.EN, label: "Angielski" },
+        { value: Language.DE, label: "Niemiecki" },
+        { value: Language.ES, label: "Hiszpański" },
+        { value: Language.RU, label: "Rosyjski" }
       ],
       units: [
-        { value: "chunk", label: "Paragraf" },
-        { value: "sentence", label: "Zdanie" },
-        { value: "word", label: "Słowo" }
+        { value: TextUnit.CHUNK, label: "Paragraf" },
+        { value: TextUnit.SENTENCE, label: "Zdanie" },
+        { value: TextUnit.WORD, label: "Słowo" }
       ]
     };
   }

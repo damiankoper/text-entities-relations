@@ -5,6 +5,7 @@ import { FileProcessor } from "./FileProcessor.service";
 import { NerEventDispatcher } from "./NerEventDispatcher.service";
 import { Language } from "../Models/Language";
 import { FileType } from "../Models/FileType";
+import { ErrorType } from "../Models/ErrorType";
 
 /**
  * Responsible for sending and obtaining results of NER processing.
@@ -25,7 +26,7 @@ export class NerInterfaceService {
     return this.eventDispatcher.onSuccess;
   }
 
-  get onError(): ISimpleEvent<string> {
+  get onError(): ISimpleEvent<ErrorType> {
     return this.eventDispatcher.onError;
   }
 

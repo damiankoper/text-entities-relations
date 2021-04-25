@@ -1,6 +1,6 @@
 <template>
   <el-container direction="vertical">
-    <Header :showGraphOptions="true" />
+    <Header showGraphOptions />
     <el-container>
       <el-main class="graph">
         <GraphComponent />

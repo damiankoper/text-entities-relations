@@ -36,7 +36,7 @@
     <el-popconfirm
       confirmButtonText="OK"
       cancelButtonText="Cancel"
-      hideIcon="true"
+      hideIcon
       confirmButtonType="info plane"
       cancelButtonType="info plane"
       title="Wszystkie zmiany zostaną nadpisane!"

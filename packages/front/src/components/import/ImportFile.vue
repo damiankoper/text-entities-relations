@@ -33,7 +33,7 @@
 
 <style lang="scss" scoped>
 .title {
-  font-size: 24px;
+  margin: 0;
 }
 .file {
   margin-bottom: 24px;
@@ -50,7 +50,6 @@ export default defineComponent({
     return {
       onFileChange({ raw }: { raw: File }) {
         file.value = raw;
-        console.log(raw);
       },
       submit() {
         emit("submit", file.value);

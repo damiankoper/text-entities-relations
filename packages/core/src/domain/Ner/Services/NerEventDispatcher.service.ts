@@ -5,11 +5,11 @@ import { ErrorType } from "../Models/ErrorType";
 
 @Service()
 export class NerEventDispatcher {
-  private _onError = new SimpleEventDispatcher<string>();
+  private _onError = new SimpleEventDispatcher<ErrorType>();
   private _onProgress = new SimpleEventDispatcher<number>();
   private _onSuccess = new SimpleEventDispatcher<ChunkList>();
 
-  get onError(): ISimpleEvent<string> {
+  get onError(): ISimpleEvent<ErrorType> {
     return this._onError.asEvent();
   }
 
@@ -21,7 +21,7 @@ export class NerEventDispatcher {
     return this._onSuccess.asEvent();
   }
 
-  private dispatchError(message: string): void {
+  private dispatchError(message: ErrorType): void {
     this._onError.dispatch(message);
   }
 
