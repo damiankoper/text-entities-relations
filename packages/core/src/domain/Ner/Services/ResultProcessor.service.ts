@@ -21,7 +21,7 @@ export class ResultProcessor {
       return result;
     } catch (error) {
       this.eventDispatcher.dispatchFetchingError();
-      throw [];
+      throw error;
     }
   }
 

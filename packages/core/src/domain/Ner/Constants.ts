@@ -1,11 +1,11 @@
-export const enum APIUrls {
+export enum APIUrls {
   UPLOAD = "upload/",
   START = "startTask/",
   RESULT = "download",
   STATUS = "getStatus/",
 }
 
-export const enum Status {
+export enum Status {
   PROCESSING = "PROCESSING",
   DONE = "DONE",
   ERROR = "ERROR",

@@ -1,7 +1,7 @@
 import { ISimpleEvent, SimpleEventDispatcher } from "strongly-typed-events";
 import { ChunkList } from "../Models/ChunkList";
 import { Service } from "typedi";
-import { Errors } from "../Models/Errors";
+import { ErrorType } from "../Models/ErrorType";
 
 @Service()
 export class NerEventDispatcher {
@@ -26,23 +26,23 @@ export class NerEventDispatcher {
   }
 
   public dispatchUploadingError(): void {
-    this.dispatchError(Errors.UPLOADING);
+    this.dispatchError(ErrorType.UPLOADING);
   }
 
   public dispatchFetchingError(): void {
-    this.dispatchError(Errors.FETCHING);
+    this.dispatchError(ErrorType.FETCHING);
   }
 
   public dispatchTaskStartingError(): void {
-    this.dispatchError(Errors.TASK_STARTING);
+    this.dispatchError(ErrorType.TASK_STARTING);
   }
 
   public dispatchProcessingError(): void {
-    this.dispatchError(Errors.PROCESSING);
+    this.dispatchError(ErrorType.PROCESSING);
   }
 
   public dispatchTaskCheckingError(): void {
-    this.dispatchError(Errors.TASK_CHECKING);
+    this.dispatchError(ErrorType.TASK_CHECKING);
   }
 
   public dispatchProgress(num: number): void {

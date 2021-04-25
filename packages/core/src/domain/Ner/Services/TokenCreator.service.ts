@@ -50,9 +50,8 @@ export class TokenCreator {
   }
 
   private getTokenType(type: string): TokenType {
-    if (type === TokenType.LOCATION) return TokenType.LOCATION;
-    else if (type === TokenType.PLACE) return TokenType.PLACE;
-    else if (type === TokenType.ORGANIZATION) return TokenType.ORGANIZATION;
-    else return TokenType.PERSON;
+    if (Object.values(TokenType).includes(type as TokenType)) {
+      return type as TokenType;
+    } else return TokenType.PERSON;
   }
 }

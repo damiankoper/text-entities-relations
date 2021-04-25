@@ -18,7 +18,7 @@ export class TaskObserver {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  public async observeTask(taskHandle: string): Promise<null> {
+  public async observeTask(taskHandle: string): Promise<void> {
     const URL = baseURL + APIUrls.STATUS + taskHandle;
     let data;
     while (true) {
@@ -30,29 +30,24 @@ export class TaskObserver {
         await this.timeout(this.interval);
       } catch (error) {
         this.eventDispatcher.dispatchTaskCheckingError();
-        throw null;
+        throw error;
       }
     }
     if (data.status === Status.ERROR) {
       this.eventDispatcher.dispatchProcessingError();
-      throw null;
+      throw data;
     } else if (data.status === Status.DONE) {
       this.eventDispatcher.dispatchProgress(1);
       const result: ChunkList = [];
       this.resultProcessor.reset();
       for (const resultFile of data.value) {
         const resultHandle = resultFile["fileID"];
-        try {
-          const newResult = await this.resultProcessor.processResult(
-            resultHandle
-          );
-          result.push(...newResult);
-        } catch (error) {
-          throw null;
-        }
+        const newResult = await this.resultProcessor.processResult(
+          resultHandle
+        );
+        result.push(...newResult);
       }
       this.eventDispatcher.dispatchSuccess(result);
     }
-    return null;
   }
 }

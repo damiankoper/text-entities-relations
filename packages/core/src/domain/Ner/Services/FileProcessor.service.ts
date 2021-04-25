@@ -23,22 +23,17 @@ export class FileProcessor {
     file: ArrayBuffer,
     fileType: FileType,
     language: Language
-  ): Promise<null> {
+  ): Promise<void> {
     const URL = baseURL + APIUrls.UPLOAD;
     try {
       const response = await axios.post(URL, file, this.headers);
       const fileHandle = response.data;
-      try {
-        if (fileType == FileType.ARCHIVE)
-          await this.taskHandler.startTaskArchive(fileHandle, language);
-        else await this.taskHandler.startTaskDocument(fileHandle, language);
-        return null;
-      } catch {
-        throw null;
-      }
+      if (fileType == FileType.ARCHIVE)
+        await this.taskHandler.startTaskArchive(fileHandle, language);
+      else await this.taskHandler.startTaskDocument(fileHandle, language);
     } catch (error) {
       this.eventDispatcher.dispatchUploadingError();
-      throw null;
+      throw error;
     }
   }
 }

@@ -1,4 +1,4 @@
-export const enum FileType {
+export enum FileType {
   ARCHIVE = "zip",
   DOCUMENT = "file",
 }

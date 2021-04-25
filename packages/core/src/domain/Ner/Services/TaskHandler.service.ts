@@ -22,41 +22,36 @@ export class TaskHandler {
   public async startTaskArchive(
     fileHandle: string,
     language: Language
-  ): Promise<null> {
+  ): Promise<void> {
     const data = {
       lpmn: this.getLPMNForLanguageArchive(fileHandle, language),
       user: this.user,
     };
-    return await this.sendRequest(data);
+    return this.sendRequest(data);
   }
 
   public async startTaskDocument(
     fileHandle: string,
     language: Language
-  ): Promise<null> {
+  ): Promise<void> {
     const data = {
       lpmn: this.getLPMNForLanguage(language),
       file: fileHandle,
       user: this.user,
     };
-    return await this.sendRequest(data);
+    return this.sendRequest(data);
   }
 
-  private async sendRequest(data: Record<string, unknown>): Promise<null> {
+  private async sendRequest(data: Record<string, unknown>): Promise<void> {
     const URL = baseURL + APIUrls.START;
     try {
       const response = await axios.post(URL, data, this.headers);
       const taskHandle = response.data;
-      try {
-        await this.taskObserver.observeTask(taskHandle);
-      } catch (error) {
-        throw null;
-      }
+      await this.taskObserver.observeTask(taskHandle);
     } catch (error) {
       this.eventDispatcher.dispatchTaskStartingError();
-      throw null;
+      throw error;
     }
-    return null;
   }
 
   private getLPMNForLanguage(language: Language): string {
