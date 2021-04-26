@@ -1,13 +1,13 @@
 {
   "folders": [
     {
+      "path": "packages/front"
+    },
+    {
       "path": "."
     },
     {
       "path": "packages/core"
-    },
-    {
-      "path": "packages/front"
     }
   ],
   "settings": {
@@ -22,6 +22,7 @@
     },
     "editor.formatOnSave": true,
     "editor.rulers": [80, 120],
-    "eslint.format.enable": true
+    "eslint.format.enable": true,
+    "jest.disabledWorkspaceFolders": ["front", "text-entities-relations"]
   }
 }

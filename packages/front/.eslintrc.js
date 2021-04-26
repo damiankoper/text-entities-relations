@@ -17,5 +17,7 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
+    //"import/extensions": ['error', 'never', { vue: 'always' }]
+    //czyli jak importujemy komponent vue, dodajemy jego rozszerzenie dla vetura
   }
 };

@@ -1,7 +1,11 @@
 import Container, { Service } from "typedi";
-import { SimpleEventDispatcher, ISimpleEvent } from "strongly-typed-events";
+import { ISimpleEvent } from "strongly-typed-events";
 import { ChunkList } from "../Models/ChunkList";
-import { FileProcessor } from "../Classes/FileProcessor";
+import { FileProcessor } from "./FileProcessor.service";
+import { NerEventDispatcher } from "./NerEventDispatcher.service";
+import { Language } from "../Models/Language";
+import { FileType } from "../Models/FileType";
+import { ErrorType } from "../Models/ErrorType";
 
 /**
  * Responsible for sending and obtaining results of NER processing.
@@ -9,38 +13,32 @@ import { FileProcessor } from "../Classes/FileProcessor";
  */
 @Service()
 export class NerInterfaceService {
-  private _onError = new SimpleEventDispatcher<string>();
-  private fileProcessor = new FileProcessor(this._onError);
+  constructor(
+    private fileProcessor: FileProcessor,
+    private eventDispatcher: NerEventDispatcher
+  ) {}
+
   get onProgress(): ISimpleEvent<number> {
-    return this.fileProcessor.onProgress;
+    return this.eventDispatcher.onProgress;
   }
 
   get onSuccess(): ISimpleEvent<ChunkList> {
-    return this.fileProcessor.onSuccess;
+    return this.eventDispatcher.onSuccess;
   }
 
-  get onError(): ISimpleEvent<string> {
-    return this._onError.asEvent();
+  get onError(): ISimpleEvent<ErrorType> {
+    return this.eventDispatcher.onError;
   }
 
   static get(): NerInterfaceService {
     return Container.get(NerInterfaceService);
   }
 
-  public processFile(
-    file: Buffer,
-    fileType: string,
-    language: string
-  ): Promise<null> {
-    return new Promise(async (resolve, reject) => {
-      this.fileProcessor.process(file, fileType, language).then(
-        () => {
-          resolve(null);
-        },
-        () => {
-          reject(null);
-        }
-      );
-    });
+  public async processFile(
+    file: ArrayBuffer,
+    fileType: FileType,
+    language: Language
+  ): Promise<void> {
+    await this.fileProcessor.process(file, fileType, language);
   }
 }

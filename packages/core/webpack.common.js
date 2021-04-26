@@ -2,8 +2,7 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const ESLintWebpackPlugin = require("eslint-webpack-plugin");
-var glob = require("glob");
-console.log(glob.sync("./src/**/*.worker.ts"));
+
 module.exports = {
   entry: "./src/core.ts",
   mode: "development",
@@ -33,6 +32,11 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    fallback: {
+      timers: require.resolve("timers-browserify"),
+      stream: require.resolve("stream-browserify"),
+      buffer: require.resolve("buffer/"),
+    },
   },
   plugins: [
     new ESLintWebpackPlugin({ extensions: ["js", "ts"] }),
