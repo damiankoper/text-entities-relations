@@ -8,7 +8,20 @@
           :graphStructure="graphStructure"
           @clickNode="onNodeClick"
         />
-        <el-button v-on:click="fit" type="primary">Dopasuj</el-button>
+        <el-row type="flex" justify="end" align="middle">
+          <el-space>
+            <el-button v-on:click="fit" type="primary">Fit</el-button>
+            <el-radio-group v-model="selectedGraphModification">
+              <el-radio
+                v-for="tool in graphTools"
+                :key="tool.type"
+                :label="tool.type"
+              >
+                <i :class="tool.icon"></i> {{ tool.hint }}
+              </el-radio>
+            </el-radio-group>
+          </el-space>
+        </el-row>
       </el-main>
       <el-aside class="aside-bar">
         <GraphOptions />
@@ -22,12 +35,11 @@
 <style lang="scss" scoped>
 .graph {
   display: flex;
-  align-items: flex-end;
-  justify-content: right;
   flex-direction: column;
   min-height: calc(
     100vh - 52px - 40px - 32px
   ); // 100% - header - slider - footer
+  padding-bottom: 5px;
 }
 .aside-bar {
   overflow: visible;
@@ -43,6 +55,18 @@ import GraphRenderer from "@/components/graph/GraphRenderer.vue";
 import Footer from "@/components/Footer.vue";
 import { GraphService, GraphZoomService } from "core";
 
+enum GraphModificationOption {
+  SELECT = "select",
+  DELETE = "delete",
+  MERGE = "merge"
+}
+
+interface GraphTool {
+  hint: string;
+  icon: string;
+  type: GraphModificationOption;
+}
+
 export default defineComponent({
   name: "Graph",
   components: {
@@ -55,17 +79,30 @@ export default defineComponent({
   setup() {
     const graphRenderer = ref<typeof GraphRenderer>();
 
+    const selectedGraphModification = ref<GraphModificationOption>(
+      GraphModificationOption.SELECT
+    );
+
     const graphService = GraphService.get();
 
     const graphZoomService = GraphZoomService.get();
 
-    const graphStructure = graphService.buildGraphStructure([]);
+    const graphStructure = ref(graphService.buildGraphStructure([]));
 
-    const selectedNodes = ref<string[]>([]);
+    const selectedNodes = ref<[string, string]>();
 
     const onNodeClick = (nodeId: string) => {
-      selectedNodes.value.push(nodeId);
-      console.log(selectedNodes.value);
+      console.log(nodeId);
+      switch (selectedGraphModification.value) {
+        case GraphModificationOption.SELECT:
+          break;
+        case GraphModificationOption.MERGE:
+          break;
+        case GraphModificationOption.DELETE:
+          graphService.deleteNode(nodeId);
+          graphStructure.value = graphService.buildGraphStructure([]);
+          break;
+      }
     };
 
     const fit = () => {
@@ -75,7 +112,32 @@ export default defineComponent({
       }
     };
 
-    return { graphRenderer, graphStructure, onNodeClick, fit };
+    const graphTools: GraphTool[] = [
+      {
+        hint: "Click",
+        icon: "el-icon-thumb",
+        type: GraphModificationOption.SELECT
+      },
+      {
+        hint: "Delete nodes",
+        icon: "el-icon-delete",
+        type: GraphModificationOption.DELETE
+      },
+      {
+        hint: "Merge nodes",
+        icon: "el-icon-share",
+        type: GraphModificationOption.MERGE
+      }
+    ];
+
+    return {
+      graphRenderer,
+      selectedGraphModification,
+      graphStructure,
+      onNodeClick,
+      fit,
+      graphTools
+    };
   }
 });
 </script>

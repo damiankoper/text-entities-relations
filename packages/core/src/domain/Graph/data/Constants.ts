@@ -1,3 +1,3 @@
 export const conf = {
-  NODE_RADIUS: 7,
+  NODE_RADIUS: 15,
 };

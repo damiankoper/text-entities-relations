@@ -3,8 +3,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, PropType } from "vue";
+import { defineComponent, onMounted, ref, PropType, watch } from "vue";
 import { Graph, GraphRendererService } from "core";
+
+function renderGraph(
+  service: GraphRendererService,
+  structure: Graph,
+  svgElement: SVGSVGElement | undefined,
+  emit: (event: "clickNode", payload: string) => void
+) {
+  if (!svgElement) {
+    return;
+  }
+  service.renderSvg(structure, svgElement, emit);
+}
 
 export default defineComponent({
   name: "GraphRenderer",
@@ -20,14 +32,25 @@ export default defineComponent({
 
     const graphRendererService = GraphRendererService.get();
 
-    onMounted(() => {
-      if (graphSvgElement.value) {
-        graphRendererService.renderSvg(
-          props.graphStructure,
+    watch(
+      () => props.graphStructure,
+      currentGraph => {
+        renderGraph(
+          graphRendererService,
+          currentGraph,
           graphSvgElement.value,
           emit
         );
       }
+    );
+
+    onMounted(() => {
+      renderGraph(
+        graphRendererService,
+        props.graphStructure,
+        graphSvgElement.value,
+        emit
+      );
     });
     return {
       graphSvgElement
@@ -40,5 +63,14 @@ export default defineComponent({
 svg {
   height: 100%;
   width: 100%;
+
+  & :deep .node-container {
+    cursor: pointer;
+  }
+
+  & :deep .node-selected {
+    stroke: #ff6666ff;
+    stroke-width: 8px;
+  }
 }
 </style>

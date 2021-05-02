@@ -1,5 +1,6 @@
 import Container, { Service } from "typedi";
 import { d3 } from "../Models/D3";
+import { Selection, ZoomBehavior } from "d3";
 
 @Service()
 export class GraphZoomService {
@@ -8,8 +9,8 @@ export class GraphZoomService {
   }
 
   static createZoomBehaviour(
-    elementToAttach: d3.Selection<SVGSVGElement, unknown, null, undefined>
-  ): d3.ZoomBehavior<SVGSVGElement, unknown> {
+    elementToAttach: Selection<SVGSVGElement, unknown, null, undefined>
+  ): ZoomBehavior<SVGSVGElement, unknown> {
     return d3
       .zoom<SVGSVGElement, unknown>()
       .scaleExtent([1 / 4, 4])

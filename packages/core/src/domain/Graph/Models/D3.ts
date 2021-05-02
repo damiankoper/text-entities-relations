@@ -10,6 +10,7 @@ import {
   schemeCategory10,
   zoom,
   zoomIdentity,
+  forceCollide,
 } from "d3";
 
 export const d3 = {
@@ -24,4 +25,5 @@ export const d3 = {
   scaleOrdinal,
   schemeCategory10,
   zoomIdentity,
+  forceCollide,
 };

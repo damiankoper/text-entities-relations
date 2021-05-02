@@ -5,6 +5,8 @@ import { Node } from "../Models/Node";
 import { Link } from "../Models/Link";
 import { conf } from "../data/Constants";
 import { GraphZoomService } from "./GraphZoom.service";
+import { D3DragEvent, DragBehavior, Simulation, SubjectPosition } from "d3";
+
 @Service()
 export class GraphRendererService {
   static get(): GraphRendererService {
@@ -12,11 +14,9 @@ export class GraphRendererService {
   }
 
   private buildDraggingOptions(
-    simulation: d3.Simulation<Node, undefined>
-  ): d3.DragBehavior<SVGCircleElement, Node, Node | d3.SubjectPosition> {
-    const dragStarted = (
-      event: d3.D3DragEvent<SVGCircleElement, Node, Node>
-    ) => {
+    simulation: Simulation<Node, undefined>
+  ): DragBehavior<SVGSVGElement, Node, Node | SubjectPosition> {
+    const dragStarted = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
       if (!event.active) {
         simulation.alphaTarget(0.3).restart();
       }
@@ -24,12 +24,12 @@ export class GraphRendererService {
       event.subject.fy = event.subject.y;
     };
 
-    const dragging = (event: d3.D3DragEvent<SVGCircleElement, Node, Node>) => {
+    const dragging = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
       event.subject.fx = event.x;
       event.subject.fy = event.y;
     };
 
-    const dragEnded = (event: d3.D3DragEvent<SVGCircleElement, Node, Node>) => {
+    const dragEnded = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
       if (!event.active) {
         simulation.alphaTarget(0);
       }
@@ -38,7 +38,7 @@ export class GraphRendererService {
     };
 
     return d3
-      .drag<SVGCircleElement, Node>()
+      .drag<SVGSVGElement, Node>()
       .on("start", dragStarted)
       .on("drag", dragging)
       .on("end", dragEnded);
@@ -49,17 +49,7 @@ export class GraphRendererService {
     graphSvgElement: SVGSVGElement,
     emit: (event: "clickNode", payload: string) => void
   ): void {
-    const maxWidth = graphSvgElement.clientWidth;
-    const maxHeight = graphSvgElement.clientHeight;
-
-    const graphSimulation = d3
-      .forceSimulation<Node, Link>(graph.nodes)
-      .force(
-        "link",
-        d3.forceLink<Node, Link>(graph.links).id((d) => d.id)
-      )
-      .force("charge", d3.forceManyBody())
-      .force("center", d3.forceCenter(maxWidth / 2, maxHeight / 2));
+    const graphSimulation = this.buildGraphSimulation(graph, graphSvgElement);
 
     const svg = d3.select(graphSvgElement);
 
@@ -75,46 +65,80 @@ export class GraphRendererService {
 
     const link = root
       .append("g")
-      .attr("id", "links-group")
       .attr("stroke", "#999")
       .selectAll<SVGLineElement, Link>("line")
       .data<Link>(graph.links)
       .join<SVGLineElement, Link>("line")
-      .attr("stroke-width", (l: Link) => l.strength / 2)
-      .attr("stroke-opacity", (l: Link) => 1 / l.strength);
+      .attr("stroke-width", 1.5)
+      .attr("stroke-opacity", (l: Link) =>
+        l.strength ? 1 / l.strength : null
+      );
 
     const color = d3.scaleOrdinal(d3.schemeCategory10);
 
+    //node container
     const node = root
-      .append("g")
-      .attr("id", "nodes-group")
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1.5)
-      .selectAll<SVGCircleElement, Node>("circle")
+      .append<SVGSVGElement>("g")
+      .selectAll<SVGSVGElement, Node>("g")
       .data<Node>(graph.nodes)
-      .join<SVGCircleElement, Node>("circle")
-      .attr("r", conf.NODE_RADIUS)
-      //d3.interpolateSinebow(Math.random())
-      .attr("fill", (d: Node) => color(d.group.toString()))
-      .on("click", (event, d: Node) => emit("clickNode", d.id))
+      .join<SVGSVGElement, Node>("g")
+      .attr("class", "node-container")
+      .on("click", (_, d: Node) => emit("clickNode", d.id))
       .call(this.buildDraggingOptions(graphSimulation));
 
+    //node circle
+    node
+      .append("circle")
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 1.5)
+      .attr("r", conf.NODE_RADIUS)
+      .attr("fill", (d: Node) => color(d.group.toString()));
+
+    //node label
     node
       .append("text")
-      .text((d: Node) => d.id)
-      .attr("x", 6)
-      .attr("y", 3);
-
-    node.append("title").text((d) => d.id);
+      .attr("x", 30 + 4)
+      .attr("y", "0.31em")
+      .text((d) => d.id)
+      .clone(true)
+      .lower()
+      .attr("fill", "none")
+      .attr("stroke", "white")
+      .attr("stroke-width", 3);
 
     graphSimulation.on("tick", () => {
+      // link movement
       link
         .attr("x1", (d) => (<Node>d.source).x!)
         .attr("y1", (d) => (<Node>d.source).y!)
         .attr("x2", (d) => (<Node>d.target).x!)
         .attr("y2", (d) => (<Node>d.target).y!);
-
-      node.attr("cx", (d) => d.x!).attr("cy", (d) => d.y!);
+      // node movement
+      node.attr("transform", (d) => `translate(${d.x},${d.y})`);
     });
+  }
+
+  private buildGraphSimulation(
+    graph: Graph,
+    graphSvgElement: SVGSVGElement
+  ): Simulation<Node, Link> {
+    const maxWidth = graphSvgElement.clientWidth;
+    const maxHeight = graphSvgElement.clientHeight;
+
+    const graphSimulation = d3
+      .forceSimulation<Node, Link>(graph.nodes)
+      .force(
+        "link",
+        d3.forceLink<Node, Link>(graph.links).id((d) => d.id)
+      )
+      .force("charge", d3.forceManyBody().strength(-150))
+      .force("center", d3.forceCenter(maxWidth / 2, maxHeight / 2))
+      .force(
+        "collide",
+        d3.forceCollide(() => 55)
+        //d3.forceCollide(20).radius(20).strength(0)
+      );
+
+    return graphSimulation;
   }
 }
