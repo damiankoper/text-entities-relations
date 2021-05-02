@@ -3,23 +3,20 @@ import { Graph } from "../Models/Graph";
 import { d3 } from "../Models/D3";
 import { Node } from "../Models/Node";
 import { Link } from "../Models/Link";
-import { Simulation } from "d3-force";
-import { D3DragEvent, DragBehavior, SubjectPosition } from "d3-drag";
 import { conf } from "../data/Constants";
-import { ZoomBehavior } from "d3-zoom";
-
+import { GraphZoomService } from "./GraphZoom.service";
 @Service()
 export class GraphRendererService {
-  private _zoom: ZoomBehavior<SVGSVGElement, unknown> | null = null;
-
   static get(): GraphRendererService {
     return Container.get(GraphRendererService);
   }
 
   private buildDraggingOptions(
-    simulation: Simulation<Node, undefined>
-  ): DragBehavior<SVGCircleElement, Node, Node | SubjectPosition> {
-    const dragStarted = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
+    simulation: d3.Simulation<Node, undefined>
+  ): d3.DragBehavior<SVGCircleElement, Node, Node | d3.SubjectPosition> {
+    const dragStarted = (
+      event: d3.D3DragEvent<SVGCircleElement, Node, Node>
+    ) => {
       if (!event.active) {
         simulation.alphaTarget(0.3).restart();
       }
@@ -27,12 +24,12 @@ export class GraphRendererService {
       event.subject.fy = event.subject.y;
     };
 
-    const dragging = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
+    const dragging = (event: d3.D3DragEvent<SVGCircleElement, Node, Node>) => {
       event.subject.fx = event.x;
       event.subject.fy = event.y;
     };
 
-    const dragEnded = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
+    const dragEnded = (event: d3.D3DragEvent<SVGCircleElement, Node, Node>) => {
       if (!event.active) {
         simulation.alphaTarget(0);
       }
@@ -69,24 +66,12 @@ export class GraphRendererService {
     //clear previous drawings
     svg.selectAll("*").remove();
 
+    //root node used to aggregate the whole svg tree and allow zooming
     const root = svg.append<SVGSVGElement>("g").attr("id", "root");
 
-    this._zoom = d3
-      .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1 / 4, 4])
-      .on("zoom", (event) => root.attr("transform", event.transform));
+    const zoomBehaviour = GraphZoomService.createZoomBehaviour(root);
 
-    svg.call(this._zoom);
-
-    /*
-     disable panning
-        svg
-      .call(zoom)
-      .on("mousedown.zoom", null)
-      .on("touchstart.zoom", null)
-      .on("touchmove.zoom", null)
-      .on("touchend.zoom", null);
-      */
+    svg.call(zoomBehaviour);
 
     const link = root
       .append("g")
@@ -131,49 +116,5 @@ export class GraphRendererService {
 
       node.attr("cx", (d) => d.x!).attr("cy", (d) => d.y!);
     });
-
-    // if we want to auto zoom after nodes are layed out
-    //.on("end", () => this.fitToScreen(graphSvgElement));
-  }
-
-  fitToScreen(graphSvgElement: SVGSVGElement): void {
-    const containerSelection = d3.select(graphSvgElement);
-
-    const rootNode = containerSelection
-      .selectChild<SVGSVGElement>("#root")
-      .node();
-
-    if (!rootNode || !this._zoom) {
-      return;
-    }
-
-    const svgBounds = rootNode.getBBox();
-    const clientSize = {
-      width: graphSvgElement.clientWidth,
-      height: graphSvgElement.clientHeight,
-    };
-
-    const midX = svgBounds.x + svgBounds.width / 2;
-    const midY = svgBounds.y + svgBounds.height / 2;
-    const scale =
-      0.95 /
-      Math.max(
-        svgBounds.width / clientSize.width,
-        svgBounds.height / clientSize.height
-      );
-
-    const translate = [
-      clientSize.width / 2 - scale * midX,
-      clientSize.height / 2 - scale * midY,
-    ];
-
-    const transform = d3.zoomIdentity
-      .translate(translate[0], translate[1])
-      .scale(scale);
-
-    containerSelection
-      .transition()
-      .duration(500)
-      .call(this._zoom.transform, transform);
   }
 }

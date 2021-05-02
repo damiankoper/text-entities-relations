@@ -1,11 +1,5 @@
 <template>
-  <svg
-    width="100%"
-    height="80vh"
-    xmlns="http://www.w3.org/2000/svg"
-    ref="graphSvgElement"
-  ></svg>
-  <el-button v-on:click="fit" type="primary">FIT</el-button>
+  <svg xmlns="http://www.w3.org/2000/svg" ref="graphSvgElement"></svg>
 </template>
 
 <script lang="ts">
@@ -13,7 +7,7 @@ import { defineComponent, onMounted, ref, PropType } from "vue";
 import { Graph, GraphRendererService } from "core";
 
 export default defineComponent({
-  name: "SvgRenderer",
+  name: "GraphRenderer",
   emits: ["clickNode"],
   props: {
     graphStructure: {
@@ -24,17 +18,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const graphSvgElement = ref<SVGSVGElement>();
 
-    const graphRenderer = GraphRendererService.get();
-
-    const fit = () => {
-      if (graphSvgElement.value) {
-        graphRenderer.fitToScreen(graphSvgElement.value);
-      }
-    };
+    const graphRendererService = GraphRendererService.get();
 
     onMounted(() => {
       if (graphSvgElement.value) {
-        graphRenderer.renderSvg(
+        graphRendererService.renderSvg(
           props.graphStructure,
           graphSvgElement.value,
           emit
@@ -42,7 +30,6 @@ export default defineComponent({
       }
     });
     return {
-      fit,
       graphSvgElement
     };
   }
@@ -50,9 +37,8 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.node {
-}
-
-.link {
+svg {
+  height: 100%;
+  width: 100%;
 }
 </style>

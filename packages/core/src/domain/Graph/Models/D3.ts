@@ -21,7 +21,7 @@ export const d3 = {
   select,
   interpolateSinebow,
   zoom,
-  zoomIdentity,
   scaleOrdinal,
   schemeCategory10,
+  zoomIdentity,
 };
