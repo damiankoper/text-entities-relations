@@ -52,33 +52,14 @@
   </el-card>
 </template>
 
-<style lang="scss" scoped>
-.title {
-  margin: 0;
-}
-.section-title {
-  margin: 0;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-.el-col {
-  margin-bottom: 24px;
-}
-</style>
-
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { units, TextUnit, languages } from "@/constants/constants";
 import { Language } from "core";
 
 export interface Params {
   ner: { lang: Language };
   ter: { window: number; overlap: number; unit: string };
-}
-
-export enum TextUnit {
-  WORD = "word",
-  SENTENCE = "sentence",
-  CHUNK = "chunk"
 }
 
 export default defineComponent({
@@ -97,19 +78,23 @@ export default defineComponent({
 
     return {
       params,
-      languages: [
-        { value: Language.PL, label: "Polski" },
-        { value: Language.EN, label: "Angielski" },
-        { value: Language.DE, label: "Niemiecki" },
-        { value: Language.ES, label: "Hiszpański" },
-        { value: Language.RU, label: "Rosyjski" }
-      ],
-      units: [
-        { value: TextUnit.CHUNK, label: "Paragraf" },
-        { value: TextUnit.SENTENCE, label: "Zdanie" },
-        { value: TextUnit.WORD, label: "Słowo" }
-      ]
+      languages: [...languages],
+      units: [...units]
     };
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.title {
+  margin: 0;
+}
+.section-title {
+  margin: 0;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.el-col {
+  margin-bottom: 24px;
+}
+</style>

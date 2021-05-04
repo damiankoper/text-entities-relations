@@ -1,6 +1,11 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane label="TER" name="TER"><Ter /></el-tab-pane>
+    <el-tab-pane label="TER" name="TER"
+      ><TerParams
+        :terProgress="terProgress"
+        :inProgress="inProgress"
+        @submit="onSubmit"
+    /></el-tab-pane>
     <el-tab-pane label="Filtry" name="Filter"><Filter /></el-tab-pane>
     <el-tab-pane label="Eksport" name="Export"><Export /></el-tab-pane>
   </el-tabs>
@@ -18,18 +23,21 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import Export from "@/components/Export.vue";
-import Ter from "@/components/Ter.vue";
+import TerParams, { Params, Progress } from "@/components/TerParams.vue";
 import Filter from "@/components/Filter.vue";
+
 export default defineComponent({
   name: "GraphOptions",
   components: {
-    Ter,
+    TerParams,
     Export,
     Filter
   },
   props: {
+    terProgress: { type: Object as PropType<Progress>, default: () => ({}) },
+    inProgress: { type: Boolean, default: false },
     nodes: Array
   },
 
@@ -38,6 +46,11 @@ export default defineComponent({
       activeName: "TER"
     };
   },
-  methods: {}
+
+  methods: {
+    onSubmit(params: Params) {
+      this.$emit("submit", params);
+    }
+  }
 });
 </script>

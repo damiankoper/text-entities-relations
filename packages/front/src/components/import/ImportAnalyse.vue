@@ -36,7 +36,7 @@
           </el-progress>
         </div>
         <div class="error" v-if="terProgress.error">
-          {{ terProgress.error }} asasd
+          {{ terProgress.error }}
         </div>
       </div>
     </el-row>

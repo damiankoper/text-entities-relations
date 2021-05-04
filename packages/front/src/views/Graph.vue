@@ -6,13 +6,62 @@
         <GraphComponent />
       </el-main>
       <el-aside class="aside-bar">
-        <GraphOptions />
+        <GraphOptions
+          :terProgress="terProgress"
+          :inProgress="inProgress"
+          @submit="onParamsSubmit"
+        />
       </el-aside>
     </el-container>
-    <Slider />
+    <Slider :sliderMinValue="sliderMinValue" :sliderMaxValue="sliderMaxValue" />
     <Footer />
   </el-container>
 </template>
+
+<script lang="ts">
+import { defineComponent, reactive, ref } from "vue";
+import GraphComponent from "@/components/graph/GraphComponent.vue";
+import Header from "@/components/Header.vue";
+import Slider from "@/components/graph/Slider.vue";
+import GraphOptions from "@/components/graph/GraphOptions.vue";
+import Footer from "@/components/Footer.vue";
+import { Progress, Params } from "@/components/TerParams.vue";
+
+export default defineComponent({
+  name: "Graph",
+  components: {
+    GraphComponent,
+    Header,
+    Slider,
+    GraphOptions,
+    Footer
+  },
+
+  setup() {
+    const terProgress = reactive<Progress>({
+      status: "",
+      percentage: 0,
+      error: null
+    });
+    const inProgress = ref(false);
+    const params = ref<Params | null>(null);
+    const sliderMinValue = 15;
+    const sliderMaxValue = 75;
+
+    return {
+      terProgress,
+      inProgress,
+      sliderMinValue,
+      sliderMaxValue,
+      async onParamsSubmit(p: Params) {
+        terProgress.percentage = 0;
+        inProgress.value = true;
+        params.value = p;
+      }
+    };
+  }
+});
+</script>
 
 <style lang="scss" scoped>
 .graph {
@@ -28,23 +77,3 @@
   overflow: visible;
 }
 </style>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-import GraphComponent from "@/components/graph/GraphComponent.vue";
-import Header from "@/components/Header.vue";
-import Slider from "@/components/graph/Slider.vue";
-import GraphOptions from "@/components/graph/GraphOptions.vue";
-import Footer from "@/components/Footer.vue";
-
-export default defineComponent({
-  name: "Graph",
-  components: {
-    GraphComponent,
-    Header,
-    Slider,
-    GraphOptions,
-    Footer
-  }
-});
-</script>
