@@ -57,7 +57,7 @@ import {
   FileType,
   ErrorType,
   IrsService,
-  IrsState
+  Irs
 } from "core";
 
 const errorMsg = {
@@ -98,7 +98,7 @@ export default defineComponent({
       percentage: 0,
       error: null
     });
-    const irs = ref<IrsState | null>(null);
+    const irs = ref<Irs | null>(null);
     const irsService = IrsService.getInstance();
 
     async function terAnalyse() {
@@ -112,9 +112,10 @@ export default defineComponent({
         if (params.value == null)
           throw new Error("Cannot analyse with TER: parameters are null");
 
-        irsService.loadDocument(nerChunkList.value);
-        irsService.calculateRelations(params.value.ter);
-        irs.value = irsService.getResult();
+        irs.value = irsService.calculateRelations(
+          nerChunkList.value,
+          params.value.ter
+        );
       } catch (error) {
         terProgress.status = "exception";
         terProgress.error = error;

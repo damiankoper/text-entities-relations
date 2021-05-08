@@ -79,6 +79,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import Footer from "@/components/Footer.vue";
+import { IrsSerializationService } from "core";
 
 export default defineComponent({
   components: { Footer },
@@ -93,7 +94,8 @@ export default defineComponent({
         if (terFileInput.value?.files) {
           const file = terFileInput.value.files[0];
           const irsJson = await file.text();
-          emit("irs", JSON.parse(irsJson));
+          const service = IrsSerializationService.getInstance();
+          emit("irs", service.parse(irsJson));
         }
       }
     };

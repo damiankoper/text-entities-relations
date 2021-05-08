@@ -1,8 +1,8 @@
 import { ChunkList } from "../../Ner/Models/ChunkList";
-import { EntityList, IrsParams } from "../Models";
+import { Entity, IrsParams } from ".";
 
-export interface IrsState {
+export interface Irs {
   document: ChunkList;
-  entities: EntityList;
+  entities: Entity[];
   params: IrsParams;
 }

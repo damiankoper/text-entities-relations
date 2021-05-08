@@ -5,24 +5,20 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import { IrsState } from "core";
+import { Irs } from "core";
 
 export default defineComponent({
   name: "App",
   setup() {
     const { push } = useRouter();
-    const irs = ref<IrsState | null>(null);
+    const irs = ref<Irs | null>(null);
 
-    // TODO: Handle IRS from localstorage here
-    // IRS resolve circular references
-    //
     // TODO: Handle IRS from localstorage here
 
     return {
       irs,
-      onIrs(irsPayload: IrsState) {
+      onIrs(irsPayload: Irs) {
         irs.value = irsPayload;
-
         push("graph");
       }
     };
