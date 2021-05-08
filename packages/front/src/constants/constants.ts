@@ -19,9 +19,3 @@ export const units = [
   { value: TextUnit.SENTENCE, label: "Zdanie" },
   { value: TextUnit.WORD, label: "Słowo" }
 ];
-
-export const sliderUnits = [
-  { value: TextUnit.CHUNK, label: "Paragraf" },
-  { value: TextUnit.SENTENCE, label: "Zdanie" },
-  { value: TextUnit.WORD, label: "Słowo" }
-];

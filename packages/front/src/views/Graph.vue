@@ -3,7 +3,7 @@
     <Header showGraphOptions />
     <el-container>
       <el-main class="graph">
-        <GraphComponent />
+        <GraphComponent v-model="slider" />
       </el-main>
       <el-aside class="aside-bar">
         <GraphOptions
@@ -13,7 +13,7 @@
         />
       </el-aside>
     </el-container>
-    <Slider :sliderMinValue="sliderMinValue" :sliderMaxValue="sliderMaxValue" />
+    <Slider v-model="slider" />
     <Footer />
   </el-container>
 </template>
@@ -26,6 +26,7 @@ import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
 import Footer from "@/components/Footer.vue";
 import { Progress, Params } from "@/components/TerParams.vue";
+import { TextUnit } from "@/constants/constants";
 
 export default defineComponent({
   name: "Graph",
@@ -45,14 +46,15 @@ export default defineComponent({
     });
     const inProgress = ref(false);
     const params = ref<Params | null>(null);
-    const sliderMinValue = 15;
-    const sliderMaxValue = 75;
-
+    const slider = reactive({
+      sliderRange: [15, 75],
+      staticOn: true,
+      selectValue: TextUnit.CHUNK
+    });
     return {
       terProgress,
       inProgress,
-      sliderMinValue,
-      sliderMaxValue,
+      slider,
       async onParamsSubmit(p: Params) {
         terProgress.percentage = 0;
         inProgress.value = true;

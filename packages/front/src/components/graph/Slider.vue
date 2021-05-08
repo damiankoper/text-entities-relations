@@ -4,16 +4,28 @@
 
     <el-row class="slider" type="flex" align="middle" justify="center">
       <div style="margin:0 16px;">
-        <el-switch v-model="staticOn"> </el-switch>
+        <el-switch :value="modelValue.staticOn" @change="onStaticChange">
+        </el-switch>
         &nbsp;&nbsp;Statyczny
       </div>
 
       <div style="flex-grow: 1">
-        <el-slider style="flex-grow:1" v-model="sliderRange" range :max="100">
+        <el-slider
+          style="flex-grow:1"
+          :value="modelValue"
+          @change="onRangeChange"
+          range
+          :max="100"
+        >
         </el-slider>
       </div>
       <div style="margin:0 16px;">
-        <el-select v-model="value" placeholder="Select" size="mini">
+        <el-select
+          :value="modelValue.selectValue"
+          placeholder="Select"
+          size="mini"
+          @change="onSelectChange"
+        >
           <el-option
             v-for="item in sliderUnits"
             :key="item.value"
@@ -29,19 +41,33 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { sliderUnits } from "@/constants/constants";
+import { units } from "@/constants/constants";
 export default defineComponent({
   name: "Slider",
-  props: {
-    sliderMinValue: Number,
-    sliderMaxValue: Number
+  props: ["modelValue"],
+  emits: ["update:modelValue"],
+  methods: {
+    onSelectChange(event: any) {
+      /*const sliderObject = {
+        sliderRange: this.modelValue.sliderRange,
+        staticOn: this.modelValue.staticOn,
+        selectValue: event
+      };*/
+      //console.log(sliderObject);
+      this.$emit("update:modelValue", event);
+      //console.log(sliderObject);
+    },
+    onRangeChange(event: any) {
+      this.$emit("update:modelValue", event);
+    },
+    onStaticChange(event: any) {
+      this.$emit("update:modelValue", event);
+    }
   },
-  data() {
+  setup() {
+    const sliderUnits = [...units];
     return {
-      sliderRange: [this.sliderMinValue, this.sliderMaxValue],
-      staticOn: true,
-      sliderUnits: [...sliderUnits],
-      value: ""
+      sliderUnits
     };
   }
 });
