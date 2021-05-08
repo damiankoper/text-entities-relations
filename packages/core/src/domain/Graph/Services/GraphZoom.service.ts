@@ -18,10 +18,6 @@ export class GraphZoomService {
     return this._zoomBehaviour;
   }
 
-  public get zoomBehaviour(): ZoomBehavior<SVGSVGElement, unknown> | null {
-    return this._zoomBehaviour;
-  }
-
   static get(): GraphZoomService {
     return Container.get(GraphZoomService);
   }

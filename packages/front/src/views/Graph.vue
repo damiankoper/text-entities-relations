@@ -90,7 +90,6 @@ export default defineComponent({
     const selectedNodes = ref<[string, string]>();
 
     const onNodeClick = (nodeId: string) => {
-      console.log(nodeId);
       switch (selectedGraphModification.value) {
         case GraphModificationOption.SELECT:
           break;
