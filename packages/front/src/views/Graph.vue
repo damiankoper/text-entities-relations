@@ -53,7 +53,7 @@ import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
 import GraphRenderer from "@/components/graph/GraphRenderer.vue";
 import Footer from "@/components/Footer.vue";
-import { GraphService, GraphZoomService } from "core";
+import { GraphService } from "core";
 
 enum GraphModificationOption {
   SELECT = "select",
@@ -85,8 +85,6 @@ export default defineComponent({
 
     const graphService = GraphService.get();
 
-    const graphZoomService = GraphZoomService.get();
-
     const graphStructure = ref(graphService.buildGraphStructure([]));
 
     const selectedNodes = ref<[string, string]>();
@@ -106,10 +104,7 @@ export default defineComponent({
     };
 
     const fit = () => {
-      const graphSvgElement = graphRenderer.value?.graphSvgElement;
-      if (graphSvgElement) {
-        graphZoomService.fitToScreen(graphSvgElement);
-      }
+      graphRenderer.value?.fit();
     };
 
     const graphTools: GraphTool[] = [

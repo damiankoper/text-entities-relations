@@ -4,19 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, PropType, watch } from "vue";
-import { Graph, GraphRendererService } from "core";
-
-function renderGraph(
-  service: GraphRendererService,
-  structure: Graph,
-  svgElement: SVGSVGElement | undefined,
-  emit: (event: "clickNode", payload: string) => void
-) {
-  if (!svgElement) {
-    return;
-  }
-  service.renderSvg(structure, svgElement, emit);
-}
+import { Graph, GraphRendererService, GraphZoomService } from "core";
 
 export default defineComponent({
   name: "GraphRenderer",
@@ -32,28 +20,29 @@ export default defineComponent({
 
     const graphRendererService = GraphRendererService.get();
 
+    const graphZoomService = GraphZoomService.get();
+
+    const fit = () => {
+      if (graphSvgElement.value) {
+        graphZoomService.fitToScreen(graphSvgElement.value);
+      }
+    };
+
     watch(
       () => props.graphStructure,
-      currentGraph => {
-        renderGraph(
-          graphRendererService,
-          currentGraph,
-          graphSvgElement.value,
-          emit
-        );
-      }
+      currentGraph => graphRendererService.renderSvg(currentGraph, emit)
     );
 
     onMounted(() => {
-      renderGraph(
-        graphRendererService,
-        props.graphStructure,
-        graphSvgElement.value,
-        emit
-      );
+      if (graphSvgElement.value) {
+        graphRendererService.initializeSimulation(graphSvgElement.value);
+        graphRendererService.renderSvg(props.graphStructure, emit);
+      }
     });
+
     return {
-      graphSvgElement
+      graphSvgElement,
+      fit
     };
   }
 });
@@ -66,11 +55,6 @@ svg {
 
   & :deep .node-container {
     cursor: pointer;
-  }
-
-  & :deep .node-selected {
-    stroke: #ff6666ff;
-    stroke-width: 8px;
   }
 }
 </style>

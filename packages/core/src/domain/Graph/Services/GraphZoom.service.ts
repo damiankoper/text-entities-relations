@@ -4,22 +4,29 @@ import { Selection, ZoomBehavior } from "d3";
 
 @Service()
 export class GraphZoomService {
+  private _zoomBehaviour: ZoomBehavior<SVGSVGElement, unknown> | null = null;
+
+  public initializeZoomBehaviour(
+    selectionToAttach: Selection<SVGSVGElement, unknown, null, undefined>
+  ): ZoomBehavior<SVGSVGElement, unknown> {
+    this._zoomBehaviour = d3
+      .zoom<SVGSVGElement, unknown>()
+      .scaleExtent([1 / 4, 4])
+      .on("zoom", (event) =>
+        selectionToAttach.attr("transform", event.transform)
+      );
+    return this._zoomBehaviour;
+  }
+
+  public get zoomBehaviour(): ZoomBehavior<SVGSVGElement, unknown> | null {
+    return this._zoomBehaviour;
+  }
+
   static get(): GraphZoomService {
     return Container.get(GraphZoomService);
   }
 
-  static createZoomBehaviour(
-    elementToAttach: Selection<SVGSVGElement, unknown, null, undefined>
-  ): ZoomBehavior<SVGSVGElement, unknown> {
-    return d3
-      .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1 / 4, 4])
-      .on("zoom", (event) =>
-        elementToAttach.attr("transform", event.transform)
-      );
-  }
-
-  fitToScreen(svgElement: SVGSVGElement): void {
+  public fitToScreen(svgElement: SVGSVGElement): void {
     const containerSelection = d3.select(svgElement);
 
     const rootSvgElementSelection = containerSelection.selectChild<SVGSVGElement>(
@@ -28,7 +35,7 @@ export class GraphZoomService {
 
     const rootNode = rootSvgElementSelection.node();
 
-    if (!rootSvgElementSelection || !rootNode) {
+    if (!rootSvgElementSelection || !rootNode || !this._zoomBehaviour) {
       return;
     }
 
@@ -56,13 +63,9 @@ export class GraphZoomService {
       .translate(transalte.X, transalte.Y)
       .scale(scale);
 
-    const zoomBehaviour = GraphZoomService.createZoomBehaviour(
-      rootSvgElementSelection
-    );
-
     containerSelection
       .transition()
       .duration(500)
-      .call(zoomBehaviour.transform, transform);
+      .call(this._zoomBehaviour.transform, transform);
   }
 }
