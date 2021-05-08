@@ -52,7 +52,13 @@ import ImportAnalyse, { Progress } from "@/components/import/ImportAnalyse.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import { ChunkList } from "core/lib/domain/Ner/Models/ChunkList";
-import { NerInterfaceService, FileType, ErrorType } from "core";
+import {
+  NerInterfaceService,
+  FileType,
+  ErrorType,
+  IrsService,
+  IrsState
+} from "core";
 
 const errorMsg = {
   [ErrorType.UPLOADING]: "Wystąpił błąd podczas wysyłania tesktu",
@@ -92,26 +98,29 @@ export default defineComponent({
       percentage: 0,
       error: null
     });
-    const irs = ref({});
+    const irs = ref<IrsState | null>(null);
+    const irsService = IrsService.getInstance();
 
     async function terAnalyse() {
-      // TODO: IRS factory entrypoint here ####
       try {
         for (let i = 0; i < 10; i++) {
           terProgress.percentage += 10;
           await new Promise(resolve => setTimeout(resolve, 200));
         }
         terProgress.status = "success";
-        // const irs = await irs.make(chunkList)
-        // irs.value = irs
+
+        if (params.value == null)
+          throw new Error("Cannot analyse with TER: parameters are null");
+
+        irsService.loadDocument(nerChunkList.value);
+        irsService.calculateRelations(params.value.ter);
+        irs.value = irsService.getResult();
       } catch (error) {
         terProgress.status = "exception";
         terProgress.error = error;
       } finally {
         inProgress.value = false;
       }
-      // TODO: IRS factory entrypoint here ####
-      // IRS should contain base NER data for recalc later
     }
 
     let onProgressUnsub: () => void;

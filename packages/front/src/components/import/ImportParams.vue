@@ -68,17 +68,11 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { Language } from "core";
+import { Language, IrsParams, TextRangeUnit } from "core";
 
 export interface Params {
   ner: { lang: Language };
-  ter: { window: number; overlap: number; unit: string };
-}
-
-export enum TextUnit {
-  WORD = "word",
-  SENTENCE = "sentence",
-  CHUNK = "chunk"
+  ter: IrsParams;
 }
 
 export default defineComponent({
@@ -91,9 +85,9 @@ export default defineComponent({
       ter: {
         window: 20,
         overlap: 10,
-        unit: TextUnit.SENTENCE
+        unit: TextRangeUnit.SENTENCE
       }
-    });
+    } as Params);
 
     return {
       params,
@@ -105,9 +99,9 @@ export default defineComponent({
         { value: Language.RU, label: "Rosyjski" }
       ],
       units: [
-        { value: TextUnit.CHUNK, label: "Paragraf" },
-        { value: TextUnit.SENTENCE, label: "Zdanie" },
-        { value: TextUnit.WORD, label: "Słowo" }
+        { value: TextRangeUnit.CHUNK, label: "Paragraf" },
+        { value: TextRangeUnit.SENTENCE, label: "Zdanie" },
+        { value: TextRangeUnit.WORD, label: "Słowo" }
       ]
     };
   }

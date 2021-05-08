@@ -1,19 +1,25 @@
 import Container, { Service } from "typedi";
+import { parse, stringify } from "flatted";
 import { ChunkList } from "../../Ner/Models/ChunkList";
 
-import { TextRangeUnit } from "../Constants";
-import { EntityList } from "../Models/EntityList";
-import { Entity } from "../Models/Entity";
-import { EntityOccurrence } from "../Models/EntityOccurrence";
-import { Relation } from "../Models/Relation";
-import { Position } from "../Models/Position";
+import {
+  Entity,
+  EntityList,
+  EntityOccurrence,
+  IrsParams,
+  IrsState,
+  Position,
+  Relation,
+  TextRangeUnit,
+} from "../Models";
 
 @Service()
 export class IrsService {
   private _entities: EntityList = [];
   private _document: ChunkList = [];
+  private _lastParams: IrsParams | null = null;
 
-  static get(): IrsService {
+  static getInstance(): IrsService {
     return Container.get(IrsService);
   }
 
@@ -44,23 +50,53 @@ export class IrsService {
     return entities;
   }
 
+  getResult(): IrsState {
+    return {
+      document: this._document,
+      entities: this._entities,
+      params: this._lastParams,
+    } as IrsState;
+  }
+
   loadDocument(doc: ChunkList): void {
     this._document = doc;
     this._entities = [];
+    this._lastParams = null;
   }
 
-  calculateRelations(
-    windowSize: number,
-    overlap: number,
-    unit: TextRangeUnit
-  ): void {
-    const offset = windowSize - overlap;
-    const [entities, entityOccurrences, maxIdx] = this.extractEntities(unit);
-    const unitSelector = this.getUnitSelector(unit);
+  getState(): string {
+    const state = {
+      document: this._document,
+      entities: this._entities,
+      params: this._lastParams,
+    } as IrsState;
 
-    for (let idx = 0; idx < maxIdx; idx += offset) {
+    return stringify(state);
+  }
+
+  loadState(irsState: string): void {
+    const state = parse(irsState) as IrsState;
+    this._document = state.document;
+    this._entities = state.entities;
+    this._lastParams = state.params;
+  }
+
+  calculateRelations(params: IrsParams): void {
+    this._lastParams = params;
+
+    const offset = params.window - params.overlap;
+
+    if (offset <= 0)
+      throw new Error("Overlap should be lower than window size");
+
+    const [entities, entityOccurrences, maxIdx] = this.extractEntities(
+      params.unit
+    );
+    const unitSelector = this.getUnitSelector(params.unit);
+
+    for (let idx = 0; idx <= maxIdx; idx += offset) {
       const occurrencesInWindow = entityOccurrences.filter(
-        (t) => unitSelector(t) >= idx && unitSelector(t) < idx + windowSize
+        (t) => unitSelector(t) >= idx && unitSelector(t) < idx + params.window
       );
 
       const entitiesInWindow = new Set(
@@ -68,7 +104,7 @@ export class IrsService {
       );
 
       entitiesInWindow.forEach((entityName) =>
-        this.addNewRelations(entityName, entities, entityOccurrences)
+        this.addNewRelations(entityName, entities, occurrencesInWindow)
       );
     }
 
@@ -81,7 +117,7 @@ export class IrsService {
         return (val) => val.chunkGlobalIndex;
       case TextRangeUnit.SENTENCE:
         return (val) => val.sentenceGlobalIndex;
-      case TextRangeUnit.TOKEN:
+      case TextRangeUnit.WORD:
         return (val) => val.tokenGlobalIndex;
     }
   }
@@ -129,9 +165,9 @@ export class IrsService {
     this._document.forEach((chunk) => {
       chunk.sentences.forEach((sentence) => {
         const occurrences = sentence.tokens.map((token) => {
-          if (!entities.has(name)) {
-            entities.set(name, {
-              name: name,
+          if (!entities.has(token.name)) {
+            entities.set(token.name, {
+              name: token.name,
               relations: [],
             });
           }
