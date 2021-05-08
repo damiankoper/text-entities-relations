@@ -90,16 +90,18 @@ export class GraphRendererService {
       this._state.nodeSelection.data().map((d) => [d.id, d])
     );
 
+    // the assign isn't necessary, but maybe we should have it?
     const newNodes = graph.nodes.map((d) =>
       Object.assign(oldNodesMap.get(d.id) || {}, d)
     );
 
+    // why do we need this?
     const newLinks = graph.links.map((l) => Object.assign({}, l));
 
     const color = d3.scaleOrdinal(d3.schemeCategory10);
 
     this._state.nodeSelection = this._state.nodeSelection
-      .data<Node>(newNodes)
+      .data<Node>(newNodes, (d) => d.id)
       .join<SVGSVGElement, Node>((nodeParentSeleciton) => {
         //node container
         const nodeContainer = nodeParentSeleciton
@@ -129,7 +131,7 @@ export class GraphRendererService {
       });
 
     this._state.linkSelection = this._state.linkSelection
-      .data<Link>(newLinks)
+      .data<Link>(newLinks) // the  (l) => l.id! does not satisfy typing, do we need this?
       .join<SVGLineElement, Link>("line")
       .attr("stroke-opacity", (l: Link) =>
         l.strength ? 1 / l.strength : null
@@ -151,13 +153,9 @@ export class GraphRendererService {
     const graphSimulation = d3
       .forceSimulation<Node, Link>()
       .force("link", d3.forceLink<Node, Link>())
-      .force("charge", d3.forceManyBody().strength(-150))
+      .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(maxWidth / 2, maxHeight / 2))
-      .force(
-        "collide",
-        d3.forceCollide(() => 55)
-        //d3.forceCollide(20).radius(20).strength(0)
-      );
+      .force("collide", d3.forceCollide(55));
 
     return graphSimulation;
   }
