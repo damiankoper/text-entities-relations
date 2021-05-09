@@ -5,24 +5,23 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
+import { Irs, IrsSerializationService } from "core";
+
 export default defineComponent({
   name: "App",
   setup() {
-    const irs = ref<any>(null); // TODO: type IRS
     const { push } = useRouter();
-
-    // TODO: Handle IRS from localstorage here
-    // IRS resolve circular references
-    //
-    // TODO: Handle IRS from localstorage here
+    const irs = ref<Irs | null>(null);
+    const irsSerializationService = IrsSerializationService.get();
 
     return {
       irs,
-      // TODO: type IRS
-      onIrs(irsPayload: any) {
+      onIrs(irsPayload: Irs) {
         irs.value = irsPayload;
-
-        // TODO: IRS resolve circular references
+        localStorage.setItem(
+          "terSession",
+          irsSerializationService.stringify(irsPayload)
+        );
         push("graph");
       }
     };

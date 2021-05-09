@@ -13,8 +13,8 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "webpack --config webpack.dev.js --progress --color",
-    "watch": "webpack --config webpack.dev.js --progress --color --watch",
+    "build": "rimraf lib && webpack --config webpack.dev.js --progress --color",
+    "watch": "rimraf lib && webpack --config webpack.dev.js --progress --color --watch",
     "lint": "eslint '*/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint '*/**/*.{js,ts,tsx}' --fix"
   },
@@ -48,7 +48,9 @@
     "axios": "^0.21.1",
     "buffer": "^6.0.3",
     "d3": "^6.6.2",
+    "flatted": "^3.1.1",
     "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
     "stream-browserify": "^3.0.0",
     "strongly-typed-events": "^2.1.5",
     "timers-browserify": "^2.0.12",

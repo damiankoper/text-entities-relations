@@ -11,3 +11,4 @@ export * from "./domain/Ner/Models/Sentence";
 export * from "./domain/Ner/Models/Token";
 export * from "./domain/Ner/Models/TokenType";
 export * from "./domain/Graph";
+export * from "./domain/IndirectRelatationStructure";

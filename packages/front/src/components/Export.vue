@@ -3,7 +3,7 @@
     <el-tooltip
       class="item"
       effect="dark"
-      content="Format pozwala na wczytanie z powrotem do aplikacji i kontynuowanie pracy"
+      content="Format pozwala na wczytanie danych z powrotem do aplikacji i kontynuowanie pracy"
       placement="left"
     >
       <el-button type="primary" plain>Pobierz TER</el-button>
