@@ -26,8 +26,8 @@ import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
 import Footer from "@/components/Footer.vue";
 import { TerParamsObj } from "@/components/TerParams.vue";
-import { TextUnit } from "@/common/constants";
 import { Progress } from "@/components/import/ImportAnalyse.vue";
+import { TextUnit } from "core";
 export interface SliderData {
   sliderRange: [number, number];
   isStatic: boolean;

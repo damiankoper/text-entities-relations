@@ -27,7 +27,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, watchEffect, ref, watch } from "vue";
-import { units, TextUnit, languages } from "@/common/constants";
+import { units, languages } from "@/common/constants";
+import { TextUnit } from "core";
 
 export interface TerParamsObj {
   window: number;

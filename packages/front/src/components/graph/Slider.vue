@@ -40,8 +40,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watchEffect, watch } from "vue";
-import { units, TextUnit } from "@/common/constants";
+import { units } from "@/common/constants";
 import { SliderData } from "@/views/Graph.vue";
+import { TextUnit } from "core";
 export default defineComponent({
   name: "Slider",
   props: {

@@ -1,7 +1,7 @@
-import { TextRangeUnit } from "../Models";
+import { TextUnit } from "../Models";
 
 export interface IrsParams {
   window: number;
   overlap: number;
-  unit: TextRangeUnit;
+  unit: TextUnit;
 }

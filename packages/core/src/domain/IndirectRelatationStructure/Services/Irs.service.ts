@@ -8,7 +8,7 @@ import {
   Irs,
   Position,
   Relation,
-  TextRangeUnit,
+  TextUnit,
 } from "../Models";
 
 @Service()
@@ -50,13 +50,13 @@ export class IrsService {
     };
   }
 
-  private getUnitSelector(unit: TextRangeUnit): (val: Position) => number {
+  private getUnitSelector(unit: TextUnit): (val: Position) => number {
     switch (unit) {
-      case TextRangeUnit.CHUNK:
+      case TextUnit.CHUNK:
         return (val) => val.chunkGlobalIndex;
-      case TextRangeUnit.SENTENCE:
+      case TextUnit.SENTENCE:
         return (val) => val.sentenceGlobalIndex;
-      case TextRangeUnit.WORD:
+      case TextUnit.WORD:
         return (val) => val.tokenGlobalIndex;
     }
   }
@@ -94,7 +94,7 @@ export class IrsService {
 
   private extractEntities(
     document: ChunkList,
-    unit: TextRangeUnit
+    unit: TextUnit
   ): [Map<string, Entity>, EntityOccurrence[], number] {
     const entities: Map<string, Entity> = new Map();
     const entityOccurrences: EntityOccurrence[] = [];

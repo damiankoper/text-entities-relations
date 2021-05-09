@@ -1,5 +1,5 @@
 import Container, { Service } from "typedi";
-import { Entity, Irs, Position, Relation, TextRangeUnit } from "../Models";
+import { Entity, Irs, Position, Relation, TextUnit } from "../Models";
 
 @Service()
 export class IrsUtilsService {
@@ -11,7 +11,7 @@ export class IrsUtilsService {
     irs: Irs,
     startIndex: number,
     endIndex: number,
-    unit: TextRangeUnit
+    unit: TextUnit
   ): Irs {
     const entityData = irs.entities.map(
       (val) =>
@@ -70,13 +70,13 @@ export class IrsUtilsService {
     };
   }
 
-  private getUnitSelector(unit: TextRangeUnit): (val: Position) => number {
+  private getUnitSelector(unit: TextUnit): (val: Position) => number {
     switch (unit) {
-      case TextRangeUnit.CHUNK:
+      case TextUnit.CHUNK:
         return (val) => val.chunkGlobalIndex;
-      case TextRangeUnit.SENTENCE:
+      case TextUnit.SENTENCE:
         return (val) => val.sentenceGlobalIndex;
-      case TextRangeUnit.WORD:
+      case TextUnit.WORD:
         return (val) => val.tokenGlobalIndex;
     }
   }

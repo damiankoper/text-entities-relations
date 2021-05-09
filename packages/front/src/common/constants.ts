@@ -1,10 +1,4 @@
-import { Language } from "core";
-
-export enum TextUnit {
-  WORD = "word",
-  SENTENCE = "sentence",
-  CHUNK = "chunk"
-}
+import { Language, TextUnit } from "core";
 
 export const languages = [
   { value: Language.PL, label: "Polski" },

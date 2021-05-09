@@ -27,8 +27,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType, reactive } from "vue";
-import { units, TextUnit, languages } from "@/common/constants";
+import { units, languages } from "@/common/constants";
 import TerParams, { TerParamsObj } from "@/components/TerParams.vue";
+import { TextUnit } from "core";
 
 export interface Progress {
   status: "" | "success" | "warning" | "exception";

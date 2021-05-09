@@ -1,4 +1,4 @@
-export const enum TextRangeUnit {
+export const enum TextUnit {
   CHUNK = "chunk",
   SENTENCE = "sentence",
   WORD = "word",
