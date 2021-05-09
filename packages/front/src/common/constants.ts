@@ -13,3 +13,20 @@ export const units = [
   { value: TextUnit.SENTENCE, label: "Zdanie" },
   { value: TextUnit.WORD, label: "Słowo" }
 ];
+
+export interface Progress {
+  status: "" | "success" | "warning" | "exception";
+  percentage: number;
+  error: null | string;
+  inProgress: boolean;
+}
+export const defaultProgress: () => Progress = () => ({
+  status: "",
+  percentage: 0,
+  error: null,
+  inProgress: false
+});
+
+export interface NerParams {
+  lang: Language;
+}

@@ -13,7 +13,7 @@ import {
 
 @Service()
 export class IrsService {
-  static getInstance(): IrsService {
+  static get(): IrsService {
     return Container.get(IrsService);
   }
 
@@ -23,7 +23,7 @@ export class IrsService {
     if (offset <= 0)
       throw new Error("Overlap should be lower than window size");
 
-    const [entities, entityOccurrences, maxIdx] = this.extractEntities(
+    const { entities, entityOccurrences, maxIdx } = this.extractEntities(
       document,
       params.unit
     );
@@ -95,11 +95,15 @@ export class IrsService {
   private extractEntities(
     document: ChunkList,
     unit: TextUnit
-  ): [Map<string, Entity>, EntityOccurrence[], number] {
+  ): {
+    entities: Map<string, Entity>;
+    entityOccurrences: EntityOccurrence[];
+    maxIdx: number;
+  } {
     const entities: Map<string, Entity> = new Map();
     const entityOccurrences: EntityOccurrence[] = [];
     const unitSelector = this.getUnitSelector(unit);
-    let maxIndex = 0;
+    let maxIdx = 0;
 
     document.forEach((chunk) => {
       chunk.sentences.forEach((sentence) => {
@@ -118,8 +122,8 @@ export class IrsService {
             tokenGlobalIndex: token.tokenGlobalIndex,
           } as EntityOccurrence;
 
-          if (unitSelector(occurence) > maxIndex) {
-            maxIndex = unitSelector(occurence);
+          if (unitSelector(occurence) > maxIdx) {
+            maxIdx = unitSelector(occurence);
           }
 
           return occurence;
@@ -129,6 +133,6 @@ export class IrsService {
       });
     });
 
-    return [entities, entityOccurrences, maxIndex];
+    return { entities, entityOccurrences, maxIdx };
   }
 }

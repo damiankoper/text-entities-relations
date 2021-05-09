@@ -7,9 +7,10 @@
       </el-main>
       <el-aside class="aside-bar">
         <GraphOptions
-          :terProgress="terProgress"
-          :inProgress="inProgress"
-          @submit="onParamsSubmit"
+          :terProgress="progress"
+          :irs="irs"
+          @submitTer="onTerSubmit"
+          @resetTer="onTerReset"
         />
       </el-aside>
     </el-container>
@@ -19,15 +20,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, PropType } from "vue";
 import GraphComponent from "@/components/graph/GraphComponent.vue";
 import Header from "@/components/Header.vue";
 import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
 import Footer from "@/components/Footer.vue";
-import { TerParamsObj } from "@/components/TerParams.vue";
-import { Progress } from "@/components/import/ImportAnalyse.vue";
-import { TextUnit } from "core";
+import { TextUnit, Irs, IrsParams } from "core";
+import { useRouter } from "vue-router";
+import { useTer } from "@/composables/useTer";
 export interface SliderData {
   sliderRange: [number, number];
   isStatic: boolean;
@@ -43,14 +44,14 @@ export default defineComponent({
     Footer
   },
 
-  setup() {
-    const terProgress = reactive<Progress>({
-      status: "",
-      percentage: 0,
-      error: null
-    });
-    const inProgress = ref(false);
-    const params = ref<TerParamsObj | null>(null);
+  props: {
+    irs: {
+      type: Object as PropType<Irs>,
+      required: false
+    }
+  },
+  setup(props, { emit }) {
+    const { progress, irs, analyse, resetProgress } = useTer();
 
     const slider = ref<SliderData>({
       sliderRange: [0, 100],
@@ -58,18 +59,24 @@ export default defineComponent({
       unit: TextUnit.CHUNK
     });
 
+    const { push } = useRouter();
     onMounted(() => {
-      // todo: if irs from props =undefined route= /home
+      console.log(props.irs);
+      if (!props.irs) push("/");
     });
 
     return {
-      terProgress,
-      inProgress,
       slider,
-      async onParamsSubmit(p: TerParamsObj) {
-        terProgress.percentage = 0;
-        inProgress.value = true;
-        params.value = p;
+      progress,
+      async onTerSubmit(p: IrsParams) {
+        resetProgress();
+        if (props.irs) {
+          await analyse(props.irs?.document, p);
+          emit("irs", irs.value);
+        }
+      },
+      onTerReset() {
+        resetProgress();
       }
     };
   }

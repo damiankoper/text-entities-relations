@@ -28,9 +28,9 @@
         </el-col>
         <el-col :span="24">
           <el-button
-            disabled
+            :disabled="!terSession"
             class="home-button"
-            @click="$router.push('graph')"
+            @click="terSessionRestore"
           >
             Przywróć poprzednią sesję
           </el-button>
@@ -70,31 +70,42 @@
     margin-bottom: 20px;
   }
 }
-/*
-.header-content {
-  padding: 0px;
-} */
 </style>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import Footer from "@/components/Footer.vue";
 import { IrsSerializationService } from "core";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: { Footer },
   name: "Home",
   emits: ["irs"],
   setup(_, { emit }) {
+    const { push } = useRouter();
     const terFileInput = ref<HTMLInputElement | null>(null);
+    const irsSerializationService = IrsSerializationService.get();
+    const terSession = ref<string | null>(null);
+    onMounted(() => {
+      terSession.value = localStorage.getItem("terSession");
+    });
+
     return {
       logoImg: require("@/assets/books.svg"),
       terFileInput,
+      terSession,
+      terSessionRestore() {
+        if (terSession.value) {
+          emit("irs", irsSerializationService.parse(terSession.value));
+          push("graph");
+        }
+      },
       async onTerFile() {
         if (terFileInput.value?.files) {
           const file = terFileInput.value.files[0];
           const irsJson = await file.text();
-          const service = IrsSerializationService.getInstance();
+          const service = IrsSerializationService.get();
           emit("irs", service.parse(irsJson));
         }
       }

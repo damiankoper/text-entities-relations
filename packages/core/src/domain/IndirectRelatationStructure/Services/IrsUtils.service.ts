@@ -3,7 +3,7 @@ import { Entity, Irs, Position, Relation, TextUnit } from "../Models";
 
 @Service()
 export class IrsUtilsService {
-  static getInstance(): IrsUtilsService {
+  static get(): IrsUtilsService {
     return Container.get(IrsUtilsService);
   }
 
@@ -70,6 +70,7 @@ export class IrsUtilsService {
     };
   }
 
+  // TODO: extract this method to "helper" service used in IrsService and here
   private getUnitSelector(unit: TextUnit): (val: Position) => number {
     switch (unit) {
       case TextUnit.CHUNK:

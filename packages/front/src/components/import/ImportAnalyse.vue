@@ -52,7 +52,9 @@
         Wstecz
       </el-button>
       <el-button
-        :disabled="inProgress || !!terProgress.error || !!nerProgress.error"
+        :disabled="
+          inProgress || !!terProgress.inProgress || !!nerProgress.error
+        "
         type="primary"
         @click="$emit('submit')"
         :loading="inProgress || !!terProgress.error || !!nerProgress.error"
@@ -84,18 +86,19 @@
 </style>
 
 <script lang="ts">
-export interface Progress {
-  status: "" | "success" | "warning" | "exception";
-  percentage: number;
-  error: null | string;
-}
-
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, computed } from "vue";
+import { Progress } from "@/common/constants";
 export default defineComponent({
   props: {
     nerProgress: { type: Object as PropType<Progress>, required: true },
-    terProgress: { type: Object as PropType<Progress>, required: true },
-    inProgress: { type: Boolean, default: false }
+    terProgress: { type: Object as PropType<Progress>, required: true }
+  },
+  setup(props) {
+    const inProgress = computed(
+      () => props.nerProgress.inProgress || props.terProgress.inProgress
+    );
+
+    return { inProgress };
   }
 });
 </script>

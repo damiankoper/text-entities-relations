@@ -4,7 +4,7 @@ import { Irs } from "../Models";
 
 @Service()
 export class IrsSerializationService {
-  static getInstance(): IrsSerializationService {
+  static get(): IrsSerializationService {
     return Container.get(IrsSerializationService);
   }
 

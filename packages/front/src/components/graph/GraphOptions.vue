@@ -1,11 +1,13 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane label="TER" name="TER"
-      ><TerAnalyse
+    <el-tab-pane label="TER" name="TER">
+      <TerAnalyse
         :terProgress="terProgress"
-        :inProgress="inProgress"
+        :irs="irs"
         @submit="onSubmit"
-    /></el-tab-pane>
+        @reset="$emit('resetTer')"
+      />
+    </el-tab-pane>
     <el-tab-pane label="Filtry" name="Filter"><Filter /></el-tab-pane>
     <el-tab-pane label="Eksport" name="Export"><Export /></el-tab-pane>
   </el-tabs>
@@ -26,12 +28,12 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import Export from "@/components/Export.vue";
 import Filter from "@/components/Filter.vue";
 import TerAnalyse from "@/components/graph/TerAnalyse.vue";
-import { Progress } from "../import/ImportAnalyse.vue";
-import { TerParamsObj } from "../TerParams.vue";
+import { Irs, IrsParams } from "core";
+import { Progress, defaultProgress } from "@/common/constants";
 
 export default defineComponent({
   name: "GraphOptions",
@@ -40,22 +42,25 @@ export default defineComponent({
     Export,
     Filter
   },
+  emits: ["submitTer", "resetTer"],
   props: {
-    terProgress: { type: Object as PropType<Progress>, default: () => ({}) },
-    inProgress: { type: Boolean, default: false },
-    nodes: Array
-  },
-
-  data() {
-    return {
-      activeName: "TER"
-    };
-  },
-
-  methods: {
-    onSubmit(params: TerParamsObj) {
-      this.$emit("submit", params);
+    terProgress: {
+      type: Object as PropType<Progress>,
+      default: defaultProgress
+    },
+    irs: {
+      type: Object as PropType<Irs>,
+      required: false
     }
+  },
+
+  setup(_, { emit }) {
+    return {
+      activeName: ref("TER"),
+      onSubmit(params: IrsParams) {
+        emit("submitTer", params);
+      }
+    };
   }
 });
 </script>

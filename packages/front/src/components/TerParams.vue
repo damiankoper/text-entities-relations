@@ -1,7 +1,7 @@
 <template>
   <h3 class="section-title">Parametry TER</h3>
   <el-container>
-    <el-form>
+    <el-form :disabled="disabled">
       <el-col>
         <el-form-item label="Okno" label-width="80px">
           <el-input-number v-model="params.window" :min="1" />
@@ -28,24 +28,19 @@
 <script lang="ts">
 import { defineComponent, PropType, watchEffect, ref, watch } from "vue";
 import { units, languages } from "@/common/constants";
-import { TextUnit } from "core";
-
-export interface TerParamsObj {
-  window: number;
-  overlap: number;
-  unit: string;
-}
+import { TextUnit, IrsParams } from "core";
 
 export default defineComponent({
   emits: ["update:modelValue"],
   props: {
     modelValue: {
-      type: Object as PropType<TerParamsObj>,
+      type: Object as PropType<IrsParams>,
       required: true
-    }
+    },
+    disabled: Boolean
   },
   setup(props, { emit }) {
-    const params = ref<TerParamsObj>({
+    const params = ref<IrsParams>({
       window: 20,
       overlap: 10,
       unit: TextUnit.SENTENCE

@@ -5,20 +5,23 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import { Irs } from "core";
+import { Irs, IrsSerializationService } from "core";
 
 export default defineComponent({
   name: "App",
   setup() {
     const { push } = useRouter();
     const irs = ref<Irs | null>(null);
-
-    // TODO: Handle IRS from localstorage here
+    const irsSerializationService = IrsSerializationService.get();
 
     return {
       irs,
       onIrs(irsPayload: Irs) {
         irs.value = irsPayload;
+        localStorage.setItem(
+          "terSession",
+          irsSerializationService.stringify(irsPayload)
+        );
         push("graph");
       }
     };
