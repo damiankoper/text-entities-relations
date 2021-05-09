@@ -1,6 +1,7 @@
 <template>
   <el-footer class="footer" height="32px">
-    &copy; TER {{ new Date().getFullYear() }}. All rights reserved.
+    <span>&copy; TER {{ new Date().getFullYear() }}. All rights reserved.</span>
+    <span>Made with ❤️ & 🍺</span>
   </el-footer>
 </template>
 
@@ -9,6 +10,7 @@
   background: #ebeef5;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 </style>
 

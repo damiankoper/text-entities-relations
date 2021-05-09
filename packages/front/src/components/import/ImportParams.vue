@@ -20,24 +20,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <h3 class="section-title">Parametry TER</h3>
-          <el-form-item label="Okno" label-width="80px">
-            <el-input-number v-model="params.ter.window" :min="1" />
-          </el-form-item>
-          <el-form-item label="Overlap" label-width="80px">
-            <el-input-number v-model="params.ter.overlap" :min="0" />
-          </el-form-item>
-          <el-form-item label="Jednostka" label-width="80px">
-            <el-select v-model="params.ter.unit" placeholder="Jednostka">
-              <el-option
-                v-for="item in units"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
+          <ter-params v-model="params.ter" />
         </el-col>
       </el-row>
     </el-form>
@@ -52,6 +35,42 @@
   </el-card>
 </template>
 
+<script lang="ts">
+import { defineComponent, reactive } from "vue";
+
+import { units, languages } from "@/common/constants";
+import { Language, IrsParams, TextUnit } from "core";
+import TerParams from "../TerParams.vue";
+
+export interface Params {
+  ner: { lang: Language };
+  ter: IrsParams;
+}
+
+export default defineComponent({
+  emits: ["submit", "back"],
+  components: { TerParams },
+  setup() {
+    const params = reactive({
+      ner: {
+        lang: Language.PL
+      },
+      ter: {
+        window: 20,
+        overlap: 10,
+        unit: TextUnit.SENTENCE
+      }
+    } as Params);
+
+    return {
+      params,
+      languages,
+      units
+    };
+  }
+});
+</script>
+
 <style lang="scss" scoped>
 .title {
   margin: 0;
@@ -65,45 +84,3 @@
   margin-bottom: 24px;
 }
 </style>
-
-<script lang="ts">
-import { defineComponent, reactive } from "vue";
-import { Language, IrsParams, TextRangeUnit } from "core";
-
-export interface Params {
-  ner: { lang: Language };
-  ter: IrsParams;
-}
-
-export default defineComponent({
-  emits: ["submit", "back"],
-  setup() {
-    const params = reactive({
-      ner: {
-        lang: Language.PL
-      },
-      ter: {
-        window: 20,
-        overlap: 10,
-        unit: TextRangeUnit.SENTENCE
-      }
-    } as Params);
-
-    return {
-      params,
-      languages: [
-        { value: Language.PL, label: "Polski" },
-        { value: Language.EN, label: "Angielski" },
-        { value: Language.DE, label: "Niemiecki" },
-        { value: Language.ES, label: "Hiszpański" },
-        { value: Language.RU, label: "Rosyjski" }
-      ],
-      units: [
-        { value: TextRangeUnit.CHUNK, label: "Paragraf" },
-        { value: TextRangeUnit.SENTENCE, label: "Zdanie" },
-        { value: TextRangeUnit.WORD, label: "Słowo" }
-      ]
-    };
-  }
-});
-</script>
