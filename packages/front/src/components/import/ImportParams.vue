@@ -20,24 +20,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <h3 class="section-title">Parametry TER</h3>
-          <el-form-item label="Okno" label-width="80px">
-            <el-input-number v-model="params.ter.window" :min="1" />
-          </el-form-item>
-          <el-form-item label="Overlap" label-width="80px">
-            <el-input-number v-model="params.ter.overlap" :min="0" />
-          </el-form-item>
-          <el-form-item label="Jednostka" label-width="80px">
-            <el-select v-model="params.ter.unit" placeholder="Jednostka">
-              <el-option
-                v-for="item in units"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
+          <ter-params v-model="params.ter" />
         </el-col>
       </el-row>
     </el-form>
@@ -54,8 +37,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { units, TextUnit, languages } from "@/constants/constants";
+import { units, TextUnit, languages } from "@/common/constants";
 import { Language } from "core";
+import TerParams from "../TerParams.vue";
 
 export interface Params {
   ner: { lang: Language };
@@ -64,6 +48,7 @@ export interface Params {
 
 export default defineComponent({
   emits: ["submit", "back"],
+  components: { TerParams },
   setup() {
     const params = reactive({
       ner: {
@@ -78,8 +63,8 @@ export default defineComponent({
 
     return {
       params,
-      languages: [...languages],
-      units: [...units]
+      languages,
+      units
     };
   }
 });

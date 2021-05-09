@@ -4,16 +4,15 @@
 
     <el-row class="slider" type="flex" align="middle" justify="center">
       <div style="margin:0 16px;">
-        <el-switch :value="modelValue.staticOn" @change="onStaticChange">
-        </el-switch>
+        <el-switch v-model="isStatic"> </el-switch>
         &nbsp;&nbsp;Statyczny
       </div>
 
       <div style="flex-grow: 1">
         <el-slider
+          :disabled="isStatic"
           style="flex-grow:1"
-          :value="modelValue"
-          @change="onRangeChange"
+          v-model="slider"
           range
           :max="100"
         >
@@ -21,13 +20,13 @@
       </div>
       <div style="margin:0 16px;">
         <el-select
-          :value="modelValue.selectValue"
+          :disabled="isStatic"
+          v-model="unit"
           placeholder="Select"
           size="mini"
-          @change="onSelectChange"
         >
           <el-option
-            v-for="item in sliderUnits"
+            v-for="item in units"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -40,34 +39,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { units } from "@/constants/constants";
+import { defineComponent, PropType, ref, watchEffect, watch } from "vue";
+import { units, TextUnit } from "@/common/constants";
+import { SliderData } from "@/views/Graph.vue";
 export default defineComponent({
   name: "Slider",
-  props: ["modelValue"],
-  emits: ["update:modelValue"],
-  methods: {
-    onSelectChange(event: any) {
-      /*const sliderObject = {
-        sliderRange: this.modelValue.sliderRange,
-        staticOn: this.modelValue.staticOn,
-        selectValue: event
-      };*/
-      //console.log(sliderObject);
-      this.$emit("update:modelValue", event);
-      //console.log(sliderObject);
-    },
-    onRangeChange(event: any) {
-      this.$emit("update:modelValue", event);
-    },
-    onStaticChange(event: any) {
-      this.$emit("update:modelValue", event);
+  props: {
+    modelValue: {
+      type: Object as PropType<SliderData>,
+      required: true
     }
   },
-  setup() {
-    const sliderUnits = [...units];
+  emits: ["update:modelValue"],
+
+  setup(props, { emit }) {
+    const slider = ref([0, 100]);
+    watchEffect(() => (slider.value = props.modelValue.sliderRange));
+    const unit = ref(TextUnit.WORD);
+    watchEffect(() => (unit.value = props.modelValue.unit));
+    const isStatic = ref(true);
+    watchEffect(() => (isStatic.value = props.modelValue.isStatic));
+
+    watch([slider, unit, isStatic], () =>
+      emit("update:modelValue", {
+        sliderRange: slider.value,
+        isStatic: isStatic.value,
+        unit: unit.value
+      })
+    );
+
     return {
-      sliderUnits
+      slider,
+      units,
+      unit,
+      isStatic
     };
   }
 });

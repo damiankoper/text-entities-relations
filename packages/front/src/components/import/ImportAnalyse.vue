@@ -18,7 +18,7 @@
           </el-progress>
         </div>
         <div class="error" v-if="nerProgress.error">
-          >
+          <i class="el-icon-error"></i>
           {{ nerProgress.error }}
         </div>
       </div>
@@ -36,6 +36,7 @@
           </el-progress>
         </div>
         <div class="error" v-if="terProgress.error">
+          <i class="el-icon-error"></i>
           {{ terProgress.error }}
         </div>
       </div>
@@ -51,10 +52,10 @@
         Wstecz
       </el-button>
       <el-button
-        :disabled="inProgress || terProgress.error || nerProgress.error"
+        :disabled="inProgress || !!terProgress.error || !!nerProgress.error"
         type="primary"
         @click="$emit('submit')"
-        :loading="inProgress || terProgress.error || nerProgress.error"
+        :loading="inProgress || !!terProgress.error || !!nerProgress.error"
       >
         Wyświetl wizualizację
       </el-button>
@@ -77,6 +78,7 @@
   }
   .error {
     margin: 24px 0 0 0;
+    color: #f56c6c;
   }
 }
 </style>

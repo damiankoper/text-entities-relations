@@ -1,7 +1,7 @@
 <template>
   <el-tabs v-model="activeName">
     <el-tab-pane label="TER" name="TER"
-      ><TerParams
+      ><TerAnalyse
         :terProgress="terProgress"
         :inProgress="inProgress"
         @submit="onSubmit"
@@ -12,6 +12,9 @@
 </template>
 
 <style>
+.el-tabs {
+  margin-right: 16px;
+}
 .el-tabs__nav-scroll > .el-tabs__nav {
   width: 100%;
 }
@@ -25,13 +28,15 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import Export from "@/components/Export.vue";
-import TerParams, { Params, Progress } from "@/components/TerParams.vue";
 import Filter from "@/components/Filter.vue";
+import TerAnalyse from "@/components/graph/TerAnalyse.vue";
+import { Progress } from "../import/ImportAnalyse.vue";
+import { TerParamsObj } from "../TerParams.vue";
 
 export default defineComponent({
   name: "GraphOptions",
   components: {
-    TerParams,
+    TerAnalyse,
     Export,
     Filter
   },
@@ -48,7 +53,7 @@ export default defineComponent({
   },
 
   methods: {
-    onSubmit(params: Params) {
+    onSubmit(params: TerParamsObj) {
       this.$emit("submit", params);
     }
   }

@@ -19,15 +19,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, onMounted } from "vue";
 import GraphComponent from "@/components/graph/GraphComponent.vue";
 import Header from "@/components/Header.vue";
 import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
 import Footer from "@/components/Footer.vue";
-import { Progress, Params } from "@/components/TerParams.vue";
-import { TextUnit } from "@/constants/constants";
-
+import { TerParamsObj } from "@/components/TerParams.vue";
+import { TextUnit } from "@/common/constants";
+import { Progress } from "@/components/import/ImportAnalyse.vue";
+export interface SliderData {
+  sliderRange: [number, number];
+  isStatic: boolean;
+  unit: TextUnit;
+}
 export default defineComponent({
   name: "Graph",
   components: {
@@ -45,17 +50,23 @@ export default defineComponent({
       error: null
     });
     const inProgress = ref(false);
-    const params = ref<Params | null>(null);
-    const slider = reactive({
-      sliderRange: [15, 75],
-      staticOn: true,
-      selectValue: TextUnit.CHUNK
+    const params = ref<TerParamsObj | null>(null);
+
+    const slider = ref<SliderData>({
+      sliderRange: [0, 100],
+      isStatic: true,
+      unit: TextUnit.CHUNK
     });
+
+    onMounted(() => {
+      // todo: if irs from props =undefined route= /home
+    });
+
     return {
       terProgress,
       inProgress,
       slider,
-      async onParamsSubmit(p: Params) {
+      async onParamsSubmit(p: TerParamsObj) {
         terProgress.percentage = 0;
         inProgress.value = true;
         params.value = p;
