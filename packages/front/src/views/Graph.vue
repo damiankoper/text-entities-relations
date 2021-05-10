@@ -9,7 +9,7 @@
           @clickNode="onNodeClick"
         />
         <el-card class="controls">
-          <el-button size="mini" v-on:click="fit" type="primary">
+          <el-button size="mini" @click="fit" type="primary">
             Fit
           </el-button>
           <el-radio-group size="mini" v-model="selectedGraphModification">
@@ -18,6 +18,7 @@
               v-for="tool in graphTools"
               :key="tool.type"
               :label="tool.type"
+              :disabled="!slider.isStatic"
             >
               <i :class="tool.icon"></i> {{ tool.hint }}
             </el-radio-button>
@@ -34,19 +35,30 @@
         />
       </el-aside>
     </el-container>
-    <Slider v-model="slider" />
+    <Slider v-model="slider" :limits="sliderLimits" />
     <Footer />
   </el-container>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, PropType } from "vue";
+import { defineComponent, ref, onMounted, PropType, watch } from "vue";
 import Header from "@/components/Header.vue";
 import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
 import GraphRenderer from "@/components/graph/GraphRenderer.vue";
 import Footer from "@/components/Footer.vue";
-import { TextUnit, Irs, IrsParams, GraphService } from "core";
+import _ from "lodash";
+import {
+  TextUnit,
+  Irs,
+  IrsParams,
+  GraphService,
+  IrsUtilsService,
+  ChunkList,
+  Chunk,
+  Sentence,
+  Token
+} from "core";
 import { useRouter } from "vue-router";
 import { useTer } from "@/composables/useTer";
 enum GraphModificationOption {
@@ -84,17 +96,21 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const graphRenderer = ref<typeof GraphRenderer>();
+    const { push } = useRouter();
+    const irsUtilsService = IrsUtilsService.get();
 
-    const selectedGraphModification = ref<GraphModificationOption>(
-      GraphModificationOption.SELECT
-    );
+    const graphRenderer = ref<typeof GraphRenderer>();
+    const fit = () => {
+      graphRenderer.value?.fit();
+    };
+
+    const selectedGraphModification = ref(GraphModificationOption.SELECT);
 
     const graphService = GraphService.get();
 
     const graphStructure = ref(graphService.buildGraphStructure([]));
 
-    const selectedNodes = ref<[string, string]>();
+    const selectedNodes = ref<[string | null, string | null]>([null, null]);
 
     const onNodeClick = (nodeId: string) => {
       switch (selectedGraphModification.value) {
@@ -107,10 +123,6 @@ export default defineComponent({
           graphStructure.value = graphService.buildGraphStructure([]);
           break;
       }
-    };
-
-    const fit = () => {
-      graphRenderer.value?.fit();
     };
 
     const graphTools: GraphTool[] = [
@@ -133,19 +145,109 @@ export default defineComponent({
 
     const { progress, irs, analyse, resetProgress } = useTer();
 
+    const sliderLimits = ref({
+      min: 0,
+      max: 0
+    });
     const slider = ref<SliderData>({
       sliderRange: [0, 100],
       isStatic: true,
-      unit: TextUnit.CHUNK
+      unit: TextUnit.SENTENCE
     });
 
-    const { push } = useRouter();
+    const resetSlider = () => {
+      slider.value.sliderRange = [
+        sliderLimits.value.min,
+        sliderLimits.value.max
+      ];
+    };
+
+    watch(
+      slider,
+      () => {
+        if (!slider.value.isStatic) {
+          selectedGraphModification.value = GraphModificationOption.SELECT;
+        } else {
+          resetSlider();
+        }
+      },
+      { immediate: true }
+    );
+
+    const firstChunk = (c: ChunkList) => _.first(c) as Chunk;
+    const firstSentence = (c: ChunkList) =>
+      _.first(firstChunk(c).sentences) as Sentence;
+    const firstWord = (c: ChunkList) =>
+      _.first(firstSentence(c).tokens) as Token;
+
+    const lastChunk = (c: ChunkList) => _.last(c) as Chunk;
+    const lastSentence = (c: ChunkList) =>
+      _.last(lastChunk(c).sentences) as Sentence;
+    const lastWord = (c: ChunkList) => _.last(lastSentence(c).tokens) as Token;
+
+    watch(
+      [() => slider.value.unit, () => props.irs],
+      ([newUnit], [oldUnit]) => {
+        const irs = props.irs;
+        if (irs && newUnit !== oldUnit) {
+          switch (slider.value.unit) {
+            case TextUnit.CHUNK:
+              sliderLimits.value = {
+                min: firstChunk(irs.document).chunkIndex + 1,
+                max: lastChunk(irs.document).chunkIndex + 1
+              };
+              break;
+            case TextUnit.SENTENCE:
+              sliderLimits.value = {
+                min: firstSentence(irs.document).sentenceGlobalIndex + 1,
+                max: lastSentence(irs.document).sentenceGlobalIndex + 1
+              };
+              break;
+            case TextUnit.WORD:
+              sliderLimits.value = {
+                min: firstWord(irs.document).tokenGlobalIndex + 1,
+                max: lastWord(irs.document).tokenGlobalIndex + 1
+              };
+              break;
+          }
+
+          resetSlider();
+        }
+      },
+      { immediate: true }
+    );
+
+    watch(
+      [
+        () => slider.value.sliderRange,
+        () => slider.value.unit,
+        () => props.irs
+      ],
+      ([newRange, newUnit], [oldRange, oldUnit]) => {
+        if (
+          props.irs &&
+          (!_.isEqual(newRange, oldRange) || oldUnit !== newUnit)
+        ) {
+          console.log("filter & build triggered");
+          const filteredIrs = irsUtilsService.getRelationsInPeriod(
+            props.irs,
+            slider.value.sliderRange[0],
+            slider.value.sliderRange[1],
+            slider.value.unit
+          );
+          // TODO: graph build entrypoint
+          graphStructure.value = graphService.buildGraphStructure(filteredIrs);
+        }
+      },
+      { immediate: true }
+    );
+
     onMounted(() => {
-      console.log(props.irs);
       if (!props.irs) push("/");
     });
 
     return {
+      sliderLimits,
       graphRenderer,
       selectedGraphModification,
       graphStructure,

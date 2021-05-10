@@ -105,8 +105,8 @@ export default defineComponent({
         if (terFileInput.value?.files) {
           const file = terFileInput.value.files[0];
           const irsJson = await file.text();
-          const service = IrsSerializationService.get();
-          emit("irs", service.parse(irsJson));
+          emit("irs", irsSerializationService.parse(irsJson));
+          push("graph");
         }
       }
     };

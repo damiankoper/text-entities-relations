@@ -14,7 +14,8 @@
           style="flex-grow:1"
           v-model="slider"
           range
-          :max="100"
+          :max="limits.max"
+          :min="limits.min"
         >
         </el-slider>
       </div>
@@ -43,11 +44,16 @@ import { defineComponent, PropType, ref, watchEffect, watch } from "vue";
 import { units } from "@/common/constants";
 import { SliderData } from "@/views/Graph.vue";
 import { TextUnit } from "core";
+import _ from "lodash";
 export default defineComponent({
   name: "Slider",
   props: {
     modelValue: {
       type: Object as PropType<SliderData>,
+      required: true
+    },
+    limits: {
+      type: Object as PropType<{ min: number; max: number }>,
       required: true
     }
   },
@@ -61,12 +67,23 @@ export default defineComponent({
     const isStatic = ref(true);
     watchEffect(() => (isStatic.value = props.modelValue.isStatic));
 
-    watch([slider, unit, isStatic], () =>
+    watch([unit, isStatic], () =>
       emit("update:modelValue", {
-        sliderRange: slider.value,
+        sliderRange: [...slider.value],
         isStatic: isStatic.value,
         unit: unit.value
       })
+    );
+    watch(
+      slider,
+      _.debounce((n, o) => {
+        if (!_.isEqual(n, o))
+          emit("update:modelValue", {
+            sliderRange: [...slider.value],
+            isStatic: isStatic.value,
+            unit: unit.value
+          });
+      }, 500)
     );
 
     return {
