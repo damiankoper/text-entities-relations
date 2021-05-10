@@ -8,20 +8,22 @@
           :graphStructure="graphStructure"
           @clickNode="onNodeClick"
         />
-        <el-row type="flex" justify="end" align="middle">
-          <el-space>
-            <el-button v-on:click="fit" type="primary">Fit</el-button>
-            <el-radio-group v-model="selectedGraphModification">
-              <el-radio
-                v-for="tool in graphTools"
-                :key="tool.type"
-                :label="tool.type"
-              >
-                <i :class="tool.icon"></i> {{ tool.hint }}
-              </el-radio>
-            </el-radio-group>
-          </el-space>
-        </el-row>
+        <el-card class="controls">
+          <el-button size="mini" v-on:click="fit" type="primary">
+            Fit
+          </el-button>
+          <el-radio-group size="mini" v-model="selectedGraphModification">
+            <el-radio-button
+              size="mini"
+              v-for="tool in graphTools"
+              :key="tool.type"
+              :label="tool.type"
+            >
+              <i :class="tool.icon"></i> {{ tool.hint }}
+            </el-radio-button>
+          </el-radio-group>
+        </el-card>
+        <el-divider direction="vertical" class="divider" />
       </el-main>
       <el-aside class="aside-bar">
         <GraphOptions
@@ -118,12 +120,12 @@ export default defineComponent({
         type: GraphModificationOption.SELECT
       },
       {
-        hint: "Delete nodes",
+        hint: "Delete",
         icon: "el-icon-delete",
         type: GraphModificationOption.DELETE
       },
       {
-        hint: "Merge nodes",
+        hint: "Merge",
         icon: "el-icon-share",
         type: GraphModificationOption.MERGE
       }
@@ -169,12 +171,32 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .graph {
-  display: flex;
-  flex-direction: column;
   min-height: calc(
     100vh - 52px - 40px - 32px
   ); // 100% - header - slider - footer
-  padding-bottom: 5px;
+  padding-bottom: 25px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  .divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    margin: 0;
+  }
+  .controls {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    ::v-deep(.el-card__body) {
+      padding: 8px;
+    }
+    .el-button {
+      margin-right: 8px;
+    }
+  }
 }
 .aside-bar {
   overflow: visible;

@@ -15,7 +15,7 @@
 
 <style>
 .el-tabs {
-  margin-right: 16px;
+  margin: 0 16px;
 }
 .el-tabs__nav-scroll > .el-tabs__nav {
   width: 100%;
