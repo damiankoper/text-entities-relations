@@ -1,18 +1,19 @@
 import Container, { Service } from "typedi";
 import { ChunkList } from "../../Ner/Models/ChunkList";
-
+import { IrsHelperService } from "./IrsHelper.service";
 import {
   Entity,
   EntityOccurrence,
   IrsParams,
   Irs,
-  Position,
   Relation,
   TextUnit,
 } from "../Models";
 
 @Service()
 export class IrsService {
+  constructor(private helperService: IrsHelperService) {}
+
   static get(): IrsService {
     return Container.get(IrsService);
   }
@@ -27,7 +28,7 @@ export class IrsService {
       document,
       params.unit
     );
-    const unitSelector = this.getUnitSelector(params.unit);
+    const unitSelector = this.helperService.getUnitSelector(params.unit);
 
     for (let idx = 0; idx <= maxIdx; idx += offset) {
       const occurrencesInWindow = entityOccurrences.filter(
@@ -48,17 +49,6 @@ export class IrsService {
       params: params,
       entities: [...entities].map(([, value]) => value),
     };
-  }
-
-  private getUnitSelector(unit: TextUnit): (val: Position) => number {
-    switch (unit) {
-      case TextUnit.CHUNK:
-        return (val) => val.chunkGlobalIndex;
-      case TextUnit.SENTENCE:
-        return (val) => val.sentenceGlobalIndex;
-      case TextUnit.WORD:
-        return (val) => val.tokenGlobalIndex;
-    }
   }
 
   private addNewRelations(
@@ -102,7 +92,7 @@ export class IrsService {
   } {
     const entities: Map<string, Entity> = new Map();
     const entityOccurrences: EntityOccurrence[] = [];
-    const unitSelector = this.getUnitSelector(unit);
+    const unitSelector = this.helperService.getUnitSelector(unit);
     let maxIdx = 0;
 
     document.forEach((chunk) => {

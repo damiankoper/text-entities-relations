@@ -1,8 +1,11 @@
 import Container, { Service } from "typedi";
-import { Entity, Irs, Position, Relation, TextUnit } from "../Models";
+import { Entity, Irs, Relation, TextUnit } from "../Models";
+import { IrsHelperService } from "./IrsHelper.service";
 
 @Service()
 export class IrsUtilsService {
+  constructor(private helperService: IrsHelperService) {}
+
   static get(): IrsUtilsService {
     return Container.get(IrsUtilsService);
   }
@@ -24,7 +27,7 @@ export class IrsUtilsService {
         ] as [Entity, Relation[]]
     );
 
-    const unitSelector = this.getUnitSelector(unit);
+    const unitSelector = this.helperService.getUnitSelector(unit);
 
     for (const [entity, relations] of entityData) {
       entity.relations = relations.filter(
@@ -68,17 +71,5 @@ export class IrsUtilsService {
       params: irs.params,
       entities: [],
     };
-  }
-
-  // TODO: extract this method to "helper" service used in IrsService and here
-  private getUnitSelector(unit: TextUnit): (val: Position) => number {
-    switch (unit) {
-      case TextUnit.CHUNK:
-        return (val) => val.chunkGlobalIndex;
-      case TextUnit.SENTENCE:
-        return (val) => val.sentenceGlobalIndex;
-      case TextUnit.WORD:
-        return (val) => val.tokenGlobalIndex;
-    }
   }
 }

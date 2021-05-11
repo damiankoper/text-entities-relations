@@ -61,6 +61,7 @@ import {
 } from "core";
 import { useRouter } from "vue-router";
 import { useTer } from "@/composables/useTer";
+
 enum GraphModificationOption {
   SELECT = "select",
   DELETE = "delete",
@@ -78,6 +79,7 @@ export interface SliderData {
   isStatic: boolean;
   unit: TextUnit;
 }
+
 export default defineComponent({
   name: "Graph",
   components: {

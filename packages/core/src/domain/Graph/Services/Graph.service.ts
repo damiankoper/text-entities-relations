@@ -1,6 +1,7 @@
 import Container, { Service } from "typedi";
 import { Graph } from "../Models/Graph";
 import { SampleGraph } from "../data/SampleGraph";
+import { Irs } from "domain/IndirectRelatationStructure";
 
 @Service()
 export class GraphService {
@@ -14,7 +15,7 @@ export class GraphService {
     return Container.get(GraphService);
   }
 
-  buildGraphStructure(inputStructure: any): Graph {
+  buildGraphStructure(irs: Irs): Graph {
     return { ...this._graph };
   }
 
