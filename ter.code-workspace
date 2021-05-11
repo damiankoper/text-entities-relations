@@ -1,16 +1,16 @@
 {
   "folders": [
     {
-      "name": "text-entities-relations",
-      "path": "."
-    },
-    {
       "name": "front",
       "path": "packages/front"
     },
     {
       "name": "core",
       "path": "packages/core"
+    },
+    {
+      "name": "text-entities-relations",
+      "path": "."
     }
   ],
   "settings": {
