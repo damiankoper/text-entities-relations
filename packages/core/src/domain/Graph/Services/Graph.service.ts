@@ -1,31 +1,30 @@
 import Container, { Service } from "typedi";
-import { Graph } from "../Models/Graph";
-import { NormalizedGraph } from "../data/SampleGraph";
+import { Graph, d3 } from "../Models";
 import { Irs } from "domain/IndirectRelatationStructure";
 
 @Service()
 export class GraphService {
-  private _graph: Graph;
-
-  constructor() {
-    this._graph = NormalizedGraph;
-  }
-
   static get(): GraphService {
     return Container.get(GraphService);
   }
 
-  buildGraphStructure(irs: Irs): Graph {
+  buildGraphStructure(irs?: Irs): Graph | null {
+    if (!irs) return null;
+
     const graph: Graph = {
       nodes: [],
       links: [],
     };
 
+    let maxWeight = 1;
+    let maxStrength = 1;
+
     irs.entities.forEach((e) => {
+      if (e.relations.length > maxWeight) maxWeight = e.relations.length;
+
       graph.nodes.push({
         id: e.name,
         weight: e.relations.length,
-        easiedWeight: 0,
       });
 
       e.relations.forEach((r) => {
@@ -40,24 +39,25 @@ export class GraphService {
 
         if (link) {
           link.strength += 1;
+          if (link.strength > maxStrength) maxStrength = link.strength;
         } else {
           graph.links.push({
             source: firstId,
             target: secondId,
             strength: 1,
-            easiedStrength: 0,
           });
         }
       });
     });
 
-    return graph;
-  }
+    graph.nodes.forEach((n) => {
+      n.easiedWeight = d3.easeExpOut(n.weight / maxWeight);
+    });
 
-  deleteNode(nodeId: string): void {
-    this._graph.nodes = this._graph.nodes.filter((d) => d.id !== nodeId);
-    this._graph.links = this._graph.links.filter(
-      (l) => l.source !== nodeId && l.target !== nodeId
-    );
+    graph.links.forEach((l) => {
+      l.easiedStrength = d3.easeExpOut(l.strength / maxStrength);
+    });
+
+    return graph;
   }
 }

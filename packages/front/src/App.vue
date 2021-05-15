@@ -18,10 +18,20 @@ export default defineComponent({
       irs,
       onIrs(irsPayload: Irs) {
         irs.value = irsPayload;
-        localStorage.setItem(
-          "terSession",
-          irsSerializationService.stringify(irsPayload)
-        );
+        try {
+          // TODO Damian usuń
+          const json = irsSerializationService.stringify(irsPayload);
+          const file = new Blob([json], { type: "text/plain" });
+          console.log("Wynik TER:\n" + URL.createObjectURL(file));
+
+          // TODO dodać kompresję przed localstorage
+          localStorage.setItem(
+            "terSession",
+            irsSerializationService.stringify(irsPayload)
+          );
+        } catch (err) {
+          console.log("Błąd zapisu do localstorage:\n" + err);
+        }
         push("graph");
       }
     };

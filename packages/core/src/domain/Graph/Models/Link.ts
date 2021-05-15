@@ -9,5 +9,5 @@ export interface Link extends SimulationLinkDatum<Node> {
   /**
    * Easied value of strength field used for visualization
    */
-  easiedStrength: number;
+  easiedStrength?: number;
 }

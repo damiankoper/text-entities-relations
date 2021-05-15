@@ -1,5 +1,5 @@
 import { Graph } from "../Models/Graph";
-import { easeCubicOut } from "d3";
+import { easeExpOut } from "d3";
 
 export const SampleGraph: Graph = {
   nodes: [
@@ -1132,7 +1132,7 @@ export const NormalizedGraph: Graph = {
   nodes: SampleGraph.nodes.map((d) => ({
     weight: d.weight,
     id: d.id,
-    easiedWeight: easeCubicOut(d.weight / maxWeight),
+    easiedWeight: easeExpOut(d.weight / maxWeight),
   })),
   links: SampleGraph.links.map((l) => {
     const strength = Math.floor(Math.random() * (271 - 1 + 1)) + 1;
@@ -1140,7 +1140,7 @@ export const NormalizedGraph: Graph = {
       source: l.source,
       target: l.target,
       strength: strength,
-      easiedStrength: easeCubicOut(strength / maxStrength),
+      easiedStrength: easeExpOut(strength / maxStrength),
     };
   }),
 };

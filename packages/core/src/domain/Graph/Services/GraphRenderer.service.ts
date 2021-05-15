@@ -118,8 +118,15 @@ export class GraphRendererService {
           .append("circle")
           .attr("stroke", "#fff")
           .attr("stroke-width", 1.5)
-          .attr("r", (d: Node) => conf.NODE_RADIUS * d.easiedWeight)
-          .attr("fill", (d: Node) => d3.interpolateYlOrRd(d.easiedWeight));
+          .attr(
+            "r",
+            (d: Node) =>
+              conf.MIN_NODE_RADIUS +
+              (conf.MAX_NODE_RADIUS - conf.MIN_NODE_RADIUS) * d.easiedWeight!
+          )
+          .attr("fill", (d: Node) =>
+            d3.interpolateYlOrRd(0.3 + 0.7 * d.easiedWeight!)
+          );
 
         //append text
         nodeContainer
@@ -136,7 +143,12 @@ export class GraphRendererService {
     this._state.linkSelection = this._state.linkSelection
       .data<Link>(newLinks)
       .join<SVGLineElement, Link>("line")
-      .attr("stroke-width", (l: Link) => l.easiedStrength);
+      .attr(
+        "stroke-width",
+        (l: Link) =>
+          conf.MIN_LINK_WIDTH +
+          (conf.MAX_LINK_WIDTH - conf.MIN_LINK_WIDTH) * l.easiedStrength!
+      );
 
     this._state.simulation.nodes(newNodes);
     this._state.simulation.force(

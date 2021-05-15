@@ -99,6 +99,7 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const { push } = useRouter();
+    const { progress, irs, analyse, resetProgress } = useTer();
     const irsUtilsService = IrsUtilsService.get();
 
     const graphRenderer = ref<typeof GraphRenderer>();
@@ -110,7 +111,7 @@ export default defineComponent({
 
     const graphService = GraphService.get();
 
-    const graphStructure = ref(graphService.buildGraphStructure([]));
+    const graphStructure = ref(graphService.buildGraphStructure());
 
     const selectedNodes = ref<[string | null, string | null]>([null, null]);
 
@@ -121,8 +122,11 @@ export default defineComponent({
         case GraphModificationOption.MERGE:
           break;
         case GraphModificationOption.DELETE:
-          graphService.deleteNode(nodeId);
-          graphStructure.value = graphService.buildGraphStructure([]);
+          {
+            const updatedIrs = irsUtilsService.deleteNode(props.irs!, nodeId);
+            graphStructure.value = graphService.buildGraphStructure(updatedIrs);
+            emit("irs", updatedIrs);
+          }
           break;
       }
     };
@@ -144,8 +148,6 @@ export default defineComponent({
         type: GraphModificationOption.MERGE
       }
     ];
-
-    const { progress, irs, analyse, resetProgress } = useTer();
 
     const sliderLimits = ref({
       min: 0,
