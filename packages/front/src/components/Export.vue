@@ -6,10 +6,13 @@
       content="Format pozwala na wczytanie danych z powrotem do aplikacji i kontynuowanie pracy"
       placement="left"
     >
-      <el-button type="primary" plain>Pobierz TER</el-button>
+      <el-button @click="onTerExport" type="primary" plain>
+        Pobierz TER
+      </el-button>
     </el-tooltip>
     <el-button type="primary" plain>Pobierz GEPHI</el-button>
     <el-button type="primary" plain>Pobierz CSV</el-button>
+    <a ref="anchorElem" download />
   </div>
 </template>
 
@@ -26,11 +29,40 @@
   margin: 5px 2px;
   width: 100%;
 }
+.a {
+  display: none;
+}
 </style>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { compressToUint8Array } from "lz-string";
+import moment from "moment";
+import { Irs, IrsSerializationService } from "core";
+import { useDownloadLink } from "@/composables/useDownloadLink";
+
 export default defineComponent({
-  name: "Export"
+  name: "Export",
+
+  props: {
+    irs: {
+      type: Object as PropType<Irs>,
+      required: true
+    }
+  },
+
+  setup(props) {
+    const irsSerializationService = IrsSerializationService.get();
+    const { anchorElem, downloadBlob } = useDownloadLink();
+
+    const onTerExport = () => {
+      const irsJson = irsSerializationService.stringify(props.irs);
+      const terContent = compressToUint8Array(irsJson);
+      // TODO może jakiś popup o podanie nazwy?
+      downloadBlob(terContent, `save-${moment().format("YY-MM-DD@HH-mm")}.ter`);
+    };
+
+    return { anchorElem, onTerExport };
+  }
 });
 </script>

@@ -32,7 +32,7 @@
             class="home-button"
             @click="terSessionRestore"
           >
-            Przywróć poprzednią sesję
+            Przywróć poprzednią sesję{{ terSessionNotification }}
           </el-button>
         </el-col>
       </el-row>
@@ -73,10 +73,12 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import Footer from "@/components/Footer.vue";
-import { IrsSerializationService } from "core";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
+import { decompressFromUTF16, decompressFromUint8Array } from "lz-string";
+import moment from "moment";
+import { IrsSerializationService } from "core";
+import Footer from "@/components/Footer.vue";
 
 export default defineComponent({
   components: { Footer },
@@ -86,25 +88,38 @@ export default defineComponent({
     const { push } = useRouter();
     const terFileInput = ref<HTMLInputElement | null>(null);
     const irsSerializationService = IrsSerializationService.get();
+
     const terSession = ref<string | null>(null);
+    const terSessionDate = ref<string | null>(null);
+    const terSessionNotification = computed(() => {
+      if (terSessionDate.value) {
+        return ` (${moment(terSessionDate.value).fromNow()})`;
+      }
+      return null;
+    });
+
     onMounted(() => {
       terSession.value = localStorage.getItem("terSession");
+      terSessionDate.value = localStorage.getItem("terSessionDate");
     });
 
     return {
       logoImg: require("@/assets/books.svg"),
       terFileInput,
       terSession,
+      terSessionNotification,
       terSessionRestore() {
-        if (terSession.value) {
-          emit("irs", irsSerializationService.parse(terSession.value));
-          push("graph");
-        }
+        if (!terSession.value) return;
+        const json = decompressFromUTF16(terSession.value);
+        if (json === null) return;
+        emit("irs", irsSerializationService.parse(json));
+        push("graph");
       },
       async onTerFile() {
         if (terFileInput.value?.files) {
           const file = terFileInput.value.files[0];
-          const irsJson = await file.text();
+          const irsContent = new Uint8Array(await file.arrayBuffer());
+          const irsJson = decompressFromUint8Array(irsContent) as string;
           emit("irs", irsSerializationService.parse(irsJson));
           push("graph");
         }

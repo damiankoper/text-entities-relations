@@ -5,6 +5,8 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
+import { compressToUTF16 } from "lz-string";
+import moment from "moment";
 import { Irs, IrsSerializationService } from "core";
 
 export default defineComponent({
@@ -19,16 +21,11 @@ export default defineComponent({
       onIrs(irsPayload: Irs) {
         irs.value = irsPayload;
         try {
-          // TODO Damian usuń
-          const json = irsSerializationService.stringify(irsPayload);
-          const file = new Blob([json], { type: "text/plain" });
-          console.log("Wynik TER:\n" + URL.createObjectURL(file));
-
-          // TODO dodać kompresję przed localstorage
           localStorage.setItem(
             "terSession",
-            irsSerializationService.stringify(irsPayload)
+            compressToUTF16(irsSerializationService.stringify(irsPayload))
           );
+          localStorage.setItem("terSessionDate", moment().format());
         } catch (err) {
           console.log("Błąd zapisu do localstorage:\n" + err);
         }

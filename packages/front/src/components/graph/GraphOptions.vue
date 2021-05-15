@@ -9,7 +9,9 @@
       />
     </el-tab-pane>
     <el-tab-pane label="Filtry" name="Filter"><Filter /></el-tab-pane>
-    <el-tab-pane label="Eksport" name="Export"><Export /></el-tab-pane>
+    <el-tab-pane label="Eksport" name="Export">
+      <Export :irs="irs" />
+    </el-tab-pane>
   </el-tabs>
 </template>
 
