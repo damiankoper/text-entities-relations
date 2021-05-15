@@ -90,23 +90,13 @@ export class GraphRendererService {
       this._state.nodeSelection.data().map((d) => [d.id, d])
     );
 
-    // this is not necessary, we can simply do const newLinks = graph.links.map((l) => Object.assign({}, l)); but why assign is needed?
-    // not sure if we have any advantage doing it so (since probably internaly in d3 the whole link array is reinitialized)
-    // the diffrence between using oldLinksMap and graph.links is that in oldLinksMap links internally already have Nodes set as objects with node postions
-    // and in graph.links we have plain id string without nodes position (but probably inside d3 on  .data<Link>(newLinks) it's still rebuild so maybe we can drop this)
-    const oldLinksMap = new Map(
-      this._state.linkSelection.data().map((l) => [l.id, l])
-    );
+    // const newNodes = graph.nodes.map((d) =>
+    //   Object.assign(oldNodesMap.get(d.id) || {}, d)
+    // );
 
-    // the assign isn't necessary, but maybe we should have it?
-    const newNodes = graph.nodes.map((d) =>
-      Object.assign(oldNodesMap.get(d.id) || {}, d)
-    );
+    const newNodes = graph.nodes.map((d) => oldNodesMap.get(d.id) ?? d);
 
-    // here assign is necessary, why tho?
-    const newLinks = graph.links.map((l) =>
-      Object.assign(oldLinksMap.get(l.id) || {}, l)
-    );
+    const newLinks = graph.links.map((l) => Object.assign({}, l));
 
     const color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -117,6 +107,11 @@ export class GraphRendererService {
         const nodeContainer = nodeParentSeleciton
           .append<SVGSVGElement>("g")
           .attr("class", "node-container")
+          .on("dblclick", (event: Event, d: Node) => {
+            event.stopPropagation();
+            d.fx = null;
+            d.fy = null;
+          })
           .on("click", (_, d: Node) => emit("clickNode", d.id))
           .call(this.buildDraggingOptions());
 
@@ -141,7 +136,7 @@ export class GraphRendererService {
       });
 
     this._state.linkSelection = this._state.linkSelection
-      .data<Link>(newLinks) // the  (l) => l.id! does not satisfy typing, do we need this?
+      .data<Link>(newLinks)
       .join<SVGLineElement, Link>("line")
       .attr("stroke-opacity", (l: Link) =>
         l.strength ? 1 / l.strength : null
@@ -152,8 +147,6 @@ export class GraphRendererService {
       "link",
       d3.forceLink<Node, Link>(newLinks).id((d) => d.id)
     );
-    // if we disable dragging this must be enabled
-    //this._state.simulation.alphaTarget(0.01).restart();
   }
 
   private buildGraphSimulation(
@@ -177,25 +170,29 @@ export class GraphRendererService {
     Node,
     Node | SubjectPosition
   > {
-    const dragStarted = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
+    const dragStarted = (
+      event: D3DragEvent<SVGCircleElement, Node, Node>,
+      d: Node
+    ) => {
       if (!event.active) {
         this._state?.simulation.alphaTarget(0.1).restart();
       }
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
+      d.fx = d.x;
+      d.fy = d.y;
     };
 
-    const dragging = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
+    const dragging = (
+      event: D3DragEvent<SVGCircleElement, Node, Node>,
+      d: Node
+    ) => {
+      d.fx = event.x;
+      d.fy = event.y;
     };
 
     const dragEnded = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
       if (!event.active) {
         this._state?.simulation.alphaTarget(0);
       }
-      event.subject.fx = null;
-      event.subject.fy = null;
     };
 
     return d3

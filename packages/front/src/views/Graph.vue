@@ -129,7 +129,7 @@ export default defineComponent({
 
     const graphTools: GraphTool[] = [
       {
-        hint: "Click",
+        hint: "Pin",
         icon: "el-icon-thumb",
         type: GraphModificationOption.SELECT
       },
