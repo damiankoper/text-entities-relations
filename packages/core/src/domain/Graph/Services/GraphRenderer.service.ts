@@ -98,8 +98,6 @@ export class GraphRendererService {
 
     const newLinks = graph.links.map((l) => Object.assign({}, l));
 
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
-
     this._state.nodeSelection = this._state.nodeSelection
       .data<Node>(newNodes, (d) => d.id)
       .join<SVGSVGElement, Node>((nodeParentSeleciton) => {
@@ -120,8 +118,8 @@ export class GraphRendererService {
           .append("circle")
           .attr("stroke", "#fff")
           .attr("stroke-width", 1.5)
-          .attr("r", conf.NODE_RADIUS)
-          .attr("fill", (d: Node) => color(d.group.toString()));
+          .attr("r", (d: Node) => conf.NODE_RADIUS * d.easiedWeight)
+          .attr("fill", (d: Node) => d3.interpolateYlOrRd(d.easiedWeight));
 
         //append text
         nodeContainer
@@ -138,9 +136,7 @@ export class GraphRendererService {
     this._state.linkSelection = this._state.linkSelection
       .data<Link>(newLinks)
       .join<SVGLineElement, Link>("line")
-      .attr("stroke-opacity", (l: Link) =>
-        l.strength ? 1 / l.strength : null
-      );
+      .attr("stroke-width", (l: Link) => l.easiedStrength);
 
     this._state.simulation.nodes(newNodes);
     this._state.simulation.force(

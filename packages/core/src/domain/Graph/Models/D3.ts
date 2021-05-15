@@ -7,10 +7,10 @@ import {
   select,
   interpolateSinebow,
   scaleOrdinal,
-  schemeCategory10,
   zoom,
   zoomIdentity,
   forceCollide,
+  interpolateYlOrRd,
 } from "d3";
 
 export const d3 = {
@@ -23,7 +23,7 @@ export const d3 = {
   interpolateSinebow,
   zoom,
   scaleOrdinal,
-  schemeCategory10,
   zoomIdentity,
   forceCollide,
+  interpolateYlOrRd,
 };
