@@ -10,7 +10,7 @@ export interface Node extends SimulationNodeDatum {
    */
   weight: number;
   /**
-   * Easied value in range (0,1] of weight used for visualization
+   * Easied value in range [0,1] of weight used for visualization
    */
   easiedWeight: number;
 }

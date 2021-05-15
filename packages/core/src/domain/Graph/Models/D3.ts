@@ -11,6 +11,7 @@ import {
   zoomIdentity,
   forceCollide,
   interpolateYlOrRd,
+  easeCubicOut,
 } from "d3";
 
 export const d3 = {
@@ -26,4 +27,5 @@ export const d3 = {
   zoomIdentity,
   forceCollide,
   interpolateYlOrRd,
+  easeCubicOut,
 };
