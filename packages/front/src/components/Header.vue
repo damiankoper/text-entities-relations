@@ -5,7 +5,7 @@
       <span class="header-text">TER</span>
     </router-link>
     <span style="width:100%"></span>
-    <Undo v-if="showGraphOptions" />
+    <Undo v-if="showGraphOptions" @hisBack="hisBack" @hisForward="hisForward" />
   </el-header>
   <el-divider style="margin: 0; margin-top: -1px" />
 </template>
@@ -24,8 +24,17 @@ export default defineComponent({
       default: false
     }
   },
-  setup() {
-    return { logoImg: require("@/assets/books.svg") };
+  emits: ["hisBack", "hisForward"],
+  setup(_, { emit }) {
+    return {
+      logoImg: require("@/assets/books.svg"),
+      hisBack() {
+        emit("hisBack");
+      },
+      hisForward() {
+        emit("hisForward");
+      }
+    };
   }
 });
 </script>

@@ -77,6 +77,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import Footer from "@/components/Footer.vue";
 import { IrsSerializationService } from "core";
 import { useRouter } from "vue-router";
+import { IrsHistory } from "@/common/irsHistory";
 
 export default defineComponent({
   components: { Footer },
@@ -87,8 +88,14 @@ export default defineComponent({
     const terFileInput = ref<HTMLInputElement | null>(null);
     const irsSerializationService = IrsSerializationService.get();
     const terSession = ref<string | null>(null);
+    const irsHistory = IrsHistory.getInstance();
     onMounted(() => {
       terSession.value = localStorage.getItem("terSession");
+      const localHistory = localStorage.getItem("history");
+      if (localHistory) {
+        irsHistory.clear();
+        irsHistory.history.push(...JSON.parse(localHistory));
+      }
     });
 
     return {

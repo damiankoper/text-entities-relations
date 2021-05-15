@@ -53,6 +53,7 @@ import Footer from "@/components/Footer.vue";
 import { useNer } from "@/composables/useNer";
 import { useTer } from "@/composables/useTer";
 import { FileType } from "core";
+import { IrsHistory } from "@/common/irsHistory";
 
 export default defineComponent({
   emits: ["irs"],
@@ -82,6 +83,8 @@ export default defineComponent({
       irs
     } = useTer();
 
+    const irsHistory = IrsHistory.getInstance();
+
     return {
       activeStep,
       nerProgress,
@@ -105,6 +108,9 @@ export default defineComponent({
         }
       },
       onAnalyseSubmit() {
+        if (irs.value) {
+          irsHistory.add(irs.value);
+        }
         emit("irs", irs.value);
       }
     };
