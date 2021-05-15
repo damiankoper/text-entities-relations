@@ -16,7 +16,42 @@ export class GraphService {
   }
 
   buildGraphStructure(irs: Irs): Graph {
-    return { ...this._graph };
+    const graph: Graph = {
+      nodes: [],
+      links: [],
+    };
+
+    irs.entities.forEach((e) => {
+      graph.nodes.push({
+        id: e.name,
+        weight: e.relations.length,
+        easiedWeight: 0,
+      });
+
+      e.relations.forEach((r) => {
+        const [firstId, secondId] =
+          e.name < r.target.name
+            ? [e.name, r.target.name]
+            : [r.target.name, e.name];
+
+        const link = graph.links.find(
+          (e) => e.source === firstId && e.target === secondId
+        );
+
+        if (link) {
+          link.strength += 1;
+        } else {
+          graph.links.push({
+            source: firstId,
+            target: secondId,
+            strength: 1,
+            easiedStrength: 0,
+          });
+        }
+      });
+    });
+
+    return graph;
   }
 
   deleteNode(nodeId: string): void {
