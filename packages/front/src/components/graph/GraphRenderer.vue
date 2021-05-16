@@ -11,7 +11,7 @@ export default defineComponent({
   emits: ["clickNode"],
   props: {
     graphStructure: {
-      type: Object as PropType<Graph>,
+      type: Object as PropType<Graph | null>,
       required: true
     }
   },
@@ -30,11 +30,15 @@ export default defineComponent({
 
     watch(
       () => props.graphStructure,
-      currentGraph => graphRendererService.renderSvg(currentGraph, emit)
+      currentGraph => {
+        if (currentGraph) {
+          graphRendererService.renderSvg(currentGraph, emit);
+        }
+      }
     );
 
     onMounted(() => {
-      if (graphSvgElement.value) {
+      if (graphSvgElement.value && props.graphStructure) {
         graphRendererService.initializeSimulation(graphSvgElement.value);
         graphRendererService.renderSvg(props.graphStructure, emit);
       }
@@ -53,7 +57,7 @@ svg {
   height: 100%;
   width: 100%;
 
-  & :deep .node-container {
+  & ::v-deep(.node-container) {
     cursor: pointer;
   }
 }

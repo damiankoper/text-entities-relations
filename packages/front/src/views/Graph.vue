@@ -57,7 +57,8 @@ import {
   ChunkList,
   Chunk,
   Sentence,
-  Token
+  Token,
+  Graph
 } from "core";
 import { useRouter } from "vue-router";
 import { useTer } from "@/composables/useTer";
@@ -111,7 +112,9 @@ export default defineComponent({
 
     const graphService = GraphService.get();
 
-    const graphStructure = ref(graphService.buildGraphStructure());
+    const graphStructure = ref<Graph | null>(
+      graphService.buildGraphStructure(props.irs)
+    );
 
     const selectedNodes = ref<[string | null, string | null]>([null, null]);
 

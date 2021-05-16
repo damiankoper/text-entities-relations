@@ -118,12 +118,7 @@ export class GraphRendererService {
           .append("circle")
           .attr("stroke", "#fff")
           .attr("stroke-width", 1.5)
-          .attr(
-            "r",
-            (d: Node) =>
-              conf.MIN_NODE_RADIUS +
-              (conf.MAX_NODE_RADIUS - conf.MIN_NODE_RADIUS) * d.easiedWeight!
-          )
+          .attr("r", (d: Node) => this.getPropValue(d))
           .attr("fill", (d: Node) =>
             d3.interpolateYlOrRd(0.3 + 0.7 * d.easiedWeight!)
           );
@@ -143,12 +138,7 @@ export class GraphRendererService {
     this._state.linkSelection = this._state.linkSelection
       .data<Link>(newLinks)
       .join<SVGLineElement, Link>("line")
-      .attr(
-        "stroke-width",
-        (l: Link) =>
-          conf.MIN_LINK_WIDTH +
-          (conf.MAX_LINK_WIDTH - conf.MIN_LINK_WIDTH) * l.easiedStrength!
-      );
+      .attr("stroke-width", (l: Link) => this.getPropValue(l));
 
     this._state.simulation.nodes(newNodes);
     this._state.simulation.force(
@@ -208,5 +198,21 @@ export class GraphRendererService {
       .on("start", dragStarted)
       .on("drag", dragging)
       .on("end", dragEnded);
+  }
+
+  private isNodeGuard(object: Node | Link): object is Node {
+    return (object as Node).id !== undefined;
+  }
+
+  private getPropValue(object: Node | Link): number {
+    const [min, max] = this.isNodeGuard(object)
+      ? [conf.MIN_NODE_RADIUS, conf.MAX_NODE_RADIUS]
+      : [conf.MIN_LINK_WIDTH, conf.MAX_LINK_WIDTH];
+
+    const easiedValue = this.isNodeGuard(object)
+      ? object.easiedWeight
+      : object.easiedStrength;
+
+    return min + (max - min) * easiedValue!;
   }
 }

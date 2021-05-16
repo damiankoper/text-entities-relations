@@ -71,10 +71,10 @@ export class IrsUtilsService {
       mergedNames.includes(e.name)
     );
 
-    const newNode = {
+    const newNode: Entity = {
       name: mergedNodeName,
       relations: [],
-    } as Entity;
+    };
 
     const notMergedNodes: Map<string, Entity> = new Map(
       irs.entities
@@ -110,7 +110,7 @@ export class IrsUtilsService {
             )
         )
         .flat(),
-      (a, b) =>
+      (a: Relation, b: Relation) =>
         a.target.name === b.target.name &&
         a.tokenGlobalIndex === b.tokenGlobalIndex
     );

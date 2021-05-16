@@ -8,7 +8,7 @@ export class GraphService {
     return Container.get(GraphService);
   }
 
-  buildGraphStructure(irs?: Irs): Graph | null {
+  buildGraphStructure(irs: Irs | undefined): Graph | null {
     if (!irs) return null;
 
     const graph: Graph = {
