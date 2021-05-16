@@ -7,7 +7,8 @@
         </el-col>
         <el-col :span="16" class="logo-text">
           <div>TER</div>
-          <div>Analyse the shit out of your books</div>
+          <!--<div>Analyse the shit out of your books</div>-->
+          <div>Może nie najlepiej, ale jako tako.</div>
         </el-col>
       </el-row>
       <el-row :gutter="24" align="middle">
@@ -75,7 +76,6 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import { decompressFromUTF16, decompressFromUint8Array } from "lz-string";
 import moment from "moment";
 import { IrsSerializationService } from "core";
 import Footer from "@/components/Footer.vue";
@@ -110,17 +110,15 @@ export default defineComponent({
       terSessionNotification,
       terSessionRestore() {
         if (!terSession.value) return;
-        const json = decompressFromUTF16(terSession.value);
-        if (json === null) return;
-        emit("irs", irsSerializationService.parse(json));
+        if (terSession.value === null) return;
+        emit("irs", irsSerializationService.parse(terSession.value));
         push("graph");
       },
       async onTerFile() {
         if (terFileInput.value?.files) {
           const file = terFileInput.value.files[0];
-          const irsContent = new Uint8Array(await file.arrayBuffer());
-          const irsJson = decompressFromUint8Array(irsContent) as string;
-          emit("irs", irsSerializationService.parse(irsJson));
+          const irsText = await file.text();
+          emit("irs", irsSerializationService.parse(irsText));
           push("graph");
         }
       }

@@ -56,8 +56,8 @@ export default defineComponent({
         lang: Language.PL
       },
       ter: {
-        window: 5,
-        overlap: 1,
+        window: 1,
+        overlap: 0,
         unit: TextUnit.SENTENCE
       }
     } as Params);

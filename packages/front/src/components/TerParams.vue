@@ -41,8 +41,8 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const params = ref<IrsParams>({
-      window: 20,
-      overlap: 10,
+      window: 1,
+      overlap: 0,
       unit: TextUnit.SENTENCE
     });
 

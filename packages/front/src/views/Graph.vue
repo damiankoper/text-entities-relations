@@ -14,7 +14,7 @@
         />
         <el-card class="controls">
           <el-button size="mini" @click="fit" type="primary">
-            Fit
+            Wyśrodkuj
           </el-button>
           <el-radio-group size="mini" v-model="selectedGraphModification">
             <el-radio-button
@@ -116,41 +116,43 @@ export default defineComponent({
 
     const graphService = GraphService.get();
 
-    const graphStructure = ref<Graph | null>(
-      graphService.buildGraphStructure(props.irs)
-    );
+    const graphStructure = ref<Graph>({ nodes: [], links: [] });
 
     const selectedNodes = ref<[string | null, string | null]>([null, null]);
 
     const onNodeClick = (nodeId: string) => {
-      switch (selectedGraphModification.value) {
-        case GraphModificationOption.SELECT:
-          break;
-        case GraphModificationOption.MERGE:
-          break;
-        case GraphModificationOption.DELETE:
-          {
-            const updatedIrs = irsUtilsService.deleteNode(props.irs!, nodeId);
-            graphStructure.value = graphService.buildGraphStructure(updatedIrs);
-            emit("irs", updatedIrs);
-          }
-          break;
+      if (props.irs) {
+        switch (selectedGraphModification.value) {
+          case GraphModificationOption.SELECT:
+            break;
+          case GraphModificationOption.MERGE:
+            break;
+          case GraphModificationOption.DELETE:
+            {
+              const updatedIrs = irsUtilsService.deleteNode(props.irs, nodeId);
+              graphStructure.value = graphService.buildGraphStructure(
+                updatedIrs
+              );
+              emit("irs", updatedIrs);
+            }
+            break;
+        }
       }
     };
 
     const graphTools: GraphTool[] = [
       {
-        hint: "Pin",
+        hint: "Przypnij",
         icon: "el-icon-thumb",
         type: GraphModificationOption.SELECT
       },
       {
-        hint: "Delete",
+        hint: "Usuń",
         icon: "el-icon-delete",
         type: GraphModificationOption.DELETE
       },
       {
-        hint: "Merge",
+        hint: "Scal",
         icon: "el-icon-share",
         type: GraphModificationOption.MERGE
       }
@@ -272,7 +274,6 @@ export default defineComponent({
       async onTerSubmit(p: IrsParams) {
         resetProgress();
         if (props.irs) {
-          const oldIrs = irs.value;
           await analyse(props.irs?.document, p);
           emit("irs", irs.value);
         }

@@ -39,11 +39,7 @@ export class IrsUtilsService {
 
     const entities = entityData.map(([entity]) => entity);
 
-    return {
-      document: irs.document,
-      params: irs.params,
-      entities: entities,
-    };
+    return { ...irs, entities };
   }
 
   deleteNode(irs: Irs, name: string): Irs {
@@ -57,11 +53,7 @@ export class IrsUtilsService {
           } as Entity)
       );
 
-    return {
-      document: irs.document,
-      params: irs.params,
-      entities: entities,
-    };
+    return { ...irs, entities };
   }
 
   mergeNodes(irs: Irs, mergedNames: string[], newName?: string): Irs {
@@ -116,8 +108,7 @@ export class IrsUtilsService {
     );
 
     return {
-      document: irs.document,
-      params: irs.params,
+      ...irs,
       entities: [newNode, ...[...notMergedNodes].map(([, v]) => v)],
     };
   }

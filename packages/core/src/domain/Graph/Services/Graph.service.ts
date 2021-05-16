@@ -1,5 +1,6 @@
 import Container, { Service } from "typedi";
-import { Graph, d3 } from "../Models";
+import { Graph } from "../Models";
+import * as d3 from "d3";
 import { Irs } from "domain/IndirectRelatationStructure";
 
 @Service()
@@ -8,19 +9,22 @@ export class GraphService {
     return Container.get(GraphService);
   }
 
-  buildGraphStructure(irs: Irs | undefined): Graph | null {
-    if (!irs) return null;
-
+  buildGraphStructure(irs: Irs): Graph {
     const graph: Graph = {
       nodes: [],
       links: [],
     };
 
-    let maxWeight = 1;
-    let maxStrength = 1;
+    let maxWeight = 0;
+    let minWeight = Infinity;
+    let maxStrength = 0;
+    let minStrength = Infinity;
 
     irs.entities.forEach((e) => {
-      if (e.relations.length > maxWeight) maxWeight = e.relations.length;
+      maxWeight = Math.max(maxWeight, e.relations.length);
+      minWeight = Math.min(minWeight, e.relations.length);
+      maxStrength = Math.max(maxStrength, e.relations.length);
+      minStrength = Math.min(minStrength, e.relations.length);
 
       graph.nodes.push({
         id: e.name,
@@ -50,12 +54,19 @@ export class GraphService {
       });
     });
 
+    const weightSpan = maxWeight - minWeight;
+    const strengthSpan = maxStrength - minStrength;
+
+    const easeFn = d3.easeExpOut;
+
     graph.nodes.forEach((n) => {
-      n.easiedWeight = d3.easeExpOut(n.weight / maxWeight);
+      const normalized = (n.weight - minWeight) / weightSpan;
+      n.easiedWeight = easeFn(normalized);
     });
 
     graph.links.forEach((l) => {
-      l.easiedStrength = d3.easeExpOut(l.strength / maxStrength);
+      const normalized = (l.strength - minStrength) / strengthSpan;
+      l.easiedStrength = easeFn(normalized);
     });
 
     return graph;

@@ -1,6 +1,6 @@
 import Container, { Service } from "typedi";
 import { Graph } from "../Models/Graph";
-import { d3 } from "../Models/D3";
+import * as d3 from "d3";
 import { Node } from "../Models/Node";
 import { Link } from "../Models/Link";
 import { conf } from "../data/Constants";
@@ -65,10 +65,10 @@ export class GraphRendererService {
     graphSimulation.on("tick", () => {
       // link movement
       this._state?.linkSelection
-        .attr("x1", (d) => (<Node>d.source).x!)
-        .attr("y1", (d) => (<Node>d.source).y!)
-        .attr("x2", (d) => (<Node>d.target).x!)
-        .attr("y2", (d) => (<Node>d.target).y!);
+        .attr("x1", (d) => (<Node>d.source).x || 0)
+        .attr("y1", (d) => (<Node>d.source).y || 0)
+        .attr("x2", (d) => (<Node>d.target).x || 0)
+        .attr("y2", (d) => (<Node>d.target).y || 0);
 
       // node movement
       this._state?.nodeSelection.attr(
@@ -116,17 +116,17 @@ export class GraphRendererService {
         //node circle
         nodeContainer
           .append("circle")
-          .attr("stroke", "#fff")
-          .attr("stroke-width", 1.5)
+          .attr("stroke", "#eee")
+          .attr("stroke-width", (d) => 1.5 + 1.5 * (d.easiedWeight || 0))
           .attr("r", (d: Node) => this.getPropValue(d))
-          .attr("fill", (d: Node) =>
-            d3.interpolateYlOrRd(0.3 + 0.7 * d.easiedWeight!)
-          );
+          .attr("fill", (d: Node) => {
+            return d3.interpolateYlOrRd(d.easiedWeight || 0);
+          });
 
         //append text
         nodeContainer
           .append("text")
-          .attr("x", 16)
+          .attr("x", (d) => 16 + 16 * (d.easiedWeight || 0))
           .attr("y", "0.40em")
           .text((d) => d.id)
           .attr("stroke", "black")
@@ -138,13 +138,16 @@ export class GraphRendererService {
     this._state.linkSelection = this._state.linkSelection
       .data<Link>(newLinks)
       .join<SVGLineElement, Link>("line")
-      .attr("stroke-width", (l: Link) => this.getPropValue(l));
+      .attr("stroke-width", (l: Link) => this.getPropValue(l))
+      .attr("opacity", (l: Link) => l.easiedStrength || 0);
 
     this._state.simulation.nodes(newNodes);
     this._state.simulation.force(
       "link",
       d3.forceLink<Node, Link>(newLinks).id((d) => d.id)
     );
+
+    this._state.simulation.alphaTarget(0.01).restart();
   }
 
   private buildGraphSimulation(
@@ -209,10 +212,11 @@ export class GraphRendererService {
       ? [conf.MIN_NODE_RADIUS, conf.MAX_NODE_RADIUS]
       : [conf.MIN_LINK_WIDTH, conf.MAX_LINK_WIDTH];
 
-    const easiedValue = this.isNodeGuard(object)
-      ? object.easiedWeight
-      : object.easiedStrength;
+    const easiedValue =
+      (this.isNodeGuard(object)
+        ? object.easiedWeight
+        : object.easiedStrength) || 0;
 
-    return min + (max - min) * easiedValue!;
+    return min + (max - min) * easiedValue;
   }
 }

@@ -16,27 +16,8 @@
   </div>
 </template>
 
-<style scoped>
-.box {
-  border-radius: 0px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-right: 5px;
-}
-.box .el-button {
-  margin: 5px 2px;
-  width: 100%;
-}
-.a {
-  display: none;
-}
-</style>
-
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { compressToUint8Array } from "lz-string";
 import moment from "moment";
 import { Irs, IrsSerializationService } from "core";
 import { useDownloadLink } from "@/composables/useDownloadLink";
@@ -46,8 +27,8 @@ export default defineComponent({
 
   props: {
     irs: {
-      type: Object as PropType<Irs>,
-      required: true
+      type: Object as PropType<Irs | undefined>,
+      required: false
     }
   },
 
@@ -56,13 +37,28 @@ export default defineComponent({
     const { anchorElem, downloadBlob } = useDownloadLink();
 
     const onTerExport = () => {
-      const irsJson = irsSerializationService.stringify(props.irs);
-      const terContent = compressToUint8Array(irsJson);
-      // TODO może jakiś popup o podanie nazwy?
-      downloadBlob(terContent, `save-${moment().format("YY-MM-DD@HH-mm")}.ter`);
+      if (props.irs) {
+        const irsJson = irsSerializationService.stringify(props.irs);
+        downloadBlob(
+          irsJson,
+          `save-${moment().format("YYYY_MM_DD_HH_mm")}.ter`
+        );
+      }
     };
 
     return { anchorElem, onTerExport };
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.box {
+  flex-direction: column;
+  align-items: center;
+  padding-right: 4px;
+  .el-button {
+    margin: 5px 2px;
+    width: 100%;
+  }
+}
+</style>

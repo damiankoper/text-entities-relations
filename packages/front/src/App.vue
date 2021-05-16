@@ -10,13 +10,10 @@
 <script lang="ts">
 import { defineComponent, ref, provide } from "vue";
 import { useRouter } from "vue-router";
-import { compressToUTF16 } from "lz-string";
 import moment from "moment";
 import { Irs, IrsSerializationService } from "core";
 import { useHistory, countersSymbol } from "./composables/useHistory";
-const id = 1;
 export default defineComponent({
-  name: "App",
   setup() {
     const { push } = useRouter();
     const irs = ref<Irs | null>(null);
@@ -29,10 +26,6 @@ export default defineComponent({
         localStorage.setItem(
           "terSession",
           irsSerializationService.stringify(irs.value)
-        );
-        localStorage.setItem(
-          "terSession",
-          compressToUTF16(irsSerializationService.stringify(irs.value))
         );
         localStorage.setItem("terSessionDate", moment().format());
       }

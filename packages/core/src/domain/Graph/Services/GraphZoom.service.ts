@@ -1,5 +1,5 @@
 import Container, { Service } from "typedi";
-import { d3 } from "../Models/D3";
+import * as d3 from "d3";
 import { Selection, ZoomBehavior } from "d3";
 
 @Service()
