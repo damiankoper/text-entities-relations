@@ -1,6 +1,10 @@
 <template>
   <el-container direction="vertical">
-    <Header showGraphOptions @hisBack="hisBack" @hisForward="hisForward" />
+    <Header
+      showGraphOptions
+      @hisBack="$emit('hisBack')"
+      @hisForward="$emit('hisForward')"
+    />
     <el-container>
       <el-main class="graph">
         <GraphRenderer
@@ -47,7 +51,6 @@ import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
 import GraphRenderer from "@/components/graph/GraphRenderer.vue";
 import Footer from "@/components/Footer.vue";
-import { IrsHistory } from "@/common/irsHistory";
 import _ from "lodash";
 import {
   TextUnit,
@@ -100,7 +103,6 @@ export default defineComponent({
     const { push } = useRouter();
     const irsUtilsService = IrsUtilsService.get();
 
-    const irsHistory = IrsHistory.getInstance();
     const graphRenderer = ref<typeof GraphRenderer>();
     const fit = () => {
       graphRenderer.value?.fit();
@@ -262,20 +264,11 @@ export default defineComponent({
         resetProgress();
         if (props.irs) {
           await analyse(props.irs?.document, p);
-          if (irs.value) {
-            irsHistory.add(irs.value);
-          }
           emit("irs", irs.value);
         }
       },
       onTerReset() {
         resetProgress();
-      },
-      hisBack() {
-        irsHistory.back();
-      },
-      hisForward() {
-        irsHistory.forward();
       }
     };
   }

@@ -1,11 +1,17 @@
 <template>
-  <router-view @irs="onIrs" :irs="irs" />
+  <router-view
+    @irs="onIrs"
+    :irs="irs"
+    @hisBack="hisBack"
+    @hisForward="hisForward"
+  />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Irs, IrsSerializationService } from "core";
+import { useHistory } from "./composables/useHistory";
 
 export default defineComponent({
   name: "App",
@@ -13,16 +19,23 @@ export default defineComponent({
     const { push } = useRouter();
     const irs = ref<Irs | null>(null);
     const irsSerializationService = IrsSerializationService.get();
-
+    const { back, forward, add } = useHistory();
     return {
       irs,
       onIrs(irsPayload: Irs) {
         irs.value = irsPayload;
+        add(irs.value);
         localStorage.setItem(
           "terSession",
           irsSerializationService.stringify(irsPayload)
         );
         push("graph");
+      },
+      hisBack() {
+        if (irs.value) irs.value = back(irs.value);
+      },
+      hisForward() {
+        if (irs.value) irs.value = forward(irs.value);
       }
     };
   }
