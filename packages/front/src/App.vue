@@ -8,34 +8,49 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, provide } from "vue";
 import { useRouter } from "vue-router";
 import { Irs, IrsSerializationService } from "core";
-import { useHistory } from "./composables/useHistory";
-
+import { useHistory, countersSymbol } from "./composables/useHistory";
+const id = 1;
 export default defineComponent({
   name: "App",
   setup() {
     const { push } = useRouter();
     const irs = ref<Irs | null>(null);
     const irsSerializationService = IrsSerializationService.get();
-    const { back, forward, add } = useHistory();
+    const { back, forward, add, counters } = useHistory();
+    provide(countersSymbol, counters);
+
+    function setTerSession() {
+      if (irs.value) {
+        localStorage.setItem(
+          "terSession",
+          irsSerializationService.stringify(irs.value)
+        );
+      }
+    }
     return {
       irs,
       onIrs(irsPayload: Irs) {
+        // Save old
+        if (irs.value) add(irs.value);
+        // Set new
         irs.value = irsPayload;
-        add(irs.value);
-        localStorage.setItem(
-          "terSession",
-          irsSerializationService.stringify(irsPayload)
-        );
+        setTerSession();
         push("graph");
       },
       hisBack() {
-        if (irs.value) irs.value = back(irs.value);
+        if (irs.value) {
+          irs.value = back(irs.value);
+          setTerSession();
+        }
       },
       hisForward() {
-        if (irs.value) irs.value = forward(irs.value);
+        if (irs.value) {
+          irs.value = forward(irs.value);
+          setTerSession();
+        }
       }
     };
   }

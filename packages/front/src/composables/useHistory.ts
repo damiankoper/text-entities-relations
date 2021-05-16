@@ -21,15 +21,15 @@ export function useHistory() {
       backHistory.value.push(irs);
     },
     back(currentIrs: Irs): Irs {
-      if (backHistory.value.length) {
-        const irs = backHistory.value[backHistory.value.length - 1];
+      const irs = backHistory.value.pop();
+      if (irs) {
         forwardHistory.value.unshift(currentIrs);
         return irs;
       } else throw Error("Missing back history entry!");
     },
     forward(currentIrs: Irs): Irs {
-      if (forwardHistory.value.length) {
-        const irs = forwardHistory.value[0];
+      const irs = forwardHistory.value.shift();
+      if (irs) {
         backHistory.value.push(currentIrs);
         return irs;
       } else throw Error("Missing forward history entry!");

@@ -21,8 +21,6 @@
   </el-badge>
 </template>
 
-<style></style>
-
 <script lang="ts">
 import { defineComponent, inject } from "vue";
 import { countersSymbol, HistoryCoutners } from "@/composables/useHistory";
@@ -42,3 +40,13 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.item {
+  margin-left: 16px;
+  ::v-deep(sup) {
+    margin-top: 4px;
+    margin-right: 8px;
+  }
+}
+</style>
