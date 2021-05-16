@@ -1,18 +1,15 @@
 import Container, { Service } from "typedi";
 import { ChunkList } from "../../Ner/Models/ChunkList";
 import { IrsHelperService } from "./IrsHelper.service";
-import {
-  Entity,
-  EntityOccurrence,
-  IrsParams,
-  Irs,
-  Relation,
-  TextUnit,
-} from "../Models";
-
+import { Entity, EntityOccurrence, IrsParams, Irs, Relation } from "../Models";
+import { IrsUtilsService } from "./IrsUtils.service";
+import levenshtein from "fast-levenshtein";
 @Service()
 export class IrsService {
-  constructor(private helperService: IrsHelperService) {}
+  constructor(
+    private helperService: IrsHelperService,
+    private utilsService: IrsUtilsService
+  ) {}
 
   static get(): IrsService {
     return Container.get(IrsService);
@@ -26,7 +23,7 @@ export class IrsService {
 
     const { entities, entityOccurrences, maxIdx } = this.extractEntities(
       document,
-      params.unit
+      params
     );
     const unitSelector = this.helperService.getUnitSelector(params.unit);
 
@@ -44,11 +41,13 @@ export class IrsService {
       );
     }
 
-    return {
+    const irs = {
       document: document,
       params: params,
-      entities: [...entities].map(([, value]) => value),
+      entities: [...entities.values()],
     };
+
+    return this.postIrs(irs, params);
   }
 
   private addNewRelations(
@@ -84,7 +83,7 @@ export class IrsService {
 
   private extractEntities(
     document: ChunkList,
-    unit: TextUnit
+    { unit, types }: IrsParams
   ): {
     entities: Map<string, Entity>;
     entityOccurrences: EntityOccurrence[];
@@ -97,7 +96,9 @@ export class IrsService {
 
     document.forEach((chunk) => {
       chunk.sentences.forEach((sentence) => {
-        const occurrences = sentence.tokens.map((token) => {
+        const tokens = sentence.tokens.filter((t) => types.includes(t.type));
+
+        const occurrences = tokens.map((token) => {
           if (!entities.has(token.name)) {
             entities.set(token.name, {
               name: token.name,
@@ -105,12 +106,12 @@ export class IrsService {
             });
           }
 
-          const occurence = {
+          const occurence: EntityOccurrence = {
             name: token.name,
             chunkGlobalIndex: chunk.chunkIndex,
             sentenceGlobalIndex: sentence.sentenceGlobalIndex,
             tokenGlobalIndex: token.tokenGlobalIndex,
-          } as EntityOccurrence;
+          };
 
           if (unitSelector(occurence) > maxIdx) {
             maxIdx = unitSelector(occurence);
@@ -124,5 +125,44 @@ export class IrsService {
     });
 
     return { entities, entityOccurrences, maxIdx };
+  }
+
+  private postIrs(irs: Irs, params: IrsParams): Irs {
+    // Delete numbers
+    if (params.post.excludeNumbers) {
+      for (const entity of irs.entities) {
+        if (!isNaN(Number(entity.name))) {
+          irs = this.utilsService.deleteNode(irs, entity.name);
+        }
+      }
+    }
+
+    // Merge
+    for (let i = 0; i < irs.entities.length; i++) {
+      const iName = irs.entities[i].name;
+      const toMerge: string[] = [iName];
+      for (let j = i + 1; j < irs.entities.length; j++) {
+        const jName = irs.entities[j].name;
+        if (levenshtein.get(iName, jName) <= params.post.maxMergeDistance) {
+          toMerge.push(jName);
+        }
+      }
+      if (toMerge.length > 1) {
+        irs = this.utilsService.mergeNodes(irs, toMerge);
+      }
+    }
+
+    // Delete
+    const toDelete: string[] = [];
+    for (const entity of irs.entities) {
+      if (entity.relations.length < params.post.minRelations) {
+        toDelete.push(entity.name);
+      }
+    }
+
+    toDelete.forEach((d) => {
+      irs = this.utilsService.deleteNode(irs, d);
+    });
+    return irs;
   }
 }

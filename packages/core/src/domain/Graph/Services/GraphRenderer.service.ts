@@ -120,7 +120,7 @@ export class GraphRendererService {
           .attr("stroke-width", (d) => 1.5 + 1.5 * (d.easiedWeight || 0))
           .attr("r", (d: Node) => this.getPropValue(d))
           .attr("fill", (d: Node) => {
-            return d3.interpolateYlOrRd(d.easiedWeight || 0);
+            return d3.interpolateHsl("#fff263", "#7f0000")(d.easiedWeight || 0);
           });
 
         //append text

@@ -53,11 +53,12 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .box {
+  display: flex;
   flex-direction: column;
   align-items: center;
   padding-right: 4px;
   .el-button {
-    margin: 5px 2px;
+    margin: 4px 2px;
     width: 100%;
   }
 }

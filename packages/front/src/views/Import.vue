@@ -10,9 +10,9 @@
           <el-row :gutter="12">
             <el-col :span="24" :lg="5" class="aside-bar">
               <el-steps
-                :direction="'vertical'"
+                direction="vertical"
                 :active="activeStep"
-                style="height: 200px"
+                style="height: 200px; margin-bottom:32px"
               >
                 <el-step title="Dane wejściowe"></el-step>
                 <el-step title="Parametry analizy"></el-step>
@@ -101,7 +101,13 @@ export default defineComponent({
 
         if (file.value) {
           await nerAnalyse(file.value, fileType.value, params.value.ner);
-          await terAnalyse(chunkList.value, params.value.ter);
+          setTimeout(
+            () =>
+              params.value
+                ? terAnalyse(chunkList.value, params.value.ter)
+                : null,
+            200
+          );
         }
       },
       onAnalyseSubmit() {

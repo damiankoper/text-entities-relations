@@ -25,7 +25,7 @@
               plain
               :disabled="terProgress.inProgress"
             >
-              Ponów analizę
+              Analizuj
             </el-button>
           </template>
         </el-popconfirm>
@@ -54,8 +54,8 @@ import {
   Progress
 } from "@/common/constants";
 import TerParams from "@/components/TerParams.vue";
-import { TextUnit, Irs, IrsParams } from "core";
-
+import { Irs, IrsParams, defaultIrsParams } from "core";
+import _ from "lodash";
 export default defineComponent({
   emits: ["submit", "reset"],
   props: {
@@ -70,16 +70,12 @@ export default defineComponent({
   },
   components: { TerParams },
   setup(props, { emit }) {
-    const params = ref<IrsParams>({
-      window: 20,
-      overlap: 10,
-      unit: TextUnit.SENTENCE
-    });
+    const params = ref<IrsParams>(defaultIrsParams());
 
     watch(
       () => props.irs,
       v => {
-        if (v) params.value = { ...v.params };
+        if (v) params.value = _.cloneDeep(v.params);
       },
       { immediate: true }
     );
@@ -90,7 +86,7 @@ export default defineComponent({
       units,
       reset() {
         emit("reset");
-        if (props.irs) params.value = { ...props.irs.params };
+        if (props.irs) params.value = _.cloneDeep(props.irs.params);
       }
     };
   }

@@ -43,7 +43,7 @@ export class IrsUtilsService {
   }
 
   deleteNode(irs: Irs, name: string): Irs {
-    const entities = irs.entities
+    const entities = [...irs.entities]
       .filter((e) => e.name !== name)
       .map(
         (e) =>

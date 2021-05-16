@@ -3,4 +3,5 @@ export enum TokenType {
   PLACE = "placeName",
   PERSON = "persName",
   ORGANIZATION = "orgName",
+  DATE = "date",
 }

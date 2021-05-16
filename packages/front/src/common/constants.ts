@@ -1,4 +1,4 @@
-import { Language, TextUnit } from "core";
+import { Language, TextUnit, TokenType } from "core";
 
 export const languages = [
   { value: Language.PL, label: "Polski" },
@@ -12,6 +12,14 @@ export const units = [
   { value: TextUnit.CHUNK, label: "Paragraf" },
   { value: TextUnit.SENTENCE, label: "Zdanie" },
   { value: TextUnit.WORD, label: "Słowo" }
+];
+
+export const tokenTypes = [
+  { value: TokenType.DATE, label: "Data" },
+  { value: TokenType.ORGANIZATION, label: "Organizacja" },
+  { value: TokenType.LOCATION, label: "Lokalizacja" },
+  { value: TokenType.PERSON, label: "Osoba" },
+  { value: TokenType.PLACE, label: "Miejsce" }
 ];
 
 export interface Progress {

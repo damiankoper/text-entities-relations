@@ -39,7 +39,7 @@
 import { defineComponent, reactive } from "vue";
 
 import { units, languages, NerParams } from "@/common/constants";
-import { Language, IrsParams, TextUnit } from "core";
+import { Language, IrsParams, TextUnit, defaultIrsParams } from "core";
 import TerParams from "../TerParams.vue";
 
 export interface Params {
@@ -55,11 +55,7 @@ export default defineComponent({
       ner: {
         lang: Language.PL
       },
-      ter: {
-        window: 1,
-        overlap: 0,
-        unit: TextUnit.SENTENCE
-      }
+      ter: defaultIrsParams()
     } as Params);
 
     return {

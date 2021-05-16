@@ -27,10 +27,27 @@
               <i :class="tool.icon"></i> {{ tool.hint }}
             </el-radio-button>
           </el-radio-group>
+          <el-dropdown class="menu" placement="top">
+            <el-button type="primary" size="mini">
+              <i class="el-icon-arrow-down"></i>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="unpinAll">
+                  <icon class="el-icon-thumb el-icon--left"></icon>
+                  Odepnij wszystkie
+                </el-dropdown-item>
+                <el-dropdown-item @click="resetPosition">
+                  <icon class="el-icon-magic-stick el-icon--left"></icon>
+                  Resetuj układ
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </el-card>
         <el-divider direction="vertical" class="divider" />
       </el-main>
-      <el-aside class="aside-bar">
+      <el-aside width="auto" class="aside-bar">
         <GraphOptions
           :terProgress="progress"
           :irs="irs"
@@ -280,6 +297,12 @@ export default defineComponent({
       },
       onTerReset() {
         resetProgress();
+      },
+      unpinAll() {
+        // TODO: Leszek :3
+      },
+      resetPosition() {
+        // TODO: Leszek :3
       }
     };
   }
@@ -295,6 +318,13 @@ export default defineComponent({
   padding: 0;
   position: relative;
   overflow: hidden;
+  .menu {
+    button {
+      margin-left: 8px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
   .divider {
     position: absolute;
     top: 0;
@@ -317,5 +347,6 @@ export default defineComponent({
 }
 .aside-bar {
   overflow: visible;
+  min-width: 300px;
 }
 </style>
