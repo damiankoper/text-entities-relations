@@ -1,6 +1,10 @@
 <template>
   <el-container direction="vertical">
-    <Header showGraphOptions />
+    <Header
+      showGraphOptions
+      @hisBack="$emit('hisBack')"
+      @hisForward="$emit('hisForward')"
+    />
     <el-container>
       <el-main class="graph">
         <GraphRenderer
@@ -230,14 +234,16 @@ export default defineComponent({
         () => slider.value.unit,
         () => props.irs
       ],
-      ([newRange, newUnit], [oldRange, oldUnit]) => {
+      ([newRange, newUnit, newIrs], [oldRange, oldUnit, oldIrs]) => {
         if (
-          props.irs &&
-          (!_.isEqual(newRange, oldRange) || oldUnit !== newUnit)
+          newIrs &&
+          (oldIrs !== newIrs ||
+            !_.isEqual(newRange, oldRange) ||
+            oldUnit !== newUnit)
         ) {
           console.log("filter & build triggered");
           const filteredIrs = irsUtilsService.getRelationsInPeriod(
-            props.irs,
+            newIrs as Irs,
             slider.value.sliderRange[0],
             slider.value.sliderRange[1],
             slider.value.unit
@@ -266,6 +272,7 @@ export default defineComponent({
       async onTerSubmit(p: IrsParams) {
         resetProgress();
         if (props.irs) {
+          const oldIrs = irs.value;
           await analyse(props.irs?.document, p);
           emit("irs", irs.value);
         }

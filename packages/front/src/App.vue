@@ -1,35 +1,63 @@
 <template>
-  <router-view @irs="onIrs" :irs="irs" />
+  <router-view
+    @irs="onIrs"
+    :irs="irs"
+    @hisBack="hisBack"
+    @hisForward="hisForward"
+  />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, provide } from "vue";
 import { useRouter } from "vue-router";
 import { compressToUTF16 } from "lz-string";
 import moment from "moment";
 import { Irs, IrsSerializationService } from "core";
-
+import { useHistory, countersSymbol } from "./composables/useHistory";
+const id = 1;
 export default defineComponent({
   name: "App",
   setup() {
     const { push } = useRouter();
     const irs = ref<Irs | null>(null);
     const irsSerializationService = IrsSerializationService.get();
+    const { back, forward, add, counters } = useHistory();
+    provide(countersSymbol, counters);
 
+    function setTerSession() {
+      if (irs.value) {
+        localStorage.setItem(
+          "terSession",
+          irsSerializationService.stringify(irs.value)
+        );
+        localStorage.setItem(
+          "terSession",
+          compressToUTF16(irsSerializationService.stringify(irs.value))
+        );
+        localStorage.setItem("terSessionDate", moment().format());
+      }
+    }
     return {
       irs,
       onIrs(irsPayload: Irs) {
+        // Save old
+        if (irs.value) add(irs.value);
+        // Set new
         irs.value = irsPayload;
-        try {
-          localStorage.setItem(
-            "terSession",
-            compressToUTF16(irsSerializationService.stringify(irsPayload))
-          );
-          localStorage.setItem("terSessionDate", moment().format());
-        } catch (err) {
-          console.log("Błąd zapisu do localstorage:\n" + err);
-        }
+        setTerSession();
         push("graph");
+      },
+      hisBack() {
+        if (irs.value) {
+          irs.value = back(irs.value);
+          setTerSession();
+        }
+      },
+      hisForward() {
+        if (irs.value) {
+          irs.value = forward(irs.value);
+          setTerSession();
+        }
       }
     };
   }
