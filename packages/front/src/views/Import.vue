@@ -82,7 +82,6 @@ export default defineComponent({
       irs
     } = useTer();
 
-
     return {
       activeStep,
       nerProgress,
