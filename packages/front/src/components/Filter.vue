@@ -1,6 +1,11 @@
 <template>
   <div class="box">
-    <el-select v-model="name" debounce="2000" placeholder="Nazwa wierzchołka">
+    <el-select
+      v-model="name"
+      filterable
+      debounce="2000"
+      placeholder="Nazwa wierzchołka"
+    >
       <el-option
         v-for="item in options"
         :key="item.value"
@@ -23,39 +28,38 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "Filter",
   props: {},
-  methods: {
-    resetValues() {
-      this.input = ref("");
-      this.name = "";
-    }
-  },
-  data() {
-    return {
-      input: ref(""),
-      options: [
-        {
-          value: "Option1",
-          label: "Option1"
-        },
-        {
-          value: "Option2",
-          label: "Option2"
-        },
-        {
-          value: "Option3",
-          label: "Option3"
-        },
-        {
-          value: "Option4",
-          label: "Option4"
-        },
-        {
-          value: "Option5",
-          label: "Option5"
-        }
-      ],
-      name: ""
+  setup() {
+    const input = ref("");
+    const name = ref("");
+    const options = ref([
+      {
+        value: "Option1",
+        label: "Option1"
+      },
+      {
+        value: "Option2",
+        label: "Option2"
+      },
+      {
+        value: "Option3",
+        label: "Option3"
+      },
+      {
+        value: "Option4",
+        label: "Option4"
+      },
+      {
+        value: "Option5",
+        label: "Option5"
+      }
+    ]);
+
+    const resetValues = () => {
+      input.value = "";
+      name.value = "";
     };
+
+    return { input, name, options, resetValues };
   }
 });
 </script>
