@@ -25,9 +25,8 @@ export class GraphZoomService {
   public fitToScreen(svgElement: SVGSVGElement): void {
     const containerSelection = d3.select(svgElement);
 
-    const rootSvgElementSelection = containerSelection.selectChild<SVGSVGElement>(
-      "#root"
-    );
+    const rootSvgElementSelection =
+      containerSelection.selectChild<SVGSVGElement>("#root");
 
     const rootNode = rootSvgElementSelection.node();
 
