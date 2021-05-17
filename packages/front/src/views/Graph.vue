@@ -9,7 +9,7 @@
       <el-main class="graph">
         <GraphRenderer
           ref="graphRenderer"
-          :graphStructure="graphStructure"
+          :graphStructure="graphStructureFiltered"
           @clickNode="onNodeClick"
         />
         <el-card class="controls">
@@ -34,11 +34,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="unpinAll">
-                  <icon class="el-icon-thumb el-icon--left"></icon>
+                  <el-icon class="el-icon-thumb el-icon--left"></el-icon>
                   Odepnij wszystkie
                 </el-dropdown-item>
                 <el-dropdown-item @click="resetPosition">
-                  <icon class="el-icon-magic-stick el-icon--left"></icon>
+                  <el-icon class="el-icon-magic-stick el-icon--left"></el-icon>
                   Resetuj układ
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -51,6 +51,7 @@
         <GraphOptions
           :terProgress="progress"
           :irs="irs"
+          v-model:filter-params="filterParams"
           @submitTer="onTerSubmit"
           @resetTer="onTerReset"
         />
@@ -62,7 +63,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, PropType, watch } from "vue";
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  PropType,
+  watch,
+  computed,
+  nextTick
+} from "vue";
 import Header from "@/components/Header.vue";
 import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
@@ -79,7 +88,9 @@ import {
   Chunk,
   Sentence,
   Token,
-  Graph
+  Graph,
+  defaultFilterParams,
+  FilterParams
 } from "core";
 import { useRouter } from "vue-router";
 import { useTer } from "@/composables/useTer";
@@ -267,22 +278,29 @@ export default defineComponent({
             slider.value.sliderRange[1],
             slider.value.unit
           );
-          // TODO: graph build entrypoint
           graphStructure.value = graphService.buildGraphStructure(filteredIrs);
         }
       },
       { immediate: true }
     );
 
+    const filterParams = ref<FilterParams>(defaultFilterParams());
+    const graphStructureFiltered = computed(() => {
+      // TODO: filter entrypoint
+      // @see src/domain/IndirectRelatationStructure/Services/Irs.service.ts@146
+      // return graphFilterService.filter(graphStructure.value, filterParams.value)
+      return graphStructure.value;
+    });
     onMounted(() => {
       if (!props.irs) push("/");
     });
 
     return {
+      filterParams,
       sliderLimits,
       graphRenderer,
       selectedGraphModification,
-      graphStructure,
+      graphStructureFiltered,
       onNodeClick,
       fit,
       graphTools,
