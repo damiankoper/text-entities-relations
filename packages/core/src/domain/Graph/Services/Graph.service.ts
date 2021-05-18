@@ -3,6 +3,8 @@ import { defaultGraph, Graph } from "../Models";
 import * as d3 from "d3";
 import { Irs } from "domain/IndirectRelatationStructure";
 import { conf } from "../data/Constants";
+import { Node } from "../Models/Node";
+import _ from "lodash";
 
 @Service()
 export class GraphService {
@@ -23,10 +25,14 @@ export class GraphService {
       maxWeight = Math.max(maxWeight, e.relations.length);
       minWeight = Math.min(minWeight, e.relations.length);
 
-      graph.nodes.push({
+      const node: Node = {
         id: e.name,
+        type: e.type,
         weight: e.relations.length,
-      });
+        neighboursCount: _.uniq(e.relations.map((r) => r.target.name)).length,
+        relationsCount: e.relations.length,
+      };
+      graph.nodes.push(node);
 
       e.relations.forEach((r) => {
         const [firstId, secondId] =

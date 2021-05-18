@@ -11,6 +11,8 @@
           ref="graphRenderer"
           :graphStructure="graphStructureFiltered"
           @clickNode="onNodeClick"
+          @mouseenterNode="onNodeMouseEnter"
+          @mouseleaveNode="onNodeMouseLeave"
         />
         <GraphControls
           v-model:graphMode="graphMode"
@@ -20,7 +22,10 @@
           @pinAll="pinAll"
           @resetPosition="resetPosition"
         />
-        <GraphInfo :graphStructure="graphStructureFiltered" />
+        <GraphInfo
+          :graphStructure="graphStructureFiltered"
+          :infoNode="infoNode"
+        />
         <el-divider direction="vertical" class="divider" />
       </el-main>
       <el-aside width="auto" class="aside-bar">
@@ -72,6 +77,7 @@ import {
 } from "core";
 import { useRouter } from "vue-router";
 import { useTer } from "@/composables/useTer";
+import { Node } from "core/lib/domain/Graph/Models/Node";
 
 export interface SliderData {
   sliderRange: [number, number];
@@ -98,6 +104,8 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    console.log(props.irs);
+
     const { push } = useRouter();
     const { progress, irs, analyse, resetProgress } = useTer();
     const irsUtilsService = IrsUtilsService.get();
@@ -112,6 +120,7 @@ export default defineComponent({
     const graphService = GraphService.get();
 
     const graphStructure = ref<Graph>(defaultGraph());
+    const infoNode = ref<Node | null>(null);
 
     const selectedNodes = ref<[string | null, string | null]>([null, null]);
 
@@ -251,9 +260,16 @@ export default defineComponent({
       graphMode,
       graphStructureFiltered,
       onNodeClick,
+      infoNode,
       fit,
       slider,
       progress,
+      onNodeMouseEnter(n: Node) {
+        infoNode.value = n;
+      },
+      onNodeMouseLeave() {
+        infoNode.value = null;
+      },
       async onTerSubmit(p: IrsParams) {
         resetProgress();
         if (props.irs) {

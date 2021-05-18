@@ -18,6 +18,7 @@ interface SimulationState {
   linkSelection: Selection<SVGLineElement, Link, SVGGElement, unknown>;
   nodeSelection: Selection<SVGSVGElement, Node, SVGSVGElement, unknown>;
 }
+type EventType = "clickNode" | "mouseleaveNode" | "mouseenterNode";
 
 @Service()
 export class GraphRendererService {
@@ -77,10 +78,9 @@ export class GraphRendererService {
       );
     });
   }
-
   public renderSvg(
     graph: Graph,
-    emit: (event: "clickNode", payload: string) => void
+    emit: (event: EventType, payload: string | Node) => void
   ): void {
     if (!this._state) {
       return;
@@ -116,6 +116,8 @@ export class GraphRendererService {
             d.fy = null;
           })
           .on("click", (_, d: Node) => emit("clickNode", d.id))
+          .on("mouseenter", (_, d: Node) => emit("mouseenterNode", d))
+          .on("mouseleave", (_, d: Node) => emit("mouseleaveNode", d))
           .call(this.buildDraggingOptions());
 
         //node circle

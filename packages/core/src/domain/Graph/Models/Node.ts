@@ -18,4 +18,6 @@ export interface Node extends SimulationNodeDatum {
    * Type from NER
    */
   type?: TokenType;
+  relationsCount?: number;
+  neighboursCount?: number;
 }
