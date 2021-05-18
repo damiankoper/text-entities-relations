@@ -12,39 +12,15 @@
           :graphStructure="graphStructureFiltered"
           @clickNode="onNodeClick"
         />
-        <el-card class="controls">
-          <el-button size="mini" @click="fit" type="primary">
-            Wyśrodkuj
-          </el-button>
-          <el-radio-group size="mini" v-model="selectedGraphModification">
-            <el-radio-button
-              size="mini"
-              v-for="tool in graphTools"
-              :key="tool.type"
-              :label="tool.type"
-              :disabled="!slider.isStatic"
-            >
-              <i :class="tool.icon"></i> {{ tool.hint }}
-            </el-radio-button>
-          </el-radio-group>
-          <el-dropdown class="menu" placement="top">
-            <el-button type="primary" size="mini">
-              <i class="el-icon-arrow-down"></i>
-            </el-button>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="unpinAll">
-                  <el-icon class="el-icon-thumb el-icon--left"></el-icon>
-                  Odepnij wszystkie
-                </el-dropdown-item>
-                <el-dropdown-item @click="resetPosition">
-                  <el-icon class="el-icon-magic-stick el-icon--left"></el-icon>
-                  Resetuj układ
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </el-card>
+        <GraphControls
+          v-model:graphMode="graphMode"
+          :editDisabled="!slider.isStatic"
+          @fit="fit"
+          @unpinAll="unpinAll"
+          @pinAll="pinAll"
+          @resetPosition="resetPosition"
+        />
+        <GraphInfo :graphStructure="graphStructureFiltered" />
         <el-divider direction="vertical" class="divider" />
       </el-main>
       <el-aside width="auto" class="aside-bar">
@@ -69,12 +45,13 @@ import {
   onMounted,
   PropType,
   watch,
-  computed,
-  nextTick
+  computed
 } from "vue";
 import Header from "@/components/Header.vue";
 import Slider from "@/components/graph/Slider.vue";
 import GraphOptions from "@/components/graph/GraphOptions.vue";
+import GraphInfo from "@/components/graph/GraphInfo.vue";
+import GraphControls, { GraphMode } from "@/components/graph/GraphControls.vue";
 import GraphRenderer from "@/components/graph/GraphRenderer.vue";
 import Footer from "@/components/Footer.vue";
 import _ from "lodash";
@@ -90,22 +67,11 @@ import {
   Token,
   Graph,
   defaultFilterParams,
-  FilterParams
+  FilterParams,
+  defaultGraph
 } from "core";
 import { useRouter } from "vue-router";
 import { useTer } from "@/composables/useTer";
-
-enum GraphModificationOption {
-  SELECT = "select",
-  DELETE = "delete",
-  MERGE = "merge"
-}
-
-interface GraphTool {
-  hint: string;
-  icon: string;
-  type: GraphModificationOption;
-}
 
 export interface SliderData {
   sliderRange: [number, number];
@@ -114,13 +80,14 @@ export interface SliderData {
 }
 
 export default defineComponent({
-  name: "Graph",
   components: {
     Header,
     Slider,
     GraphOptions,
     Footer,
-    GraphRenderer
+    GraphRenderer,
+    GraphControls,
+    GraphInfo
   },
 
   props: {
@@ -140,22 +107,22 @@ export default defineComponent({
       graphRenderer.value?.fit();
     };
 
-    const selectedGraphModification = ref(GraphModificationOption.SELECT);
+    const graphMode = ref(GraphMode.SELECT);
 
     const graphService = GraphService.get();
 
-    const graphStructure = ref<Graph>({ nodes: [], links: [] });
+    const graphStructure = ref<Graph>(defaultGraph());
 
     const selectedNodes = ref<[string | null, string | null]>([null, null]);
 
     const onNodeClick = (nodeId: string) => {
       if (props.irs) {
-        switch (selectedGraphModification.value) {
-          case GraphModificationOption.SELECT:
+        switch (graphMode.value) {
+          case GraphMode.SELECT:
             break;
-          case GraphModificationOption.MERGE:
+          case GraphMode.MERGE:
             break;
-          case GraphModificationOption.DELETE:
+          case GraphMode.DELETE:
             {
               const updatedIrs = irsUtilsService.deleteNode(props.irs, nodeId);
               graphStructure.value = graphService.buildGraphStructure(
@@ -167,24 +134,6 @@ export default defineComponent({
         }
       }
     };
-
-    const graphTools: GraphTool[] = [
-      {
-        hint: "Przypnij",
-        icon: "el-icon-thumb",
-        type: GraphModificationOption.SELECT
-      },
-      {
-        hint: "Usuń",
-        icon: "el-icon-delete",
-        type: GraphModificationOption.DELETE
-      },
-      {
-        hint: "Scal",
-        icon: "el-icon-share",
-        type: GraphModificationOption.MERGE
-      }
-    ];
 
     const sliderLimits = ref({
       min: 0,
@@ -207,7 +156,7 @@ export default defineComponent({
       slider,
       () => {
         if (!slider.value.isStatic) {
-          selectedGraphModification.value = GraphModificationOption.SELECT;
+          graphMode.value = GraphMode.SELECT;
         } else {
           resetSlider();
         }
@@ -299,11 +248,10 @@ export default defineComponent({
       filterParams,
       sliderLimits,
       graphRenderer,
-      selectedGraphModification,
+      graphMode,
       graphStructureFiltered,
       onNodeClick,
       fit,
-      graphTools,
       slider,
       progress,
       async onTerSubmit(p: IrsParams) {
@@ -317,6 +265,9 @@ export default defineComponent({
         resetProgress();
       },
       unpinAll() {
+        // TODO: Leszek :3
+      },
+      pinAll() {
         // TODO: Leszek :3
       },
       resetPosition() {
@@ -336,13 +287,7 @@ export default defineComponent({
   padding: 0;
   position: relative;
   overflow: hidden;
-  .menu {
-    button {
-      margin-left: 8px;
-      padding-left: 8px;
-      padding-right: 8px;
-    }
-  }
+
   .divider {
     position: absolute;
     top: 0;
@@ -350,17 +295,6 @@ export default defineComponent({
     right: 0;
     height: 100%;
     margin: 0;
-  }
-  .controls {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    ::v-deep(.el-card__body) {
-      padding: 8px;
-    }
-    .el-button {
-      margin-right: 8px;
-    }
   }
 }
 .aside-bar {

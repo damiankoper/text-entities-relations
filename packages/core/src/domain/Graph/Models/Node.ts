@@ -1,4 +1,5 @@
 import { SimulationNodeDatum } from "d3";
+import { TokenType } from "domain/Ner/Models/TokenType";
 
 export interface Node extends SimulationNodeDatum {
   /**
@@ -13,4 +14,8 @@ export interface Node extends SimulationNodeDatum {
    * Easied value in range [0,1] of weight used for visualization
    */
   easiedWeight?: number;
+  /**
+   * Type from NER
+   */
+  type?: TokenType;
 }

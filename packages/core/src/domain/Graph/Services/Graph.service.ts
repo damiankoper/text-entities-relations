@@ -1,7 +1,8 @@
 import Container, { Service } from "typedi";
-import { Graph } from "../Models";
+import { defaultGraph, Graph } from "../Models";
 import * as d3 from "d3";
 import { Irs } from "domain/IndirectRelatationStructure";
+import { conf } from "../data/Constants";
 
 @Service()
 export class GraphService {
@@ -11,10 +12,7 @@ export class GraphService {
 
   // TODO: problem z wagą wierzchołków dla dynamicznego, filtrowanego IRSa po ponownym wyliczeniu
   buildGraphStructure(irs: Irs): Graph {
-    const graph: Graph = {
-      nodes: [],
-      links: [],
-    };
+    const graph: Graph = defaultGraph();
 
     let maxWeight = 0;
     let minWeight = Infinity;
@@ -24,8 +22,6 @@ export class GraphService {
     irs.entities.forEach((e) => {
       maxWeight = Math.max(maxWeight, e.relations.length);
       minWeight = Math.min(minWeight, e.relations.length);
-      maxStrength = Math.max(maxStrength, e.relations.length);
-      minStrength = Math.min(minStrength, e.relations.length);
 
       graph.nodes.push({
         id: e.name,
@@ -43,9 +39,12 @@ export class GraphService {
         );
 
         if (link) {
-          link.strength += 1;
-          if (link.strength > maxStrength) maxStrength = link.strength;
+          link.strength++;
+          maxStrength = Math.max(maxStrength, link.strength);
+          minStrength = Math.min(minStrength, link.strength);
         } else {
+          maxStrength = Math.max(maxStrength, 1);
+          minStrength = Math.min(minStrength, 1);
           graph.links.push({
             source: firstId,
             target: secondId,
@@ -55,20 +54,25 @@ export class GraphService {
       });
     });
 
+    minStrength += 1; // every relation is counted twice
+
     const weightSpan = maxWeight - minWeight;
     const strengthSpan = maxStrength - minStrength;
 
-    const easeFn = d3.easeExpOut;
-
     graph.nodes.forEach((n) => {
       const normalized = (n.weight - minWeight) / weightSpan;
-      n.easiedWeight = easeFn(normalized);
+      n.easiedWeight = d3.easeExpOut(normalized);
     });
 
     graph.links.forEach((l) => {
       const normalized = (l.strength - minStrength) / strengthSpan;
-      l.easiedStrength = easeFn(normalized);
+      l.easiedStrength = d3.easeQuadOut(normalized);
     });
+
+    graph.weight.colorMin = conf.INT_FROM;
+    graph.weight.colorMax = conf.INT_TO;
+    graph.weight.min = minWeight;
+    graph.weight.max = maxWeight;
 
     return graph;
   }
