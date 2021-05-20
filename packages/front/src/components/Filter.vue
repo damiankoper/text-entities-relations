@@ -34,7 +34,6 @@
 <script lang="ts">
 import { defineComponent, ref, PropType, watchEffect, watch } from "vue";
 import { defaultFilterParams, FilterParams } from "core";
-import _ from "lodash";
 export default defineComponent({
   name: "Filter",
   props: {

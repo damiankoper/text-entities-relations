@@ -12,6 +12,12 @@ describe("IrsService", () => {
       window: 1,
       overlap: 0,
       unit: TextUnit.SENTENCE,
+      types: [],
+      post: {
+        minRelations: 0,
+        maxMergeDistance: 2,
+        excludeNumbers: false,
+      },
     });
 
     expect(
@@ -36,6 +42,12 @@ describe("IrsService", () => {
       window: 2,
       overlap: 1,
       unit: TextUnit.SENTENCE,
+      types: [],
+      post: {
+        minRelations: 0,
+        maxMergeDistance: 2,
+        excludeNumbers: false,
+      },
     });
 
     const json = serializationService.stringify(irs);

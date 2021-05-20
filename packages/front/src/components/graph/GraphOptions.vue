@@ -38,7 +38,6 @@ import Filter from "@/components/Filter.vue";
 import TerAnalyse from "@/components/graph/TerAnalyse.vue";
 import { Irs, IrsParams, defaultFilterParams, FilterParams } from "core";
 import { Progress, defaultProgress } from "@/common/constants";
-import _ from "lodash";
 export default defineComponent({
   name: "GraphOptions",
   components: {
