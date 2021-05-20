@@ -65,6 +65,7 @@ import {
   Irs,
   IrsParams,
   GraphService,
+  GraphFilterService,
   IrsUtilsService,
   ChunkList,
   Chunk,
@@ -242,13 +243,15 @@ export default defineComponent({
       { immediate: true }
     );
 
+    const graphFilterService = GraphFilterService.get();
     const filterParams = ref<FilterParams>(defaultFilterParams());
     const graphStructureFiltered = computed(() => {
-      // TODO: filter entrypoint
-      // @see src/domain/IndirectRelatationStructure/Services/Irs.service.ts@146
-      // return graphFilterService.filter(graphStructure.value, filterParams.value)
-      return graphStructure.value;
+      return graphFilterService.filter(
+        graphStructure.value,
+        filterParams.value
+      );
     });
+
     onMounted(() => {
       if (!props.irs) push("/");
     });

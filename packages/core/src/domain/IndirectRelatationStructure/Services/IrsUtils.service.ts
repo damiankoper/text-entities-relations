@@ -41,7 +41,9 @@ export class IrsUtilsService {
       );
     }
 
-    const entities = entityData.map(([entity]) => entity);
+    const entities = entityData
+      .map(([entity]) => entity)
+      .filter((e) => e.relations.length);
 
     return { ...irs, entities };
   }
