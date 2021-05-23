@@ -2,7 +2,11 @@ import { Token } from "../Models/Token";
 import { Sentence } from "../Models/Sentence";
 import { XMLToken } from "../Constants";
 import { Service } from "typedi";
-import { TokenType } from "../Models/TokenType";
+import {
+  TokenType,
+  TokenTypeEnglish,
+  TokenTypeRest,
+} from "../Models/TokenType";
 
 @Service()
 export class TokenCreator {
@@ -50,8 +54,43 @@ export class TokenCreator {
   }
 
   private getTokenType(type: string): TokenType {
-    if (Object.values(TokenType).includes(type as TokenType)) {
-      return type as TokenType;
-    } else return TokenType.PERSON;
+    console.log(type);
+    switch (type) {
+      case TokenType.ORGANIZATION:
+      case TokenTypeEnglish.ORGANIZATION:
+      case TokenTypeRest.ORGANIZATION:
+        return TokenType.ORGANIZATION;
+      case TokenType.DATE:
+      case TokenTypeEnglish.DATE:
+      case TokenTypeEnglish.TIME:
+        return TokenType.DATE;
+      case TokenType.LOCATION:
+      case TokenTypeEnglish.LOCATION:
+      case TokenTypeEnglish.GPE:
+      case TokenTypeRest.LOCATION:
+        return TokenType.LOCATION;
+      case TokenType.PERSON:
+      case TokenTypeEnglish.PERSON:
+      case TokenTypeRest.PERSON:
+        return TokenType.PERSON;
+      case TokenType.PLACE:
+        return TokenType.PLACE;
+      case TokenType.NUMBER:
+      case TokenTypeEnglish.ORDINAL:
+      case TokenTypeEnglish.CARDINAL:
+      case TokenTypeEnglish.QUANTITY:
+        return TokenType.NUMBER;
+      case TokenType.ART:
+      case TokenTypeEnglish.ART:
+        return TokenType.ART;
+      case TokenTypeEnglish.NORP:
+      case TokenType.NORP:
+        return TokenType.NORP;
+      case TokenType.MISCELLANEOUS:
+      case TokenTypeRest.MISCELLANEOUS:
+        return TokenType.MISCELLANEOUS;
+      default:
+        return TokenType.MISCELLANEOUS;
+    }
   }
 }
