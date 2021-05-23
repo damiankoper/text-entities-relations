@@ -17,27 +17,29 @@ export class GEXFNodeExporter {
       const type =
         TokenTypes.find((t) => t.value === node.type || -1)?.label || "Unknown";
       result += `                <node id="${index}" label="${node.id}">
-                <viz:color r="${this.getRed(color)}" g="${this.getGreen(
+                    <color r="${this.getRed(color)}" g="${this.getGreen(
         color
       )}" b="${this.getBlue(color)}" a="0"/>
-                <viz:position x="${node.x || 0}" y="${node.y || 0}" z="0.0"/>
-                <viz:size value="${this.getNodeRadius(
-                  node.easiedWeight || 0
-                )}"/>
-                <viz:shape value="disc"/>
-                <attvalues>
-                    <attvalue for="${Attributes.TOKEN_TYPE}" value="${type}"/>
-                    <attvalue for="${Attributes.WEIGHT}" value="${
+                    <position x="${node.x || 0}" y="${node.y || 0}" z="0.0"/>
+                    <size value="${this.getNodeRadius(
+                      node.easiedWeight || 0
+                    )}"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="${
+                          Attributes.TOKEN_TYPE
+                        }" value="${type}"/>
+                        <attvalue for="${Attributes.WEIGHT}" value="${
         node.weight
       }"/>
-                    <attvalue for="${Attributes.RELATIONS_COUNT}" value="${
+                        <attvalue for="${Attributes.RELATIONS_COUNT}" value="${
         node.relationsCount || 0
       }"/>
-                    <attvalue for="${Attributes.NEIGHBOURS_COUNT}" value="${
+                        <attvalue for="${Attributes.NEIGHBOURS_COUNT}" value="${
         node.neighboursCount || 0
       }"/>
-                </attvalues>
-            </node>
+                    </attvalues>
+                </node>
 `;
     });
     return result;
