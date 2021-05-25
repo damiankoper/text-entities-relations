@@ -11,7 +11,7 @@ export default defineComponent({
   emits: ["clickNode", "mouseenterNode", "mouseleaveNode"],
   props: {
     graphStructure: {
-      type: Object as PropType<Graph | null>,
+      type: Object as PropType<Graph>,
       required: true
     }
   },
@@ -30,17 +30,16 @@ export default defineComponent({
 
     watch(
       () => props.graphStructure,
-      currentGraph => {
-        if (currentGraph) {
-          graphRendererService.renderSvg(currentGraph, emit);
-        }
-      }
+      currentGraph => graphRendererService.renderSvg(currentGraph, emit)
     );
 
     onMounted(() => {
-      if (graphSvgElement.value && props.graphStructure) {
-        graphRendererService.initializeSimulation(graphSvgElement.value);
-        graphRendererService.renderSvg(props.graphStructure, emit);
+      if (graphSvgElement.value) {
+        graphRendererService.initializeSimulation(
+          graphSvgElement.value,
+          props.graphStructure
+        );
+        graphRendererService.renderSvg(props.graphStructure, emit, false);
       }
     });
 

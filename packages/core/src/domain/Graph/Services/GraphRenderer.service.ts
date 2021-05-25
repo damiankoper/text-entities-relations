@@ -17,6 +17,7 @@ interface SimulationState {
   simulation: Simulation<Node, Link>;
   linkSelection: Selection<SVGLineElement, Link, SVGGElement, unknown>;
   nodeSelection: Selection<SVGSVGElement, Node, SVGSVGElement, unknown>;
+  initialGraph: Graph;
 }
 type EventType = "clickNode" | "mouseleaveNode" | "mouseenterNode";
 
@@ -30,7 +31,10 @@ export class GraphRendererService {
     return Container.get(GraphRendererService);
   }
 
-  public initializeSimulation(graphSvgElement: SVGSVGElement): void {
+  public initializeSimulation(
+    graphSvgElement: SVGSVGElement,
+    initialGraph: Graph
+  ): void {
     const graphSimulation = this.buildGraphSimulation(graphSvgElement);
 
     const svg = d3.select(graphSvgElement);
@@ -61,6 +65,7 @@ export class GraphRendererService {
       linkSelection: link,
       nodeSelection: node,
       simulation: graphSimulation,
+      initialGraph: initialGraph,
     };
 
     graphSimulation.on("tick", () => {
@@ -78,9 +83,11 @@ export class GraphRendererService {
       );
     });
   }
+
   public renderSvg(
     graph: Graph,
-    emit: (event: EventType, payload: string | Node) => void
+    emit: (event: EventType, payload: string | Node) => void,
+    restartSimulation = true
   ): void {
     if (!this._state) {
       return;
@@ -92,12 +99,8 @@ export class GraphRendererService {
     );
 
     const oldNodesMap = new Map(
-      this._state.nodeSelection.data().map((d) => [d.id, d])
+      this._state.initialGraph.nodes.map((d) => [d.id, d])
     );
-
-    // const newNodes = graph.nodes.map((d) =>
-    //   Object.assign(oldNodesMap.get(d.id) || {}, d)
-    // );
 
     const newNodes = graph.nodes.map((d) => oldNodesMap.get(d.id) ?? d);
 
@@ -156,7 +159,9 @@ export class GraphRendererService {
       d3.forceLink<Node, Link>(newLinks).id((d) => d.id)
     );
 
-    this._state.simulation.alphaTarget(0.01).restart();
+    if (restartSimulation) {
+      this._state.simulation.alpha(0.01).restart();
+    }
   }
 
   private buildGraphSimulation(
@@ -185,7 +190,7 @@ export class GraphRendererService {
       d: Node
     ) => {
       if (!event.active) {
-        this._state?.simulation.alphaTarget(0.1).restart();
+        this._state?.simulation.alphaTarget(0.03).restart();
       }
       d.fx = d.x;
       d.fy = d.y;
@@ -210,10 +215,6 @@ export class GraphRendererService {
       .on("start", dragStarted)
       .on("drag", dragging)
       .on("end", dragEnded);
-  }
-
-  private isNodeGuard(object: Node | Link): object is Node {
-    return (object as Node).id !== undefined;
   }
 
   private getNodeRadius(weight: number) {
