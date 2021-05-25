@@ -84,6 +84,10 @@ export class GraphRendererService {
     });
   }
 
+  // emit used internally (pass in initializeSimulation)
+  // add another parameter, positionBasedOnPreviousData
+  // if not rerender from middle
+
   public renderSvg(
     graph: Graph,
     emit: (event: EventType, payload: string | Node) => void,
@@ -102,7 +106,18 @@ export class GraphRendererService {
       this._state.initialGraph.nodes.map((d) => [d.id, d])
     );
 
-    const newNodes = graph.nodes.map((d) => oldNodesMap.get(d.id) ?? d);
+    const newNodes = graph.nodes.map((d) => {
+      const oldNode = oldNodesMap.get(d.id);
+      if (oldNode) {
+        d.x = oldNode.x;
+        d.y = oldNode.y;
+        d.vx = oldNode.vx;
+        d.vy = oldNode.vy;
+        d.fx = oldNode.fx;
+        d.fy = oldNode.fy;
+      }
+      return d;
+    });
 
     const newLinks = graph.links.map((l) => Object.assign({}, l));
 
@@ -186,7 +201,7 @@ export class GraphRendererService {
     Node | SubjectPosition
   > {
     const dragStarted = (
-      event: D3DragEvent<SVGCircleElement, Node, Node>,
+      event: D3DragEvent<SVGSVGElement, Node, Node>,
       d: Node
     ) => {
       if (!event.active) {
@@ -197,14 +212,14 @@ export class GraphRendererService {
     };
 
     const dragging = (
-      event: D3DragEvent<SVGCircleElement, Node, Node>,
+      event: D3DragEvent<SVGSVGElement, Node, Node>,
       d: Node
     ) => {
       d.fx = event.x;
       d.fy = event.y;
     };
 
-    const dragEnded = (event: D3DragEvent<SVGCircleElement, Node, Node>) => {
+    const dragEnded = (event: D3DragEvent<SVGSVGElement, Node, Node>) => {
       if (!event.active) {
         this._state?.simulation.alphaTarget(0);
       }
@@ -228,5 +243,20 @@ export class GraphRendererService {
   private getLinkOpacity(strength: number) {
     const [min, max] = [conf.MIN_LINK_OPACITY, conf.MAX_LINK_OPACITY];
     return min + (max - min) * strength;
+  }
+
+  pinAllNodes(): void {
+    this._state?.initialGraph.nodes.forEach((d) => {
+      d.fx = d.x;
+      d.fy = d.y;
+    });
+  }
+
+  unpinAllNodes(): void {
+    this._state?.initialGraph.nodes.forEach((d) => {
+      d.fx = null;
+      d.fy = null;
+    });
+    this._state?.simulation.alpha(0.03).restart();
   }
 }

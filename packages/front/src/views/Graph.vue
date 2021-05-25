@@ -65,6 +65,7 @@ import {
   Irs,
   IrsParams,
   GraphService,
+  GraphRendererService,
   GraphFilterService,
   IrsUtilsService,
   ChunkList,
@@ -119,6 +120,8 @@ export default defineComponent({
     const graphMode = ref(GraphMode.SELECT);
 
     const graphService = GraphService.get();
+
+    const graphRendererService = GraphRendererService.get();
 
     const graphStructure = ref<Graph>(defaultGraph());
     const infoNode = ref<Node | null>(null);
@@ -284,13 +287,14 @@ export default defineComponent({
         resetProgress();
       },
       unpinAll() {
-        // TODO: Leszek :3
+        graphRendererService.unpinAllNodes();
       },
       pinAll() {
-        // TODO: Leszek :3
+        graphRendererService.pinAllNodes();
       },
       resetPosition() {
-        // TODO: Leszek :3
+        // maybe the simulation must be restared here
+        graphRendererService.renderSvg(graphStructureFiltered.value, false);
       }
     };
   }
