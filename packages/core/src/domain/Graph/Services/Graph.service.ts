@@ -60,10 +60,8 @@ export class GraphService {
       });
     });
 
-    minStrength += 1; // every relation is counted twice
-
-    const weightSpan = maxWeight - minWeight;
-    const strengthSpan = maxStrength - minStrength;
+    const weightSpan = Math.max(maxWeight - minWeight, 1);
+    const strengthSpan = Math.max(maxStrength - minStrength, 1);
 
     graph.nodes.forEach((n) => {
       const normalized = (n.weight - minWeight) / weightSpan;

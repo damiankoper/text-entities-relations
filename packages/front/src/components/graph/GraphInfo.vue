@@ -45,11 +45,11 @@ export default defineComponent({
     return {
       markLeft: computed(() => {
         return (
-          ((props.infoNode?.relationsCount ||
-            0 - props.graphStructure.weight.min) /
+          (((props.infoNode?.relationsCount || 0) -
+            props.graphStructure.weight.min) /
             (props.graphStructure.weight.max -
               props.graphStructure.weight.min)) *
-          100
+          98.85
         );
       }),
       type: computed(() => {
@@ -98,10 +98,11 @@ export default defineComponent({
     border: solid #555 1px;
     margin: 0 4px;
     .mark {
-      width: 1px;
+      width: 4px;
       height: 100%;
       background: white;
       position: relative;
+      margin: 0;
     }
   }
   .number-scale {

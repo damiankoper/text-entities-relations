@@ -52,13 +52,7 @@ import {
   watch,
   computed
 } from "vue";
-import Header from "@/components/Header.vue";
-import Slider from "@/components/graph/Slider.vue";
-import GraphOptions from "@/components/graph/GraphOptions.vue";
-import GraphInfo from "@/components/graph/GraphInfo.vue";
-import GraphControls, { GraphMode } from "@/components/graph/GraphControls.vue";
-import GraphRenderer from "@/components/graph/GraphRenderer.vue";
-import Footer from "@/components/Footer.vue";
+import { useRouter } from "vue-router";
 import _ from "lodash";
 import {
   TextUnit,
@@ -75,11 +69,17 @@ import {
   Graph,
   defaultFilterParams,
   FilterParams,
-  defaultGraph
+  defaultGraph,
+  Node
 } from "core";
-import { useRouter } from "vue-router";
+import Header from "@/components/Header.vue";
+import Slider from "@/components/graph/Slider.vue";
+import GraphOptions from "@/components/graph/GraphOptions.vue";
+import GraphInfo from "@/components/graph/GraphInfo.vue";
+import GraphControls, { GraphMode } from "@/components/graph/GraphControls.vue";
+import GraphRenderer from "@/components/graph/GraphRenderer.vue";
+import Footer from "@/components/Footer.vue";
 import { useTer } from "@/composables/useTer";
-import { Node } from "core/lib/domain/Graph/Models/Node";
 
 export interface SliderData {
   sliderRange: [number, number];
@@ -293,8 +293,14 @@ export default defineComponent({
         graphRendererService.pinAllNodes();
       },
       resetPosition() {
-        // maybe the simulation must be restared here
-        graphRendererService.renderSvg(graphStructureFiltered.value, false);
+        // TODO: maybe the simulation must be restared here
+        graphRendererService.renderSvg(
+          graphStructureFiltered.value,
+          () => {
+            throw new Error("Not implemented!");
+          },
+          false
+        );
       }
     };
   }
