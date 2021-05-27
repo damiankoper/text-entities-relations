@@ -87,7 +87,7 @@ export class GraphRendererService {
   // emit used internally (pass in initializeSimulation)
   // add another parameter, positionBasedOnPreviousData
   // if not rerender from middle
-
+  // TODO: doesn't respect node/link weight changes on graph update
   public renderSvg(
     graph: Graph,
     emit: (event: EventType, payload: string | Node) => void,

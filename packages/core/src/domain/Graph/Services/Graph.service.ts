@@ -12,7 +12,6 @@ export class GraphService {
     return Container.get(GraphService);
   }
 
-  // TODO: problem z wagą wierzchołków dla dynamicznego, filtrowanego IRSa po ponownym wyliczeniu
   buildGraphStructure(irs: Irs): Graph {
     const graph: Graph = defaultGraph();
 
