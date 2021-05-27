@@ -1,5 +1,4 @@
-import { ChunkList } from "../../Ner/Models/ChunkList";
-import { TokenType } from "../../Ner/Models/TokenType";
+import { ChunkList, TokenType } from "../../Ner";
 import { IrsSerializationService, IrsService } from ".";
 import { TextUnit } from "../Models";
 
@@ -12,10 +11,10 @@ describe("IrsService", () => {
       window: 1,
       overlap: 0,
       unit: TextUnit.SENTENCE,
-      types: [],
+      types: [TokenType.PERSON],
       post: {
         minRelations: 0,
-        maxMergeDistance: 2,
+        maxMergeDistance: 0,
         excludeNumbers: false,
       },
     });
@@ -42,10 +41,10 @@ describe("IrsService", () => {
       window: 2,
       overlap: 1,
       unit: TextUnit.SENTENCE,
-      types: [],
+      types: [TokenType.PERSON],
       post: {
         minRelations: 0,
-        maxMergeDistance: 2,
+        maxMergeDistance: 0,
         excludeNumbers: false,
       },
     });

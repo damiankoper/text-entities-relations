@@ -1,9 +1,10 @@
 import Container, { Service } from "typedi";
-import { ChunkList } from "../../Ner/Models/ChunkList";
+import { ChunkList } from "../../Ner";
 import { IrsHelperService } from "./IrsHelper.service";
 import { Entity, EntityOccurrence, IrsParams, Irs, Relation } from "../Models";
-import { IrsUtilsService } from "./IrsUtils.service";
+import { IrsUtilsService } from ".";
 import levenshtein from "fast-levenshtein";
+
 @Service()
 export class IrsService {
   constructor(
