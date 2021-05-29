@@ -2,7 +2,7 @@ import Container, { Service } from "typedi";
 import { ChunkList } from "../../Ner";
 import { IrsHelperService } from "./IrsHelper.service";
 import { Entity, EntityOccurrence, IrsParams, Irs, Relation } from "../Models";
-import { IrsUtilsService } from ".";
+import { IrsUtilsService } from "./IrsUtils.service";
 import levenshtein from "fast-levenshtein";
 
 @Service()
