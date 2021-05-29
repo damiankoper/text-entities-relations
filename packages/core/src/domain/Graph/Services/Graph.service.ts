@@ -18,7 +18,6 @@ export class GraphService {
     let maxWeight = 0;
     let minWeight = Infinity;
     let maxStrength = 0;
-    let minStrength = Infinity;
 
     irs.entities.forEach((e) => {
       maxWeight = Math.max(maxWeight, e.relations.length);
@@ -46,10 +45,8 @@ export class GraphService {
         if (link) {
           link.strength++;
           maxStrength = Math.max(maxStrength, link.strength);
-          minStrength = Math.min(minStrength, link.strength);
         } else {
           maxStrength = Math.max(maxStrength, 1);
-          minStrength = Math.min(minStrength, 1);
           graph.links.push({
             source: firstId,
             target: secondId,
@@ -58,6 +55,11 @@ export class GraphService {
         }
       });
     });
+
+    const minStrength = graph.links.reduce<number>(
+      (prev, val) => Math.min(prev, val.strength),
+      Infinity
+    );
 
     const weightSpan = Math.max(maxWeight - minWeight, 1);
     const strengthSpan = Math.max(maxStrength - minStrength, 1);
