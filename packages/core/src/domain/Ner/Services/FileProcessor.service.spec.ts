@@ -35,7 +35,7 @@ describe("FileProcessor", () => {
     const NERData = {
       data: "/users/default/9d0c0893-5c00-4ca8-8479-77f467c0fb4c",
     };
-    mockTaskHandler.startTaskArchive.mockResolvedValue(null);
+    mockTaskHandler.startTaskArchive.mockResolvedValue();
     const spyAxios = jest.spyOn(axios, "post");
     spyAxios.mockResolvedValue(NERData);
     await fileProcessor.process(file, fileType, language);
@@ -55,7 +55,7 @@ describe("FileProcessor", () => {
     const NERData = {
       data: "/users/default/9d0c0893-5c00-4ca8-8479-77f467c0fb4c",
     };
-    mockTaskHandler.startTaskDocument.mockResolvedValue(null);
+    mockTaskHandler.startTaskDocument.mockResolvedValue();
     const spyAxios = jest.spyOn(axios, "post");
     spyAxios.mockResolvedValue(NERData);
     await fileProcessor.process(file, fileType, language);
@@ -72,7 +72,7 @@ describe("FileProcessor", () => {
   it("should try to hit APIUrls.UPLOAD URL and miss", async () => {
     const fileType = FileType.ARCHIVE;
     const language = Language.PL;
-    mockTaskHandler.startTaskArchive.mockResolvedValue(null);
+    mockTaskHandler.startTaskArchive.mockResolvedValue();
     mockEventDispatcher.dispatchUploadingError.mockReturnValue();
     const spyAxios = jest.spyOn(axios, "post");
     spyAxios.mockRejectedValue(new Error("test"));

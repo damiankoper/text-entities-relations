@@ -42,7 +42,7 @@ describe("TaskHandler", () => {
         '"})',
       user: "Grupa D",
     };
-    mockTaskObserver.observeTask.mockResolvedValue(null);
+    mockTaskObserver.observeTask.mockResolvedValue();
     const spyAxios = jest.spyOn(axios, "post");
     spyAxios.mockResolvedValue(NERData);
     await taskHandler.startTaskArchive(fileHandle, language);
@@ -72,7 +72,7 @@ describe("TaskHandler", () => {
       file: fileHandle,
       user: "Grupa D",
     };
-    mockTaskObserver.observeTask.mockResolvedValue(null);
+    mockTaskObserver.observeTask.mockResolvedValue();
     const spyAxios = jest.spyOn(axios, "post");
     spyAxios.mockResolvedValue(NERData);
     await taskHandler.startTaskDocument(fileHandle, language);
@@ -88,7 +88,7 @@ describe("TaskHandler", () => {
 
   it("should try to hit APIUrls.START URL and miss", async () => {
     mockEventDispatcher.dispatchTaskStartingError.mockReturnValue();
-    mockTaskObserver.observeTask.mockResolvedValue(null);
+    mockTaskObserver.observeTask.mockResolvedValue();
     const spyAxios = jest.spyOn(axios, "post");
     spyAxios.mockRejectedValue(new Error("test"));
     const fileHandle = "/test";
