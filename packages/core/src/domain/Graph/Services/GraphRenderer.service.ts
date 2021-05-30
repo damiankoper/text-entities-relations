@@ -18,6 +18,7 @@ interface SimulationState {
   linkSelection: Selection<SVGLineElement, Link, SVGGElement, unknown>;
   nodeSelection: Selection<SVGSVGElement, Node, SVGSVGElement, unknown>;
 }
+type EventType = "clickNode" | "mouseleaveNode" | "mouseenterNode";
 
 @Service()
 export class GraphRendererService {
@@ -77,14 +78,18 @@ export class GraphRendererService {
       );
     });
   }
-
   public renderSvg(
     graph: Graph,
-    emit: (event: "clickNode", payload: string) => void
+    emit: (event: EventType, payload: string | Node) => void
   ): void {
     if (!this._state) {
       return;
     }
+
+    const interpolate = d3.interpolateHsl(
+      graph.weight.colorMin,
+      graph.weight.colorMax
+    );
 
     const oldNodesMap = new Map(
       this._state.nodeSelection.data().map((d) => [d.id, d])
@@ -111,6 +116,8 @@ export class GraphRendererService {
             d.fy = null;
           })
           .on("click", (_, d: Node) => emit("clickNode", d.id))
+          .on("mouseenter", (_, d: Node) => emit("mouseenterNode", d))
+          .on("mouseleave", (_, d: Node) => emit("mouseleaveNode", d))
           .call(this.buildDraggingOptions());
 
         //node circle
@@ -118,9 +125,9 @@ export class GraphRendererService {
           .append("circle")
           .attr("stroke", "#eee")
           .attr("stroke-width", (d) => 1.5 + 1.5 * (d.easiedWeight || 0))
-          .attr("r", (d: Node) => this.getPropValue(d))
+          .attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0))
           .attr("fill", (d: Node) => {
-            return d3.interpolateHsl("#fff263", "#7f0000")(d.easiedWeight || 0);
+            return interpolate(d.easiedWeight || 0);
           });
 
         //append text
@@ -138,8 +145,10 @@ export class GraphRendererService {
     this._state.linkSelection = this._state.linkSelection
       .data<Link>(newLinks)
       .join<SVGLineElement, Link>("line")
-      .attr("stroke-width", (l: Link) => this.getPropValue(l))
-      .attr("opacity", (l: Link) => l.easiedStrength || 0);
+      .attr("stroke-width", (l: Link) =>
+        this.getLinkWidth(l.easiedStrength || 0)
+      )
+      .attr("opacity", (l: Link) => this.getLinkOpacity(l.easiedStrength || 0));
 
     this._state.simulation.nodes(newNodes);
     this._state.simulation.force(
@@ -207,16 +216,16 @@ export class GraphRendererService {
     return (object as Node).id !== undefined;
   }
 
-  private getPropValue(object: Node | Link): number {
-    const [min, max] = this.isNodeGuard(object)
-      ? [conf.MIN_NODE_RADIUS, conf.MAX_NODE_RADIUS]
-      : [conf.MIN_LINK_WIDTH, conf.MAX_LINK_WIDTH];
-
-    const easiedValue =
-      (this.isNodeGuard(object)
-        ? object.easiedWeight
-        : object.easiedStrength) || 0;
-
-    return min + (max - min) * easiedValue;
+  private getNodeRadius(weight: number) {
+    const [min, max] = [conf.MIN_NODE_RADIUS, conf.MAX_NODE_RADIUS];
+    return min + (max - min) * weight;
+  }
+  private getLinkWidth(strength: number) {
+    const [min, max] = [conf.MIN_LINK_WIDTH, conf.MAX_LINK_WIDTH];
+    return min + (max - min) * strength;
+  }
+  private getLinkOpacity(strength: number) {
+    const [min, max] = [conf.MIN_LINK_OPACITY, conf.MAX_LINK_OPACITY];
+    return min + (max - min) * strength;
   }
 }

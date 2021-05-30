@@ -102,6 +102,7 @@ export class IrsService {
           if (!entities.has(token.name)) {
             entities.set(token.name, {
               name: token.name,
+              type: token.type,
               relations: [],
             });
           }

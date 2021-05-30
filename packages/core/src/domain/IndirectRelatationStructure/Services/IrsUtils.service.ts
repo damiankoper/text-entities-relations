@@ -1,3 +1,4 @@
+import { TokenType } from "../../../domain/Ner/Models/TokenType";
 import _ from "lodash";
 import Container, { Service } from "typedi";
 import { Entity, Irs, Relation, TextUnit } from "../Models";
@@ -17,11 +18,14 @@ export class IrsUtilsService {
     endIndex: number,
     unit: TextUnit
   ): Irs {
+    console.log(irs);
+
     const entityData = irs.entities.map(
       (val) =>
         [
           {
             name: val.name,
+            type: val.type,
             relations: [],
           } as Entity,
           val.relations,
@@ -37,7 +41,9 @@ export class IrsUtilsService {
       );
     }
 
-    const entities = entityData.map(([entity]) => entity);
+    const entities = entityData
+      .map(([entity]) => entity)
+      .filter((e) => e.relations.length);
 
     return { ...irs, entities };
   }
@@ -49,6 +55,7 @@ export class IrsUtilsService {
         (e) =>
           ({
             name: e.name,
+            type: e.type,
             relations: e.relations.filter((r) => r.target.name !== name),
           } as Entity)
       );
@@ -65,6 +72,7 @@ export class IrsUtilsService {
 
     const newNode: Entity = {
       name: mergedNodeName,
+      type: TokenType.PERSON,
       relations: [],
     };
 
@@ -75,6 +83,7 @@ export class IrsUtilsService {
           e.name,
           {
             name: e.name,
+            type: e.type,
             relations: e.relations.map((r) => {
               if (mergedNames.includes(r.target.name)) {
                 return {

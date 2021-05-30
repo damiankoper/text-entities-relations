@@ -1,7 +1,8 @@
-import { Graph } from "../Models/Graph";
+import { defaultGraph, Graph } from "../Models/Graph";
 import { easeExpOut } from "d3";
 
 export const SampleGraph: Graph = {
+  ...defaultGraph(),
   nodes: [
     { id: "Myriel", weight: 10, easiedWeight: 0 },
     { id: "Napoleon", weight: 1, easiedWeight: 0 },
@@ -1129,6 +1130,7 @@ const maxWeight = 36;
 const maxStrength = 271;
 
 export const NormalizedGraph: Graph = {
+  ...defaultGraph(),
   nodes: SampleGraph.nodes.map((d) => ({
     weight: d.weight,
     id: d.id,

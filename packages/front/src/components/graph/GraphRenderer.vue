@@ -8,7 +8,7 @@ import { Graph, GraphRendererService, GraphZoomService } from "core";
 
 export default defineComponent({
   name: "GraphRenderer",
-  emits: ["clickNode"],
+  emits: ["clickNode", "mouseenterNode", "mouseleaveNode"],
   props: {
     graphStructure: {
       type: Object as PropType<Graph | null>,
