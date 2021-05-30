@@ -5,10 +5,11 @@
       <span class="header-text">TER</span>
     </router-link>
     <span style="width:100%"></span>
-    <Undo
+    <HeaderButtons
       v-if="showGraphOptions"
       @hisBack="$emit('hisBack')"
       @hisForward="$emit('hisForward')"
+      @menuToggle="$emit('menuToggle')"
     />
   </el-header>
   <el-divider style="margin: 0; margin-top: -1px" />
@@ -16,11 +17,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Undo from "@/components/Undo.vue";
+import HeaderButtons from "@/components/HeaderButtons.vue";
 export default defineComponent({
-  name: "Header",
   components: {
-    Undo
+    HeaderButtons
   },
   props: {
     showGraphOptions: {
@@ -28,7 +28,7 @@ export default defineComponent({
       default: false
     }
   },
-  emits: ["hisBack", "hisForward"],
+  emits: ["hisBack", "hisForward", "menuToggle"],
   setup() {
     return {
       logoImg: require("@/assets/books.svg")

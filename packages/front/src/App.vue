@@ -37,7 +37,6 @@ export default defineComponent({
         if (irs.value) add(irs.value);
         // Set new
         irs.value = irsPayload;
-        console.log(irsPayload);
 
         setTerSession();
         push("graph");

@@ -10,6 +10,7 @@
         <div class="color-scale" :style="{ background }">
           <div
             class="mark"
+            :class="{ visible: infoNode }"
             :style="{
               left: markLeft + '%'
             }"
@@ -94,15 +95,22 @@ export default defineComponent({
   .color-scale {
     width: 300px;
     height: 20px;
-    border-radius: 4px;
-    border: solid #555 1px;
     margin: 0 4px;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     .mark {
-      width: 4px;
-      height: 100%;
+      transition: left 0.3s, opacity 0.3s;
+      width: 2px;
+      height: calc(100% + 4px);
+      margin: -2px 0 -2px 0;
       background: white;
+      border-left: #ccc solid 1px;
+      border-right: #ccc solid 1px;
       position: relative;
-      margin: 0;
+      opacity: 0;
+      &.visible {
+        opacity: 1;
+      }
     }
   }
   .number-scale {

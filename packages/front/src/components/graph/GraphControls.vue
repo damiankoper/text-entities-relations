@@ -1,7 +1,12 @@
 <template>
   <el-card class="controls">
-    <el-button size="mini" @click="$emit('fit')" type="primary">
-      Wyśrodkuj
+    <el-button
+      title="Wyśrodkuj"
+      size="mini"
+      @click="$emit('fit')"
+      type="primary"
+    >
+      <el-icon class="el-icon-aim" />
     </el-button>
     <el-radio-group size="mini" v-model="graphModeInner">
       <el-radio-button
@@ -83,6 +88,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .controls {
+  user-select: none;
   position: absolute;
   bottom: 12px;
   right: 12px;

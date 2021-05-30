@@ -4,6 +4,7 @@
       showGraphOptions
       @hisBack="$emit('hisBack')"
       @hisForward="$emit('hisForward')"
+      @menuToggle="asideVisible = !asideVisible"
     />
     <el-container>
       <el-main class="graph">
@@ -28,7 +29,7 @@
         />
         <el-divider direction="vertical" class="divider" />
       </el-main>
-      <el-aside width="auto" class="aside-bar">
+      <el-aside v-if="asideVisible" width="auto" class="aside-bar">
         <GraphOptions
           :terProgress="progress"
           :irs="irs"
@@ -106,8 +107,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    console.log(props.irs);
-
+    const asideVisible = ref(true);
     const { push } = useRouter();
     const { progress, irs, analyse, resetProgress } = useTer();
     const irsUtilsService = IrsUtilsService.get();
@@ -258,8 +258,8 @@ export default defineComponent({
     onMounted(() => {
       if (!props.irs) push("/");
     });
-
     return {
+      asideVisible,
       filterParams,
       sliderLimits,
       graphRenderer,

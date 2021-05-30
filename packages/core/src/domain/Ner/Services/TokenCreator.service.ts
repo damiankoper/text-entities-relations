@@ -54,7 +54,6 @@ export class TokenCreator {
   }
 
   private getTokenType(type: string): TokenType {
-    console.log(type);
     switch (type) {
       case TokenType.ORGANIZATION:
       case TokenTypeEnglish.ORGANIZATION:

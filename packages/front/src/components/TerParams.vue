@@ -7,7 +7,11 @@
           <el-input-number v-model="params.window" :min="1" />
         </el-form-item>
         <el-form-item label="Overlap" label-width="120px">
-          <el-input-number v-model="params.overlap" :min="0" />
+          <el-input-number
+            v-model="params.overlap"
+            :min="0"
+            :max="params.window - 1"
+          />
         </el-form-item>
         <el-form-item
           label="Jednostka"
@@ -98,7 +102,20 @@ export default defineComponent({
       params.value = props.modelValue;
     });
 
-    watch(params, () => emit("update:modelValue", params.value));
+    watch(params, () => {
+      emit("update:modelValue", params.value);
+    });
+
+    watch(
+      params,
+      () => {
+        params.value.overlap = Math.min(
+          params.value.window - 1,
+          params.value.overlap
+        );
+      },
+      { deep: true }
+    );
 
     return {
       params,
