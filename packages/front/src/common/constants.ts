@@ -18,8 +18,12 @@ export const tokenTypes = [
   { value: TokenType.DATE, label: "Data" },
   { value: TokenType.ORGANIZATION, label: "Organizacja" },
   { value: TokenType.LOCATION, label: "Lokalizacja" },
+  { value: TokenType.PLACE, label: "Miejsce" },
   { value: TokenType.PERSON, label: "Osoba" },
-  { value: TokenType.PLACE, label: "Miejsce" }
+  { value: TokenType.NUMBER, label: "Liczba" },
+  { value: TokenType.NORP, label: "Narodowość" },
+  { value: TokenType.ART, label: "Dzieło sztuki" },
+  { value: TokenType.MISCELLANEOUS, label: "Pozostałe" }
 ];
 
 export interface Progress {
