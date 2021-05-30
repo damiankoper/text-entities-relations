@@ -35,7 +35,7 @@ export default defineComponent({
 
     onMounted(() => {
       if (graphSvgElement.value) {
-        graphRendererService.initializeSimulation(
+        graphRendererService.bindSimulation(
           graphSvgElement.value,
           props.graphStructure
         );
