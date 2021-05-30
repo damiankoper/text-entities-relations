@@ -29,9 +29,9 @@ export class GraphFilterService {
     );
 
     return {
-      nodes: nodes,
-      links: links,
-      weight: { ...graph.weight },
+      ...graph,
+      nodes,
+      links,
     };
   }
 

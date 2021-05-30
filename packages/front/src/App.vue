@@ -15,10 +15,10 @@ import { Irs, IrsSerializationService } from "core";
 import { useHistory, countersSymbol } from "./composables/useHistory";
 export default defineComponent({
   setup() {
-    const { push } = useRouter();
+    const { push, beforeEach } = useRouter();
     const irs = ref<Irs | null>(null);
     const irsSerializationService = IrsSerializationService.get();
-    const { back, forward, add, counters } = useHistory();
+    const { back, forward, add, counters, clear } = useHistory();
     provide(countersSymbol, counters);
 
     function setTerSession() {
@@ -30,6 +30,12 @@ export default defineComponent({
         localStorage.setItem("terSessionDate", moment().format());
       }
     }
+    beforeEach((to, from, next) => {
+      if (to.name === "Graph") {
+        clear();
+      }
+      next();
+    });
     return {
       irs,
       onIrs(irsPayload: Irs) {

@@ -1,5 +1,5 @@
 <template>
-  <el-container direction="vertical">
+  <el-container direction="vertical" tabindex="0">
     <Header
       showGraphOptions
       @hisBack="$emit('hisBack')"
@@ -52,7 +52,8 @@ import {
   onMounted,
   PropType,
   watch,
-  computed
+  computed,
+  onUnmounted
 } from "vue";
 import { useRouter } from "vue-router";
 import _ from "lodash";
@@ -72,8 +73,7 @@ import {
   defaultFilterParams,
   FilterParams,
   defaultGraph,
-  Node,
-  conf
+  Node
 } from "core";
 import Header from "@/components/Header.vue";
 import Slider from "@/components/graph/Slider.vue";
@@ -132,53 +132,6 @@ export default defineComponent({
 
     const selectedNodes = ref<[string | null, string | null]>([null, null]);
 
-    const highlightNode = (nodeId: string) => {
-      const nodeCircle = document.getElementById(nodeId);
-
-      if (nodeCircle?.hasChildNodes()) {
-        while (nodeCircle.firstChild) {
-          nodeCircle.firstChild.remove();
-        }
-        return;
-      }
-
-      const colorAnimation = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "animate"
-      );
-      colorAnimation.setAttribute("attributeType", "XML");
-      colorAnimation.setAttribute("attributeName", "fill");
-      const colors = conf.NODE_HIGHLIGHT_COLORS;
-      const colorValues = `${colors.join(";")};${colors.reverse().join(";")}`;
-      colorAnimation.setAttribute("values", colorValues);
-      colorAnimation.setAttribute("dur", "2s");
-      colorAnimation.setAttribute("repeatCount", "indefinite");
-
-      const radiusAnimation = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "animate"
-      );
-      radiusAnimation.setAttribute("attributeType", "XML");
-      radiusAnimation.setAttribute("attributeName", "r");
-      const radiuses = [];
-      for (
-        let radius = conf.MIN_NODE_RADIUS;
-        radius < conf.MAX_NODE_RADIUS;
-        radius += 3
-      ) {
-        radiuses.push(radius);
-      }
-      const radiusValues = `${radiuses.join(";")};${radiuses
-        .reverse()
-        .join(";")}`;
-      radiusAnimation.setAttribute("values", radiusValues);
-      radiusAnimation.setAttribute("dur", "5s");
-      radiusAnimation.setAttribute("repeatCount", "indefinite");
-
-      nodeCircle?.appendChild(colorAnimation);
-      nodeCircle?.appendChild(radiusAnimation);
-    };
-
     const onNodeClick = (payload: { node: Node; shiftPressed: boolean }) => {
       if (props.irs) {
         switch (graphMode.value) {
@@ -189,10 +142,18 @@ export default defineComponent({
           case GraphMode.MERGE: {
             if (!selectedNodes.value[0]) {
               selectedNodes.value[0] = payload.node.id;
-            } else if (selectedNodes.value[0] === payload.node.id) {
-              selectedNodes.value[0] = null;
+              selectedNodes.value[1] = null;
             } else {
               selectedNodes.value[1] = payload.node.id;
+              if (selectedNodes.value[0] != selectedNodes.value[1]) {
+                const irs = irsUtilsService.mergeNodes(
+                  props.irs,
+                  selectedNodes.value as string[]
+                );
+                emit("irs", irs);
+              }
+              selectedNodes.value[1] = null;
+              if (!payload.shiftPressed) selectedNodes.value[0] = null;
             }
             break;
           }
@@ -202,6 +163,19 @@ export default defineComponent({
               payload.node.id
             );
             emit("irs", updatedIrs);
+            break;
+          }
+          case GraphMode.RENAME: {
+            console.log(payload.node.id);
+            const name = "xx" + performance.now();
+            const irs = irsUtilsService.renameNode(
+              props.irs,
+              payload.node.id,
+              name
+            );
+            graphRendererService.renameHint(payload.node.id, name);
+            //todo: input
+            emit("irs", irs);
             break;
           }
         }
@@ -224,6 +198,17 @@ export default defineComponent({
         sliderLimits.value.max
       ];
     };
+
+    watch(
+      graphMode,
+      () =>
+        graphRendererService.setDragPin(graphMode.value == GraphMode.SELECT),
+      { immediate: true }
+    );
+    watch(graphMode, () => {
+      selectedNodes.value[0] = null;
+      selectedNodes.value[1] = null;
+    });
 
     watch(
       slider,
@@ -280,6 +265,12 @@ export default defineComponent({
       { immediate: true }
     );
 
+    function setHighlighted() {
+      graphStructure.value.nodes.forEach(n => {
+        n.highlighted = selectedNodes.value.includes(n.id);
+      });
+    }
+
     function buildGraph() {
       if (props.irs) {
         const filteredIrs = irsUtilsService.getRelationsInPeriod(
@@ -289,6 +280,7 @@ export default defineComponent({
           slider.value.unit
         );
         graphStructure.value = graphService.buildGraphStructure(filteredIrs);
+        setHighlighted();
       }
     }
 
@@ -322,22 +314,31 @@ export default defineComponent({
     });
 
     watch(
-      () => selectedNodes.value,
-      (oldNodes, currentNodes) => {
-        if (currentNodes[0]) {
-          highlightNode(currentNodes[0]);
-        }
+      selectedNodes,
+      () => {
+        setHighlighted();
+        graphStructure.value = {
+          ...graphStructure.value
+        };
+
         // here we have to somehow know that shift was pressed (another varaible?)
         // we cant modify the array directly here cuz we will end up in a loop right?
 
         // const updatedIrs = irsUtilsService.mergeNodes(props.irs, selectedNodes);
         // emit("irs", updatedIrs);
         // setTimeout(() => highlightNode(selectedNodes.value[0]), 100);
-      }
+      },
+      { deep: true }
     );
-
+    function keyPress(e: KeyboardEvent) {
+      if (e.key === "Escape") selectedNodes.value[0] = null;
+    }
     onMounted(() => {
       if (!props.irs) push("/");
+      document.addEventListener("keydown", keyPress);
+    });
+    onUnmounted(() => {
+      document.removeEventListener("keydown", keyPress);
     });
     return {
       asideVisible,
@@ -347,6 +348,7 @@ export default defineComponent({
       graphRenderer,
       graphMode,
       graphStructureFiltered,
+      selectedNodes,
       onNodeClick,
       infoNode,
       fit,

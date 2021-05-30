@@ -15,8 +15,9 @@
         :key="tool.type"
         :label="tool.type"
         :disabled="editDisabled"
+        :title="tool.hint"
       >
-        <i :class="tool.icon"></i> {{ tool.hint }}
+        <i :class="tool.icon"></i>
       </el-radio-button>
     </el-radio-group>
     <el-dropdown class="menu" placement="top">
@@ -49,7 +50,8 @@ import { defineComponent, ref, PropType, watchEffect, watch } from "vue";
 export enum GraphMode {
   SELECT = "select",
   DELETE = "delete",
-  MERGE = "merge"
+  MERGE = "merge",
+  RENAME = "rename"
 }
 
 export interface GraphModeDisplay {
@@ -78,7 +80,8 @@ export default defineComponent({
     const graphModes: GraphModeDisplay[] = [
       { hint: "Przypnij", icon: "el-icon-thumb", type: GraphMode.SELECT },
       { hint: "Usuń", icon: "el-icon-delete", type: GraphMode.DELETE },
-      { hint: "Scal", icon: "el-icon-share", type: GraphMode.MERGE }
+      { hint: "Scal", icon: "el-icon-share", type: GraphMode.MERGE },
+      { hint: "Zmień nazwę", icon: "el-icon-edit", type: GraphMode.RENAME }
     ];
 
     return { graphModes, graphModeInner };

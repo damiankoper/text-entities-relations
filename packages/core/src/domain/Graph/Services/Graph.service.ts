@@ -5,7 +5,6 @@ import { Irs } from "domain/IndirectRelatationStructure";
 import { conf } from "../data/Constants";
 import { Node } from "../Models/Node";
 import _ from "lodash";
-
 @Service()
 export class GraphService {
   static get(): GraphService {
@@ -18,7 +17,6 @@ export class GraphService {
     let maxWeight = 0;
     let minWeight = Infinity;
     let maxStrength = 0;
-
     irs.entities.forEach((e) => {
       maxWeight = Math.max(maxWeight, e.relations.length);
       minWeight = Math.min(minWeight, e.relations.length);

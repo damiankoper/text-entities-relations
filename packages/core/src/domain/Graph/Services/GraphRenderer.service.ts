@@ -17,7 +17,7 @@ interface SimulationState {
   simulation: Simulation<Node, Link>;
   linkSelection: Selection<SVGLineElement, Link, SVGGElement, unknown>;
   nodeSelection: Selection<SVGSVGElement, Node, SVGSVGElement, unknown>;
-  initialGraph: Graph;
+  nodeMap: Map<string, Node>;
 }
 
 type EventType = "clickNode" | "mouseleaveNode" | "mouseenterNode";
@@ -25,6 +25,7 @@ type EventType = "clickNode" | "mouseleaveNode" | "mouseenterNode";
 @Service()
 export class GraphRendererService {
   private _state: SimulationState | null = null;
+  private dragPin = false;
 
   constructor(private zoomService: GraphZoomService) {}
 
@@ -32,10 +33,27 @@ export class GraphRendererService {
     return Container.get(GraphRendererService);
   }
 
-  public bindSimulation(
-    graphSvgElement: SVGSVGElement,
-    initialGraph: Graph
-  ): void {
+  setDragPin(v = true): void {
+    this.dragPin = v;
+  }
+
+  renameHint(o: string, n: string): void {
+    const map = this._state?.nodeMap;
+    if (map) {
+      const existing = map.get(o);
+      if (existing) {
+        map.set(n, existing);
+      }
+    }
+  }
+
+  private trimId(id: string): string {
+    return (
+      "id_" + id.replace(/^[#\-\ \/]+|[#\-\ \/]+$/g, "").replace(/[\*\. ]/g, "")
+    );
+  }
+
+  public bindSimulation(graphSvgElement: SVGSVGElement): void {
     const graphSimulation = this.buildGraphSimulation(graphSvgElement);
 
     const svg = d3.select(graphSvgElement);
@@ -66,7 +84,7 @@ export class GraphRendererService {
       linkSelection: link,
       nodeSelection: node,
       simulation: graphSimulation,
-      initialGraph: initialGraph,
+      nodeMap: new Map(),
     };
 
     graphSimulation.on("tick", () => {
@@ -85,6 +103,23 @@ export class GraphRendererService {
     });
   }
 
+  private updateNodePosition(n: Node, reverse = false): void {
+    const map = this._state?.nodeMap;
+    if (map) {
+      let o = map.get(n.id);
+      if (o) {
+        [n, o] = reverse ? [o, n] : [n, o];
+        n.x = o?.x;
+        n.y = o?.y;
+        n.vx = o?.vx;
+        n.vy = o?.vy;
+        n.fx = o?.fx;
+        n.fy = o?.fy;
+      }
+      map.set(n.id, n);
+    }
+  }
+
   public renderSvg(
     graph: Graph,
     emit: (
@@ -96,82 +131,158 @@ export class GraphRendererService {
     if (!this._state) {
       return;
     }
-
     const interpolate = d3.interpolateHsl(
       graph.weight.colorMin,
       graph.weight.colorMax
     );
 
-    const oldNodesMap = new Map(
-      this._state.initialGraph.nodes.map((d) => [d.id, d])
-    );
-
-    const newNodes = graph.nodes.map((d) => {
-      const oldNode = oldNodesMap.get(d.id);
-      if (oldNode) {
-        d.x = oldNode.x;
-        d.y = oldNode.y;
-        d.vx = oldNode.vx;
-        d.vy = oldNode.vy;
-        d.fx = oldNode.fx;
-        d.fy = oldNode.fy;
-      }
-      return d;
+    graph.nodes.forEach((n) => {
+      this.updateNodePosition(n);
     });
 
     const newLinks = graph.links.map((l) => Object.assign({}, l));
 
+    const highlightLoop = (
+      c: d3.Selection<SVGCircleElement, Node, SVGSVGElement, unknown>
+    ) => {
+      c.attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0))
+        .attr("fill", () => conf.NODE_HIGHLIGHT_COLORS[0])
+        .attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0) * 1.3)
+        .attr("fill", () => conf.NODE_HIGHLIGHT_COLORS[1])
+        .transition()
+        .duration(500)
+        .attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0))
+        .attr("fill", () => conf.NODE_HIGHLIGHT_COLORS[0])
+        .on("end", (d: Node) => {
+          if (d.highlighted) highlightLoop(c);
+        });
+    };
+    console.log(graph.nodes.find((n) => n.id == "Kwaśniewski")?.highlighted);
     this._state.nodeSelection = this._state.nodeSelection
-      .data<Node>(newNodes, (d) => `${d.id},${d.easiedWeight}`)
-      .join<SVGSVGElement, Node>((nodeParentSeleciton) => {
-        //node container
-        const nodeContainer = nodeParentSeleciton
-          .append<SVGSVGElement>("g")
-          .attr("class", "node-container")
-          .on("dblclick", (event: Event, d: Node) => {
-            event.stopPropagation();
-            d.fx = null;
-            d.fy = null;
-          })
-          .on("click", (event, d: Node) =>
-            emit("clickNode", { node: d, shiftPressed: event.shiftKey })
-          )
-          .on("mouseenter", (_, d: Node) => emit("mouseenterNode", d))
-          .on("mouseleave", (_, d: Node) => emit("mouseleaveNode", d))
-          .call(this.buildDraggingOptions());
+      .data<Node>(graph.nodes, (d) => d.id)
+      .join<SVGSVGElement, Node>(
+        (nodeParentSeleciton) => {
+          //node container
+          const nodeContainer = nodeParentSeleciton
+            .append<SVGSVGElement>("g")
+            .attr("class", "node-container")
+            .on("dblclick", (event: Event, d) => {
+              event.stopPropagation();
+              d.fx = null;
+              d.fy = null;
+            })
+            .on("click", (event: MouseEvent, d) =>
+              emit("clickNode", { node: d, shiftPressed: event.shiftKey })
+            )
+            .on("mouseenter", (_, d) => emit("mouseenterNode", d))
+            .on("mouseleave", (_, d) => emit("mouseleaveNode", d))
+            .call(this.buildDraggingOptions());
 
-        //node circle
-        nodeContainer
-          .append("circle")
-          .attr("stroke", "#eee")
-          .attr("stroke-width", (d) => 1.5 + 1.5 * (d.easiedWeight || 0))
-          .attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0))
-          .attr("fill", (d: Node) => {
-            return interpolate(d.easiedWeight || 0);
-          })
-          .attr("id", (d) => d.id);
+          //node circle
+          nodeContainer
+            .append("circle")
+            .attr("stroke", "#eee")
+            .attr("stroke-width", (d) => 1.5 + 1.5 * (d.easiedWeight || 0))
+            .attr("r", (d) => this.getNodeRadius(d.easiedWeight || 0))
+            .attr("fill", (d) => interpolate(d.easiedWeight || 0))
+            .attr("id", (d) => this.trimId(d.id));
 
-        //append text
-        nodeContainer
-          .append("text")
-          .attr("x", (d) => 16 + 16 * (d.easiedWeight || 0))
-          .attr("y", "0.40em")
-          .text((d) => d.id)
-          .attr("stroke", "black")
-          .attr("stroke-width", 1);
+          //append text
+          nodeContainer
+            .append("text")
+            .attr("x", (d) => 16 + 16 * (d.easiedWeight || 0))
+            .attr("y", "0.40em")
+            .text((d) => d.id)
+            .attr("stroke", "black")
+            .attr("stroke-width", 1);
 
-        return nodeContainer;
-      });
+          return nodeContainer;
+        },
+        (nodeContainer) => {
+          //update circle
+          nodeContainer
+            .select<SVGCircleElement>("circle")
+            .attr("stroke-width", (d) => 1.5 + 1.5 * (d.easiedWeight || 0));
 
+          //update text
+          nodeContainer
+            .select<SVGTextElement>("text")
+            .attr("x", (d) => 16 + 16 * (d.easiedWeight || 0));
+
+          highlightLoop(
+            nodeContainer
+              .select<SVGCircleElement>("circle")
+              .filter((d) => !!d.highlighted)
+          );
+
+          nodeContainer
+            .select<SVGCircleElement>("circle")
+            .filter((d) => !d.highlighted)
+            .interrupt()
+            .transition()
+            .duration(150)
+            .attr("r", (d) => this.getNodeRadius(d.easiedWeight || 0))
+            .attr("fill", (d: Node) => interpolate(d.easiedWeight || 0));
+
+          return nodeContainer;
+        },
+        (nodeContainer) => {
+          nodeContainer
+            .select<SVGCircleElement>("circle")
+            .transition()
+            .duration(150)
+            .attr("r", 0)
+            .on("end", () => {
+              nodeContainer.remove();
+            });
+          nodeContainer
+            .select<SVGTextElement>("text")
+            .transition()
+            .duration(150)
+            .style("opacity", 0);
+
+          return nodeContainer;
+        }
+      );
     this._state.linkSelection = this._state.linkSelection
-      .data<Link>(newLinks)
-      .join<SVGLineElement, Link>("line")
-      .attr("stroke-width", (l: Link) =>
-        this.getLinkWidth(l.easiedStrength || 0)
-      )
-      .attr("opacity", (l: Link) => this.getLinkOpacity(l.easiedStrength || 0));
+      .data<Link>(newLinks, (d) => {
+        if (typeof d.target === "string" || d.target instanceof String) {
+          return `${d.source},${d.target}`;
+        } else {
+          return `${(d.source as Node).id},${(d.target as Node).id}`;
+        }
+      })
+      .join<SVGLineElement, Link>(
+        (nodeParentSeleciton) => {
+          const line = nodeParentSeleciton
+            .append("line")
+            .attr("stroke-width", (l: Link) =>
+              this.getLinkWidth(l.easiedStrength || 0)
+            )
+            .attr("opacity", (l: Link) =>
+              this.getLinkOpacity(l.easiedStrength || 0)
+            );
+          return line;
+        },
+        (line) => {
+          line
+            .transition()
+            .duration(150)
+            .attr("stroke-width", (l: Link) =>
+              this.getLinkWidth(l.easiedStrength || 0)
+            )
+            .attr("opacity", (l: Link) =>
+              this.getLinkOpacity(l.easiedStrength || 0)
+            );
+          return line;
+        },
+        (line) => {
+          line.transition().duration(150).attr("stroke-width", 0);
+          return line;
+        }
+      );
 
-    this._state.simulation.nodes(newNodes);
+    this._state.simulation.nodes(graph.nodes);
     this._state.simulation.force(
       "link",
       d3.forceLink<Node, Link>(newLinks).id((d) => d.id)
@@ -219,6 +330,11 @@ export class GraphRendererService {
 
     const dragEnded = (event: D3DragEvent<SVGSVGElement, Node, Node>) => {
       if (!event.active) {
+        this.updateNodePosition(event.subject, true);
+        if (!this.dragPin) {
+          event.subject.fx = undefined;
+          event.subject.fy = undefined;
+        }
         this._state?.simulation.alphaTarget(0);
       }
     };

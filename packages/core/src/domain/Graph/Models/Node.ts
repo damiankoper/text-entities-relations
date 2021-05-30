@@ -20,4 +20,5 @@ export interface Node extends SimulationNodeDatum {
   type?: TokenType;
   relationsCount?: number;
   neighboursCount?: number;
+  highlighted?: boolean;
 }

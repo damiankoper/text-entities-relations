@@ -119,4 +119,15 @@ export class IrsUtilsService {
       entities: [newNode, ...[...notMergedNodes].map(([, v]) => v)],
     };
   }
+
+  renameNode(irs: Irs, old: string, n: string): Irs {
+    const entities = [...irs.entities].map((e) => {
+      if (e.name === old) {
+        e.name = n;
+      }
+      return e;
+    });
+
+    return { ...irs, entities };
+  }
 }
