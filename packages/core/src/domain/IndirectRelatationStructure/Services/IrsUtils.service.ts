@@ -18,8 +18,6 @@ export class IrsUtilsService {
     endIndex: number,
     unit: TextUnit
   ): Irs {
-    console.log(irs);
-
     const entityData = irs.entities.map(
       (val) =>
         [

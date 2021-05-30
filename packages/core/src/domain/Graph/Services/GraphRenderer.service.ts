@@ -19,6 +19,7 @@ interface SimulationState {
   nodeSelection: Selection<SVGSVGElement, Node, SVGSVGElement, unknown>;
   initialGraph: Graph;
 }
+
 type EventType = "clickNode" | "mouseleaveNode" | "mouseenterNode";
 
 @Service()
@@ -31,7 +32,7 @@ export class GraphRendererService {
     return Container.get(GraphRendererService);
   }
 
-  public initializeSimulation(
+  public bindSimulation(
     graphSvgElement: SVGSVGElement,
     initialGraph: Graph
   ): void {
@@ -84,13 +85,12 @@ export class GraphRendererService {
     });
   }
 
-  // emit used internally (pass in initializeSimulation)
-  // add another parameter, positionBasedOnPreviousData
-  // if not rerender from middle
-  // TODO: doesn't respect node/link weight changes on graph update
   public renderSvg(
     graph: Graph,
-    emit: (event: EventType, payload: string | Node) => void,
+    emit: (
+      event: EventType,
+      payload: { node: Node; shiftPressed?: boolean } | Node
+    ) => void,
     restartSimulation = true
   ): void {
     if (!this._state) {
@@ -122,7 +122,7 @@ export class GraphRendererService {
     const newLinks = graph.links.map((l) => Object.assign({}, l));
 
     this._state.nodeSelection = this._state.nodeSelection
-      .data<Node>(newNodes, (d) => d.id)
+      .data<Node>(newNodes, (d) => `${d.id},${d.easiedWeight}`)
       .join<SVGSVGElement, Node>((nodeParentSeleciton) => {
         //node container
         const nodeContainer = nodeParentSeleciton
@@ -133,7 +133,9 @@ export class GraphRendererService {
             d.fx = null;
             d.fy = null;
           })
-          .on("click", (_, d: Node) => emit("clickNode", d.id))
+          .on("click", (event, d: Node) =>
+            emit("clickNode", { node: d, shiftPressed: event.shiftKey })
+          )
           .on("mouseenter", (_, d: Node) => emit("mouseenterNode", d))
           .on("mouseleave", (_, d: Node) => emit("mouseleaveNode", d))
           .call(this.buildDraggingOptions());
@@ -146,7 +148,8 @@ export class GraphRendererService {
           .attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0))
           .attr("fill", (d: Node) => {
             return interpolate(d.easiedWeight || 0);
-          });
+          })
+          .attr("id", (d) => d.id);
 
         //append text
         nodeContainer
@@ -200,15 +203,10 @@ export class GraphRendererService {
     Node,
     Node | SubjectPosition
   > {
-    const dragStarted = (
-      event: D3DragEvent<SVGSVGElement, Node, Node>,
-      d: Node
-    ) => {
+    const dragStarted = (event: D3DragEvent<SVGSVGElement, Node, Node>) => {
       if (!event.active) {
         this._state?.simulation.alphaTarget(0.03).restart();
       }
-      d.fx = d.x;
-      d.fy = d.y;
     };
 
     const dragging = (
@@ -246,17 +244,23 @@ export class GraphRendererService {
   }
 
   pinAllNodes(): void {
-    this._state?.initialGraph.nodes.forEach((d) => {
+    const currentNodes = this._state?.simulation.nodes();
+    currentNodes?.forEach((d) => {
       d.fx = d.x;
       d.fy = d.y;
     });
   }
 
   unpinAllNodes(): void {
-    this._state?.initialGraph.nodes.forEach((d) => {
+    const currentNodes = this._state?.simulation.nodes();
+    currentNodes?.forEach((d) => {
       d.fx = null;
       d.fy = null;
     });
     this._state?.simulation.alpha(0.03).restart();
+  }
+
+  resetState(): void {
+    this._state = null;
   }
 }
