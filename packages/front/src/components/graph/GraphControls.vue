@@ -1,5 +1,55 @@
 <template>
   <el-card class="controls">
+    <div v-if="rename">
+      <div class="rename-label">Zmień nazwę ({{ rename }}):</div>
+      <div class="rename">
+        <el-input
+          v-model="newName"
+          size="small"
+          ref="renameInput"
+          :disabled="renameMergeVisible"
+          @keypres.enter="onRename"
+        />
+        <el-popover
+          placement="top"
+          title="Konflikt"
+          :width="300"
+          trigger="manual"
+          v-model:visible="renameMergeVisible"
+        >
+          Wierzchołek "{{ newName }}" już istnieje. Czy chcesz stalić "{{
+            newName
+          }}" z "{{ rename }}"?
+          <div style="text-align: right; margin: 0">
+            <el-button
+              size="mini"
+              type="text"
+              @click="$emit('renameMerge', { merge: false, name: newName })"
+            >
+              Nie
+            </el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="$emit('renameMerge', { merge: true, name: newName })"
+            >
+              Tak
+            </el-button>
+          </div>
+          <template #reference>
+            <el-button
+              type="primary"
+              size="mini"
+              style="margin-right:0"
+              @click="onRename"
+              :disabled="!newName || newName === rename"
+            >
+              <i class="el-icon-arrow-right"></i>
+            </el-button>
+          </template>
+        </el-popover>
+      </div>
+    </div>
     <el-button
       title="Wyśrodkuj"
       size="mini"
@@ -21,7 +71,7 @@
       </el-radio-button>
     </el-radio-group>
     <el-dropdown class="menu" placement="top">
-      <el-button type="primary" size="mini">
+      <el-button type="primary" size="mini" style="margin-right:0">
         <i class="el-icon-arrow-down"></i>
       </el-button>
       <template #dropdown>
@@ -45,7 +95,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, watchEffect, watch } from "vue";
+import {
+  defineComponent,
+  ref,
+  PropType,
+  watchEffect,
+  watch,
+  nextTick
+} from "vue";
 
 export enum GraphMode {
   SELECT = "select",
@@ -61,7 +118,15 @@ export interface GraphModeDisplay {
 }
 
 export default defineComponent({
-  emits: ["fit", "pinAll", "unpinAll", "resetPosition", "update:graphMode"],
+  emits: [
+    "fit",
+    "pinAll",
+    "unpinAll",
+    "resetPosition",
+    "rename",
+    "renameMerge",
+    "update:graphMode"
+  ],
   props: {
     editDisabled: {
       type: Boolean,
@@ -70,9 +135,21 @@ export default defineComponent({
     graphMode: {
       type: String as PropType<GraphMode>,
       required: true
+    },
+    rename: {
+      type: String,
+      requried: false
+    },
+    renameMerge: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
+    const renameInput = ref<HTMLInputElement | null>(null);
+    const newName = ref("");
+    const renameMergeVisible = ref(false);
+    watchEffect(() => (renameMergeVisible.value = props.renameMerge));
     const graphModeInner = ref(GraphMode.SELECT);
     watchEffect(() => (graphModeInner.value = props.graphMode));
     watch(graphModeInner, () => emit("update:graphMode", graphModeInner.value));
@@ -84,7 +161,26 @@ export default defineComponent({
       { hint: "Zmień nazwę", icon: "el-icon-edit", type: GraphMode.RENAME }
     ];
 
-    return { graphModes, graphModeInner };
+    watch(
+      () => props.rename,
+      () => {
+        newName.value = props.rename || "";
+        nextTick(() => {
+          if (renameInput.value) renameInput.value.focus();
+        });
+      }
+    );
+
+    return {
+      renameMergeVisible,
+      renameInput,
+      newName,
+      graphModes,
+      graphModeInner,
+      onRename() {
+        if (newName.value) emit("rename", newName.value);
+      }
+    };
   }
 });
 </script>
@@ -106,6 +202,25 @@ export default defineComponent({
       margin-left: 8px;
       padding-left: 8px;
       padding-right: 8px;
+    }
+  }
+  .rename {
+    display: flex;
+    margin-bottom: 8px;
+    &-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 250px;
+      margin-bottom: 4px;
+    }
+    button {
+      margin-left: 8px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    ::v-deep input {
+      padding: 8px;
     }
   }
 }

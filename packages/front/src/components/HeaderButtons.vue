@@ -30,19 +30,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from "vue";
+import { defineComponent, inject, onMounted, onUnmounted, Ref, ref } from "vue";
 import { countersSymbol, HistoryCoutners } from "@/composables/useHistory";
 export default defineComponent({
   emits: ["hisBack", "hisForward", "menuToggle"],
-  setup() {
-    const counters = inject<HistoryCoutners>(
+  setup(_, { emit }) {
+    const counters = inject<Ref<HistoryCoutners>>(
       countersSymbol,
-      () => ({
-        forward: 0,
-        back: 0
-      }),
+      () =>
+        ref({
+          forward: 0,
+          back: 0
+        }),
       true
     );
+
+    function onKeyPress(e: KeyboardEvent) {
+      if (e.ctrlKey) {
+        if (e.key == "z" && counters.value.back) emit("hisBack");
+        else if (e.key == "y" && counters.value.forward) emit("hisForward");
+      }
+    }
+    onMounted(() => {
+      document.addEventListener("keypress", onKeyPress);
+    });
+    onUnmounted(() => {
+      document.removeEventListener("keypress", onKeyPress);
+    });
     return { counters };
   }
 });

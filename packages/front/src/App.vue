@@ -74,4 +74,7 @@ body {
   color: #606266;
   margin: 0;
 }
+.el-popper {
+  word-break: initial !important;
+}
 </style>

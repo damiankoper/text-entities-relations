@@ -147,10 +147,12 @@ export class GraphRendererService {
     ) => {
       c.attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0))
         .attr("fill", () => conf.NODE_HIGHLIGHT_COLORS[0])
+        .transition()
+        .duration(150)
         .attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0) * 1.3)
         .attr("fill", () => conf.NODE_HIGHLIGHT_COLORS[1])
         .transition()
-        .duration(500)
+        .duration(350)
         .attr("r", (d: Node) => this.getNodeRadius(d.easiedWeight || 0))
         .attr("fill", () => conf.NODE_HIGHLIGHT_COLORS[0])
         .on("end", (d: Node) => {
@@ -168,6 +170,7 @@ export class GraphRendererService {
             .attr("class", "node-container")
             .on("dblclick", (event: Event, d) => {
               event.stopPropagation();
+              d.pinned = false;
               d.fx = null;
               d.fy = null;
             })
@@ -183,9 +186,11 @@ export class GraphRendererService {
             .append("circle")
             .attr("stroke", "#eee")
             .attr("stroke-width", (d) => 1.5 + 1.5 * (d.easiedWeight || 0))
-            .attr("r", (d) => this.getNodeRadius(d.easiedWeight || 0))
+            .attr("id", (d) => this.trimId(d.id))
+            .transition()
+            .duration(150)
             .attr("fill", (d) => interpolate(d.easiedWeight || 0))
-            .attr("id", (d) => this.trimId(d.id));
+            .attr("r", (d) => this.getNodeRadius(d.easiedWeight || 0));
 
           //append text
           nodeContainer
@@ -194,7 +199,11 @@ export class GraphRendererService {
             .attr("y", "0.40em")
             .text((d) => d.id)
             .attr("stroke", "black")
-            .attr("stroke-width", 1);
+            .attr("stroke-width", 1)
+            .style("opacity", 0)
+            .transition()
+            .duration(150)
+            .style("opacity", 1);
 
           return nodeContainer;
         },
@@ -331,7 +340,7 @@ export class GraphRendererService {
     const dragEnded = (event: D3DragEvent<SVGSVGElement, Node, Node>) => {
       if (!event.active) {
         this.updateNodePosition(event.subject, true);
-        if (!this.dragPin) {
+        if (!this.dragPin && !event.subject.pinned) {
           event.subject.fx = undefined;
           event.subject.fy = undefined;
         }
@@ -364,6 +373,7 @@ export class GraphRendererService {
     currentNodes?.forEach((d) => {
       d.fx = d.x;
       d.fy = d.y;
+      d.pinned = true;
     });
   }
 
@@ -372,6 +382,7 @@ export class GraphRendererService {
     currentNodes?.forEach((d) => {
       d.fx = null;
       d.fy = null;
+      d.pinned = false;
     });
     this._state?.simulation.alpha(0.03).restart();
   }

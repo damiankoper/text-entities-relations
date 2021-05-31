@@ -19,6 +19,10 @@
         <GraphControls
           v-model:graphMode="graphMode"
           :editDisabled="!slider.isStatic"
+          :rename="rename"
+          :renameMerge="renameMerge"
+          @rename="onRename"
+          @renameMerge="onRenameMerge"
           @fit="fit"
           @unpinAll="unpinAll"
           @pinAll="pinAll"
@@ -166,16 +170,9 @@ export default defineComponent({
             break;
           }
           case GraphMode.RENAME: {
-            console.log(payload.node.id);
-            const name = "xx" + performance.now();
-            const irs = irsUtilsService.renameNode(
-              props.irs,
-              payload.node.id,
-              name
-            );
-            graphRendererService.renameHint(payload.node.id, name);
-            //todo: input
-            emit("irs", irs);
+            if (selectedNodes.value[0] == payload.node.id)
+              selectedNodes.value[0] = null;
+            else selectedNodes.value[0] = payload.node.id;
             break;
           }
         }
@@ -340,7 +337,14 @@ export default defineComponent({
     onUnmounted(() => {
       document.removeEventListener("keydown", keyPress);
     });
+
+    const rename = computed(() =>
+      graphMode.value === GraphMode.RENAME ? selectedNodes.value[0] : null
+    );
+    const renameMerge = ref(false);
     return {
+      rename,
+      renameMerge,
       asideVisible,
       graphRendererVisible,
       filterParams,
@@ -354,6 +358,41 @@ export default defineComponent({
       fit,
       slider,
       progress,
+      onRename(newName: string) {
+        if (props.irs) {
+          const exists = !!props.irs.entities.find(e => e.name == newName);
+          if (exists) {
+            renameMerge.value = true;
+          } else {
+            console.log(props.irs.entities.find(e => e.name === "szczurek"));
+
+            const irs = irsUtilsService.renameNode(
+              props.irs,
+              selectedNodes.value[0] || "",
+              newName
+            );
+            console.log(irs.entities.find(e => e.name === "szczurekk"));
+
+            graphRendererService.renameHint(
+              selectedNodes.value[0] || "",
+              newName
+            );
+            selectedNodes.value[0] = null;
+            emit("irs", irs);
+          }
+        }
+      },
+      onRenameMerge({ name, merge }: { name: string; merge: boolean }) {
+        if (merge && props.irs) {
+          const irs = irsUtilsService.mergeNodes(props.irs, [
+            selectedNodes.value[0] as string,
+            name
+          ]);
+          selectedNodes.value[0] = null;
+          emit("irs", irs);
+        }
+        renameMerge.value = false;
+      },
       onNodeMouseEnter(n: Node) {
         infoNode.value = n;
       },

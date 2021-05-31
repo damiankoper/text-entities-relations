@@ -121,12 +121,25 @@ export class IrsUtilsService {
   }
 
   renameNode(irs: Irs, old: string, n: string): Irs {
+    let renamed: Entity | undefined;
     const entities = [...irs.entities].map((e) => {
+      e = { ...e };
       if (e.name === old) {
+        renamed = e;
         e.name = n;
       }
       return e;
     });
+
+    if (renamed) {
+      entities.forEach((e) => {
+        e.relations = e.relations.map((r) => {
+          r = { ...r };
+          if (renamed && r.target.name === old) r.target = renamed;
+          return r;
+        });
+      });
+    }
 
     return { ...irs, entities };
   }
