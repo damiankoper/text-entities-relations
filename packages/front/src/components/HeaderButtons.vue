@@ -65,7 +65,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .item {
   margin-left: 8px;
-  ::v-deep(sup) {
+  :deep(sup) {
     margin-top: 4px;
     margin-right: 8px;
   }

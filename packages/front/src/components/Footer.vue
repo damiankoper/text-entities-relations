@@ -1,6 +1,10 @@
 <template>
   <el-footer class="footer" height="32px">
-    <span>&copy; TER {{ new Date().getFullYear() }}. All rights reserved.</span>
+    <span>
+      Icons made by
+      <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
+      <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+    </span>
     <span>Made with ❤️ & 🍺</span>
   </el-footer>
 </template>

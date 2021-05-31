@@ -84,7 +84,7 @@ export default defineComponent({
   position: absolute;
   bottom: 12px;
   left: 12px;
-  ::v-deep(.el-card__body) {
+  :deep(.el-card__body) {
     padding: 8px;
   }
   h6 {

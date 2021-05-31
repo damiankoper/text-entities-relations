@@ -1,42 +1,101 @@
 <template>
   <el-container direction="vertical">
     <el-main class="home">
-      <el-row :gutter="24" align="middle" class="logo">
-        <el-col :span="8">
-          <el-image :src="logoImg" />
-        </el-col>
-        <el-col :span="16" class="logo-text">
-          <div>TER</div>
-          <!--<div>Analyse the shit out of your books</div>-->
-          <div>Może nie najlepiej, ale jako tako.</div>
-        </el-col>
-      </el-row>
-      <el-row :gutter="24" align="middle">
-        <el-col :span="12">
-          <router-link to="import">
-            <el-button class="home-button" @click="$router.push('import')">
-              Importuj plik tekstowy
+      <div style="max-width:500px">
+        <el-row :gutter="24" align="middle" class="logo">
+          <el-col :span="8">
+            <el-image :src="logoImg" />
+          </el-col>
+          <el-col :span="16" class="logo-text">
+            <div>TER</div>
+            <!--<div>Analyse the shit out of your books</div>-->
+            <div>Może nie najlepiej, ale jako tako.</div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="24" align="middle">
+          <el-col :span="12">
+            <router-link to="import">
+              <el-button class="home-button" @click="$router.push('import')">
+                Importuj plik tekstowy
+              </el-button>
+            </router-link>
+          </el-col>
+          <el-col :span="12">
+            <el-button
+              class="home-button"
+              @click="terFileInput ? terFileInput.click() : null"
+            >
+              Importuj z pliku *.ter
             </el-button>
-          </router-link>
-        </el-col>
-        <el-col :span="12">
-          <el-button
-            class="home-button"
-            @click="terFileInput ? terFileInput.click() : null"
-          >
-            Importuj z pliku *.ter
-          </el-button>
-        </el-col>
-        <el-col :span="24">
-          <el-button
-            :disabled="!terSession"
-            class="home-button"
-            @click="terSessionRestore"
-          >
-            Przywróć poprzednią sesję{{ terSessionNotification }}
-          </el-button>
-        </el-col>
-      </el-row>
+          </el-col>
+          <el-col :span="24">
+            <el-button
+              :disabled="!terSession"
+              class="home-button"
+              @click="terSessionRestore"
+            >
+              Przywróć poprzednią sesję{{ terSessionNotification }}
+            </el-button>
+          </el-col>
+          <el-col>
+            <el-divider style="margin-bottom:0px;" />
+          </el-col>
+          <el-col :span="24">
+            <el-row style="text-align:center">
+              <el-col :span="24" style="margin-bottom:8px;">
+                <el-image :src="logoClarin" />
+              </el-col>
+              <el-col :span="24" style="margin-bottom:4px;">
+                Dzięki ciężkiej pracy w pocie czoła
+              </el-col>
+              <el-col :span="24" style="margin-bottom:4px;">
+                <span>
+                  <a
+                    href="http://github.com/leszekblazewski"
+                    target="_blank"
+                    class="author"
+                  >
+                    @leszekblazewski
+                  </a>
+                  <el-divider direction="vertical" />
+                  <a
+                    href="http://github.com/damiankoper"
+                    target="_blank"
+                    class="author"
+                  >
+                    @damiankoper
+                  </a>
+                  <el-divider direction="vertical" />
+                  <a
+                    href="http://github.com/dex1g"
+                    target="_blank"
+                    class="author"
+                  >
+                    @dex1g
+                  </a>
+                </span>
+              </el-col>
+              <el-col :span="24" style="margin-bottom:4px;">
+                <a
+                  href="http://github.com/xxzxcuzx-me"
+                  target="_blank"
+                  class="author"
+                >
+                  @xxzxcuzx-me
+                </a>
+                <el-divider direction="vertical" />
+                <a
+                  href="http://github.com/Bigoz005"
+                  target="_blank"
+                  class="author"
+                >
+                  @Bigoz005
+                </a>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+      </div>
     </el-main>
     <Footer />
     <input
@@ -69,6 +128,8 @@
   }
   .el-col {
     margin-bottom: 20px;
+  }
+  .author {
   }
 }
 </style>
@@ -105,6 +166,7 @@ export default defineComponent({
 
     return {
       logoImg: require("@/assets/books.svg"),
+      logoClarin: require("@/assets/logo-small.png"),
       terFileInput,
       terSession,
       terSessionNotification,

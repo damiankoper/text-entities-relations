@@ -14,8 +14,10 @@ export class GEXFNodeExporter {
     );
     graph.nodes.forEach((node, index) => {
       const color = interpolate(node.easiedWeight || 0);
+
       const type =
-        TokenTypes.find((t) => t.value === node.type || -1)?.label || "Unknown";
+        TokenTypes.find((t) => t.value === node.type)?.label || "Unknown";
+
       result += `                <node id="${index}" label="${node.id}">
                     <color r="${this.getRed(color)}" g="${this.getGreen(
         color

@@ -191,7 +191,7 @@ export default defineComponent({
   position: absolute;
   bottom: 12px;
   right: 12px;
-  ::v-deep(.el-card__body) {
+  :deep(.el-card__body) {
     padding: 8px;
   }
   .el-button {
@@ -219,7 +219,7 @@ export default defineComponent({
       padding-left: 8px;
       padding-right: 8px;
     }
-    ::v-deep input {
+    :deep input {
       padding: 8px;
     }
   }

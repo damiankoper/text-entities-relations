@@ -53,7 +53,7 @@ svg {
   height: 100%;
   width: 100%;
 
-  & ::v-deep(.node-container) {
+  & :deep(.node-container) {
     cursor: pointer;
   }
 }

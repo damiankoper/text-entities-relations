@@ -89,18 +89,18 @@ export default defineComponent({
 <style lang="scss" scoped>
 .el-tabs {
   margin: 0 16px;
-  ::v-deep .el-tabs__nav-scroll > .el-tabs__nav {
+  :deep(.el-tabs__nav-scroll) > .el-tabs__nav {
     width: 100%;
   }
 
-  ::v-deep .el-tabs__nav > .el-tabs__item {
+  :deep(.el-tabs__nav) > .el-tabs__item {
     width: 33%;
     text-align: center;
   }
 }
 
 .item {
-  ::v-deep(sup) {
+  :deep(sup) {
     margin-top: 8px;
     margin-right: -4px;
   }

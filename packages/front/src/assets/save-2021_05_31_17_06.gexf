@@ -1,0 +1,2337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:viz="http://www.gexf.net/1.1draft/viz" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+        <meta lastmodifieddate="2009-03-20">
+            <creator>TER</creator>
+            <description>Text entities relationship diagram</description>
+        </meta>
+        <graph defaultedgetype="undirected">
+            <attributes class="node">
+                <attribute id="0" title="Weight" type="float"/>
+                <attribute id="1" title="Type" type="string"/>
+                <attribute id="2" title="Number of relations" type="float"/>
+                <attribute id="3" title="Number of neighbours" type="float"/>
+            </attributes>
+            <nodes>
+                <node id="0" label="ccc">
+                    <color r="234" g="101" b="0" a="0"/>
+                    <position x="323.73593044267676" y="53.08270079256693" z="0.0"/>
+                    <size value="14.424540770380437"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="5"/>
+                        <attvalue for="2" value="5"/>
+                        <attvalue for="3" value="5"/>
+                    </attvalues>
+                </node>
+                <node id="1" label="krakowski Przedmieście">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-687.2396369344445" y="14.108940723826164" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="2" label="Wojciechy cejrowski">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="-811.2242192715116" y="17.09468151321059" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="3" label="Wojtek">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="58.88548452776943" y="685.4052650208122" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="4" label="cejrowski">
+                    <color r="127" g="0" b="0" a="0"/>
+                    <position x="520.9027740124402" y="556.8530528569" z="0.0"/>
+                    <size value="21.37"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="38"/>
+                        <attvalue for="2" value="38"/>
+                        <attvalue for="3" value="32"/>
+                    </attvalues>
+                </node>
+                <node id="5" label="onz">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="139.76999827782592" y="123.45233640424638" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="6" label="czerwony krzyż">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="138.11950904646147" y="22.982310092262303" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="7" label="unicef">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="147.57459065002934" y="205.03648869823442" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="8" label="Polska">
+                    <color r="129" g="1" b="0" a="0"/>
+                    <position x="172.42557963876175" y="291.64116700254095" z="0.0"/>
+                    <size value="21.220165345913383"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="25"/>
+                        <attvalue for="2" value="25"/>
+                        <attvalue for="3" value="23"/>
+                    </attvalues>
+                </node>
+                <node id="9" label="Wojciech">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="356.04168341322054" y="526.0299762226113" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="10" label="jezus">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="422.0199188169092" y="719.9384444480435" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="11" label="Jezus">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="333.4014939362654" y="828.6430179217605" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="12" label="ii sobór watykański">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="440.1964705811436" y="885.5484384601781" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="13" label="Wojtki cejrowski">
+                    <color r="162" g="23" b="0" a="0"/>
+                    <position x="668.6190201377636" y="461.42111451823206" z="0.0"/>
+                    <size value="19.122640662105887"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="11"/>
+                        <attvalue for="2" value="11"/>
+                        <attvalue for="3" value="10"/>
+                    </attvalues>
+                </node>
+                <node id="14" label="Wojciechy">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1397.6049089948083" y="564.529069412661" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="15" label="Nepal">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-763.2896119797025" y="-75.14865374385172" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="16" label="Kobierzyn">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="191.62225815621096" y="556.6263473473493" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="17" label="Warszawa">
+                    <color r="136" g="5" b="0" a="0"/>
+                    <position x="412.9769196870284" y="377.55272730855415" z="0.0"/>
+                    <size value="20.774945942988474"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="18"/>
+                        <attvalue for="2" value="18"/>
+                        <attvalue for="3" value="15"/>
+                    </attvalues>
+                </node>
+                <node id="18" label="Cejrowski">
+                    <color r="151" g="14" b="0" a="0"/>
+                    <position x="138.41329972930734" y="711.6925496437564" z="0.0"/>
+                    <size value="19.829403971853683"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="13"/>
+                        <attvalue for="2" value="13"/>
+                        <attvalue for="3" value="12"/>
+                    </attvalues>
+                </node>
+                <node id="19" label="włoski">
+                    <color r="216" g="77" b="0" a="0"/>
+                    <position x="423.53099264551867" y="-126.45843071625303" z="0.0"/>
+                    <size value="15.613530362917853"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="6"/>
+                        <attvalue for="2" value="6"/>
+                        <attvalue for="3" value="6"/>
+                    </attvalues>
+                </node>
+                <node id="20" label="gino lanetti">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="371.4178604323205" y="-37.776585766105384" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="21" label="cejrowski Wojciechy">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1180.569709858841" y="64.21345671340642" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="22" label="Elbląg">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1295.4640977255913" y="70.78140329120828" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="23" label="Marian">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1248.5320074742008" y="-28.70346783262575" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="24" label="Polska ludowy">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="248.62013899936917" y="697.8386157936407" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="25" label="borewiczu">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="325.9171705167387" y="752.2826079699365" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="26" label="Konstancin">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="373.5058100920774" y="468.67068424057567" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="27" label="borewicza">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="665.9090147319723" y="655.0553776640347" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="28" label="Wojtki">
+                    <color r="188" g="46" b="0" a="0"/>
+                    <position x="705.3136670624749" y="576.3042327708314" z="0.0"/>
+                    <size value="17.41684408454337"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="8"/>
+                        <attvalue for="2" value="8"/>
+                        <attvalue for="3" value="6"/>
+                    </attvalues>
+                </node>
+                <node id="29" label="borewicz">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="581.1647149269505" y="664.1640585489415" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="30" label="ub">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="641.8091302685535" y="828.56017333655" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="31" label="solidaruch">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="529.0738758242009" y="798.8512611754242" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="32" label="Grzesiek Przemyk">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="540.1086436177125" y="872.8421011160227" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="33" label="Kiszczak">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="425.44562637114484" y="567.8273936100165" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="34" label="1989">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1287.0923565018295" y="548.3482204590421" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Pozostałe"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="35" label="stowarzyszenie ordynacka">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1348.5556485971222" y="459.17036989603554" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="36" label="Jurek Urban">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="329.85516778632524" y="621.707855702278" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="37" label="jerzy Urbany">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="376.15115376202135" y="683.6192862261688" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="38" label="Urban">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="481.1140409187488" y="626.8558563401851" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="39" label="Urbany">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="291.2127070760816" y="577.8365471223556" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="40" label="Sieradz">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="263.3677048297618" y="492.97456637728357" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="41" label="1981">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="115.89253624198759" y="618.1485763083749" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Pozostałe"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="42" label="Ananiasz">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="695.4115875049617" y="737.4565019443354" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="43" label="Wojciech Cejrowski">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="596.7174665322892" y="714.6658688930456" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="44" label="polski">
+                    <color r="143" g="9" b="0" a="0"/>
+                    <position x="545.8971370040955" y="145.75499088313884" z="0.0"/>
+                    <size value="20.315313124186325"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="15"/>
+                        <attvalue for="2" value="15"/>
+                        <attvalue for="3" value="15"/>
+                    </attvalues>
+                </node>
+                <node id="45" label="pałac kultura">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="216.8636277730767" y="632.8632439621006" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="46" label="Adamy">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="229.43526877498886" y="234.66282083014548" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="6"/>
+                    </attvalues>
+                </node>
+                <node id="47" label="Adam">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1446.6123379070614" y="882.8143306170939" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="48" label="szczurek">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1381.65371720576" y="971.585820002703" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="49" label="hr">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="93.49464900947515" y="783.7771202948019" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="50" label="Maryla rodowicz">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="158.08715404475228" y="874.492427289305" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="51" label="Mirka">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="415.7546084782109" y="790.5604898406821" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="52" label="-parasola">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="501.5238399828434" y="722.0743305456385" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="53" label="zolpidemu">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="217.21909305990692" y="781.7830579933888" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="54" label="-hehe">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="544.2937294560348" y="609.5350365263032" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="55" label="Emilia plater">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-758.8937697360018" y="107.20696791830707" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="56" label="klub gazeta polski">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-152.7994785775641" y="874.7767476626404" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="57" label="boży">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="1064.7569425112326" y="919.3067139443351" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="58" label="Polaki">
+                    <color r="234" g="101" b="0" a="0"/>
+                    <position x="999.4894439350896" y="844.7626119889961" z="0.0"/>
+                    <size value="14.424540770380437"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="5"/>
+                        <attvalue for="2" value="5"/>
+                        <attvalue for="3" value="5"/>
+                    </attvalues>
+                </node>
+                <node id="59" label="pis">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="734.9641815438627" y="141.21715730257372" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="60" label="smoleński">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="725.5326887582703" y="43.83127262170131" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="61" label="karabin.org">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1251.593770366688" y="789.1972080005744" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="62" label="bóg">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1345.2206067655134" y="856.014082698167" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="63" label="Jan Paweł błogosławionego">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1246.364009939351" y="904.2554723170389" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="64" label="polskojęzyczny">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="620.3272334637946" y="156.90955218300982" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="65" label="wojskowy służba informacyjny">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="839.5839125571637" y="60.068440795236235" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="66" label="zespół parlamentarny ds .">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="803.3403866018089" y="-37.68324826361687" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="67" label="-154 m">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="-184.34965355054703" y="293.8862055486581" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="68" label="10 kwiecień 2010">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="-105.47342216024799" y="217.02592357050872" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Pozostałe"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="69" label="Antonia macierewicz">
+                    <color r="178" g="36" b="0" a="0"/>
+                    <position x="-87.49599937399425" y="321.0611225609837" z="0.0"/>
+                    <size value="18.094641140780343"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="9"/>
+                        <attvalue for="2" value="9"/>
+                        <attvalue for="3" value="9"/>
+                    </attvalues>
+                </node>
+                <node id="70" label="wałęsa">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="469.4021985974982" y="355.08119313750814" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="71" label="macierewicz">
+                    <color r="133" g="3" b="0" a="0"/>
+                    <position x="621.7327227034955" y="424.3271825564122" z="0.0"/>
+                    <size value="20.965385774184234"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="20"/>
+                        <attvalue for="2" value="20"/>
+                        <attvalue for="3" value="19"/>
+                    </attvalues>
+                </node>
+                <node id="72" label="grażyna">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="-115.7576178004388" y="781.6676142939556" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="73" label="Antonia">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="-176.10380096740488" y="671.359177353374" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="74" label="święty Krzysztof">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="-225.9582401242742" y="764.1374276097599" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="75" label="Antoni">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="433.7049977198611" y="525.5713722108358" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="76" label="Macierewicz">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="891.4863554597699" y="217.22716715972672" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="77" label="klopsem">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-69.45218106942774" y="686.102328819188" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="78" label="Polak">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="811.6711558187181" y="-213.23896741591918" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="79" label="Niemcy">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="709.9781880292254" y="-268.0069345453213" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="80" label="2002 r .">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="711.3198728545233" y="-158.22278598937322" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Pozostałe"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="81" label="ulica">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="600.9396063605519" y="226.42648860008845" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="82" label="dolny">
+                    <color r="188" g="46" b="0" a="0"/>
+                    <position x="435.9103256413838" y="302.84218824802997" z="0.0"/>
+                    <size value="17.41684408454337"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="8"/>
+                        <attvalue for="2" value="8"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="83" label="volvo">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="981.2184507283139" y="246.26431026481777" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="84" label="warszawski">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="-181.8420829987344" y="576.9374440754962" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="85" label="Hitler">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="-115.06576363489127" y="495.08866382338203" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="86" label="radziecki">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="-207.28769422665115" y="469.1089844897074" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="6"/>
+                    </attvalues>
+                </node>
+                <node id="87" label="rosyjski">
+                    <color r="188" g="46" b="0" a="0"/>
+                    <position x="-18.105795154978882" y="507.1814488244717" z="0.0"/>
+                    <size value="17.41684408454337"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="8"/>
+                        <attvalue for="2" value="8"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="88" label="związek radziecki">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="-55.222238887218225" y="415.00662311468807" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="89" label="Syberia">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="-77.93109950428094" y="589.4629523058361" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="90" label="Abramowicz">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="28.81485449444032" y="609.3968207927892" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="91" label="wypie**alać">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="638.5916831729081" y="77.61819025794341" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="92" label="Władysław Kozakiewicz">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1076.980683498182" y="580.5244195232074" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="93" label="Moskwa">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1177.538093562549" y="646.8711700961611" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="94" label="1980">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1081.1261087112478" y="689.0968011858149" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Pozostałe"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="95" label="swarzędz">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-143.39690662366104" y="380.33953197898757" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="96" label="Sowiet">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="879.0319473712487" y="-120.77978296461782" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="97" label="Afganistan">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="935.4303496585819" y="-26.36041510029998" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="98" label="andrzej rozenek">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="-18.247455313570168" y="257.8171895158451" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="99" label="klub poselski rucho Palikot">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="40.70180526595612" y="454.13176830356775" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="100" label="sld">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="126.99648598854455" y="383.2081647325021" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="101" label="Ryszarda kalisz">
+                    <color r="188" g="46" b="0" a="0"/>
+                    <position x="210.36216357020797" y="392.71928177759196" z="0.0"/>
+                    <size value="17.41684408454337"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="8"/>
+                        <attvalue for="2" value="8"/>
+                        <attvalue for="3" value="8"/>
+                    </attvalues>
+                </node>
+                <node id="102" label="Pawła graś">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="9.83459743535139" y="351.9157649801608" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="103" label="eugeniusz kłopotek">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="92.44005691446752" y="285.16873577747367" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="104" label="rozenek">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="790.4662159587529" y="218.13255942748702" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="105" label="Gienka">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="83.40479956186734" y="538.5041901503472" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="106" label="rysio">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="166.97484824402164" y="467.10801224871375" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="107" label="kalisz">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="742.6326976301746" y="401.6787359332162" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="108" label="kalić">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="772.349862684879" y="303.5794256935042" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="109" label="macierwicz">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="681.2880886284166" y="212.18783921785672" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="110" label="kłopotek">
+                    <color r="147" g="12" b="0" a="0"/>
+                    <position x="684.9479525568973" y="280.6156745313043" z="0.0"/>
+                    <size value="20.095049425031704"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="14"/>
+                        <attvalue for="2" value="14"/>
+                        <attvalue for="3" value="13"/>
+                    </attvalues>
+                </node>
+                <node id="111" label="wódka">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="458.9868762577302" y="414.8966461714004" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="112" label="skarcić">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="554.0554539202659" y="406.86049980469375" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="113" label="-c**j">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="855.5526805658205" y="313.1966573512532" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="114" label="-halo">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="826.4507454923103" y="137.90911669256113" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="115" label="Harry Poter">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="834.2671327363778" y="420.0875500117053" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="116" label="uszaty">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="813.9093738217299" y="557.365340053476" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="117" label="-jeden">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="742.0214810214236" y="480.0245993902605" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="118" label="odj**ał">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="754.9120123132204" y="640.5471447388874" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="119" label="-debil">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-6.1128299970292534" y="771.9757255588642" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="120" label="park królikarnia">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="530.7402392958751" y="219.12284689166376" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="121" label="Antoni Macierewicz">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="981.1166206340445" y="735.7073322859043" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="122" label="Maksymilian sopoćko">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="928.4657436722073" y="910.2240996313369" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="123" label="wołodia">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="1080.6791976394422" y="799.3452852692155" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="124" label="Białoruś">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="896.0530012347202" y="805.1155682620405" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="125" label="plac trzy krzyż">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="264.0624834841139" y="-28.092600210971536" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="126" label="plac">
+                    <color r="255" g="208" b="60" a="0"/>
+                    <position x="1186.2392510119248" y="559.1674818769495" z="0.0"/>
+                    <size value="9.175451141683311"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="2"/>
+                        <attvalue for="2" value="2"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="127" label="rozdrożu">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="1106.5632482056035" y="477.45411245908855" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="128" label="rozdroże">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="1219.3960605319996" y="450.058128599293" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="129" label="szybciutki">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-238.62277041856262" y="173.04268705692468" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="130" label="korzeniowski Roberta">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-166.92943361460377" y="89.61582239531836" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="131" label="Szwajcaria">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="280.5408564942624" y="1307.9780763477502" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="132" label="wielki Brytania">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="190.72058995115006" y="1244.4777772224702" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="133" label="służba bezpieczeństwo">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="1453.9989858048227" y="440.709311609192" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="134" label="lech wałęsa">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="1499.6561206655347" y="540.7830476031567" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="135" label="francuski">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="507.89223552742476" y="-70.63995083498298" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="136" label="niemiecki">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="617.4222636573102" y="-25.174802472730835" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="137" label="1996 rok">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="617.8662507112165" y="-129.19009904749043" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Pozostałe"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="138" label="retoromański">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="519.1975780429517" y="-177.68729391259473" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="139" label="stocznia Gdańsk">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="539.198095918384" y="27.14981901282225" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="140" label="plac na">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="460.88161240848194" y="-344.708539177485" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="141" label="rozdrożu wzdłuż">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="355.78750270715807" y="-312.2243884112205" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="142" label="nato">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="86.43766771539913" y="194.64019185137525" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="143" label="ue">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="-26.468497901142392" y="157.0406825337331" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="144" label="Aleksandra kwaśniewski">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="51.7769673693757" y="79.72960656132236" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="3"/>
+                    </attvalues>
+                </node>
+                <node id="145" label="kwaśniewski">
+                    <color r="140" g="8" b="0" a="0"/>
+                    <position x="339.0490449310812" y="219.1287404636316" z="0.0"/>
+                    <size value="20.497947897659238"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="16"/>
+                        <attvalue for="2" value="16"/>
+                        <attvalue for="3" value="15"/>
+                    </attvalues>
+                </node>
+                <node id="146" label="adaaam adaaaaaaam">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="311.1807741558568" y="143.84638694184162" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="6"/>
+                    </attvalues>
+                </node>
+                <node id="147" label="cooooooo">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="228.33052414753743" y="59.034672116749924" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="6"/>
+                    </attvalues>
+                </node>
+                <node id="148" label="ooobiaaaaaad">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="207.55733257386345" y="167.04231872055593" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="6"/>
+                    </attvalues>
+                </node>
+                <node id="149" label="Adamy michnik">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="250.46042314639598" y="295.9814532756803" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="6"/>
+                    </attvalues>
+                </node>
+                <node id="150" label="Aleksandra">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-349.5118703336949" y="463.37520569456484" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="151" label="biuro bezpieczeństwo narodowy">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="-316.5021699916699" y="358.4450941584476" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="152" label="antek macierewicz">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="647.2214974194015" y="1275.7460769349725" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="153" label="agora s .">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="577.4377108446306" y="1190.7155831015114" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="154" label="Ikar">
+                    <color r="255" g="242" b="99" a="0"/>
+                    <position x="592.3359255125625" y="526.2477394791041" z="0.0"/>
+                    <size value="6.66"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="1"/>
+                        <attvalue for="2" value="1"/>
+                        <attvalue for="3" value="1"/>
+                    </attvalues>
+                </node>
+                <node id="155" label="michnik">
+                    <color r="143" g="9" b="0" a="0"/>
+                    <position x="503.42390111025156" y="321.38945560964237" z="0.0"/>
+                    <size value="20.315313124186325"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="15"/>
+                        <attvalue for="2" value="15"/>
+                        <attvalue for="3" value="14"/>
+                    </attvalues>
+                </node>
+                <node id="156" label="Kwaśniewski">
+                    <color r="201" g="60" b="0" a="0"/>
+                    <position x="368.990603467591" y="357.5021826689182" z="0.0"/>
+                    <size value="16.59939796492469"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="7"/>
+                        <attvalue for="2" value="7"/>
+                        <attvalue for="3" value="7"/>
+                    </attvalues>
+                </node>
+                <node id="157" label="wyborczy">
+                    <color r="255" g="171" b="28" a="0"/>
+                    <position x="304.219598990418" y="414.38601243839213" z="0.0"/>
+                    <size value="11.261173170355015"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="3"/>
+                        <attvalue for="2" value="3"/>
+                        <attvalue for="3" value="2"/>
+                    </attvalues>
+                </node>
+                <node id="158" label="rysio kalisz">
+                    <color r="169" g="29" b="0" a="0"/>
+                    <position x="607.3899265764323" y="315.5629835779788" z="0.0"/>
+                    <size value="18.656646193367557"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="10"/>
+                        <attvalue for="2" value="10"/>
+                        <attvalue for="3" value="9"/>
+                    </attvalues>
+                </node>
+                <node id="159" label="kielecki">
+                    <color r="169" g="29" b="0" a="0"/>
+                    <position x="673.1539116038768" y="401.07743624002416" z="0.0"/>
+                    <size value="18.656646193367557"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="10"/>
+                        <attvalue for="2" value="10"/>
+                        <attvalue for="3" value="9"/>
+                    </attvalues>
+                </node>
+                <node id="160" label="ryczanin">
+                    <color r="169" g="29" b="0" a="0"/>
+                    <position x="673.2080818065652" y="510.97224215417884" z="0.0"/>
+                    <size value="18.656646193367557"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Miejsce"/>
+                        <attvalue for="0" value="10"/>
+                        <attvalue for="2" value="10"/>
+                        <attvalue for="3" value="9"/>
+                    </attvalues>
+                </node>
+                <node id="161" label="ozjasz goldberg">
+                    <color r="169" g="29" b="0" a="0"/>
+                    <position x="533.2699098063221" y="487.74589694418506" z="0.0"/>
+                    <size value="18.656646193367557"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="10"/>
+                        <attvalue for="2" value="10"/>
+                        <attvalue for="3" value="9"/>
+                    </attvalues>
+                </node>
+                <node id="162" label="tok fm">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="504.1620089729177" y="104.38208891098924" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="163" label="paradowskiej Janina">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="409.2094053002042" y="35.65053396449751" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="164" label="belwederski">
+                    <color r="255" g="134" b="1" a="0"/>
+                    <position x="364.8426538551501" y="132.16040222613424" z="0.0"/>
+                    <size value="12.99057920365021"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Lokalizacja"/>
+                        <attvalue for="0" value="4"/>
+                        <attvalue for="2" value="4"/>
+                        <attvalue for="3" value="4"/>
+                    </attvalues>
+                </node>
+                <node id="165" label="gazeta wyborcza">
+                    <color r="234" g="101" b="0" a="0"/>
+                    <position x="453.6625622115075" y="199.06317619715347" z="0.0"/>
+                    <size value="14.424540770380437"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Organizacja"/>
+                        <attvalue for="0" value="5"/>
+                        <attvalue for="2" value="5"/>
+                        <attvalue for="3" value="5"/>
+                    </attvalues>
+                </node>
+                <node id="166" label="Michnik">
+                    <color r="234" g="101" b="0" a="0"/>
+                    <position x="373.22884630814053" y="273.9605780817401" z="0.0"/>
+                    <size value="14.424540770380437"/>
+                    <shape value="disc"/>
+                    <attvalues>
+                        <attvalue for="1" value="Osoba"/>
+                        <attvalue for="0" value="5"/>
+                        <attvalue for="2" value="5"/>
+                        <attvalue for="3" value="5"/>
+                    </attvalues>
+                </node>
+            </nodes>
+            <edges>
+                <edge id="0" source="0" target="19"/>
+                <edge id="1" source="0" target="20"/>
+                <edge id="2" source="0" target="5"/>
+                <edge id="3" source="8" target="0"/>
+                <edge id="4" source="0" target="125"/>
+                <edge id="5" source="2" target="1"/>
+                <edge id="6" source="15" target="2"/>
+                <edge id="7" source="55" target="2"/>
+                <edge id="8" source="18" target="3"/>
+                <edge id="9" source="119" target="3"/>
+                <edge id="10" source="8" target="4"/>
+                <edge id="11" source="11" target="4"/>
+                <edge id="12" source="4" target="12"/>
+                <edge id="13" source="4" target="10"/>
+                <edge id="14" source="18" target="4"/>
+                <edge id="15" source="24" target="4"/>
+                <edge id="16" source="25" target="4"/>
+                <edge id="17" source="9" target="4"/>
+                <edge id="18" source="26" target="4"/>
+                <edge id="19" source="17" target="4"/>
+                <edge id="20" source="27" target="4"/>
+                <edge id="21" source="28" target="4"/>
+                <edge id="22" source="29" target="4"/>
+                <edge id="23" source="4" target="30"/>
+                <edge id="24" source="4" target="31"/>
+                <edge id="25" source="32" target="4"/>
+                <edge id="26" source="33" target="4"/>
+                <edge id="27" source="36" target="4"/>
+                <edge id="28" source="4" target="37"/>
+                <edge id="29" source="38" target="4"/>
+                <edge id="30" source="39" target="4"/>
+                <edge id="31" source="51" target="4"/>
+                <edge id="32" source="52" target="4"/>
+                <edge id="33" source="54" target="4"/>
+                <edge id="34" source="4" target="155"/>
+                <edge id="35" source="4" target="71"/>
+                <edge id="36" source="4" target="158"/>
+                <edge id="37" source="4" target="110"/>
+                <edge id="38" source="13" target="4"/>
+                <edge id="39" source="4" target="159"/>
+                <edge id="40" source="4" target="160"/>
+                <edge id="41" source="4" target="161"/>
+                <edge id="42" source="6" target="5"/>
+                <edge id="43" source="8" target="5"/>
+                <edge id="44" source="8" target="7"/>
+                <edge id="45" source="8" target="87"/>
+                <edge id="46" source="8" target="86"/>
+                <edge id="47" source="8" target="88"/>
+                <edge id="48" source="69" target="8"/>
+                <edge id="49" source="8" target="98"/>
+                <edge id="50" source="8" target="99"/>
+                <edge id="51" source="8" target="100"/>
+                <edge id="52" source="8" target="101"/>
+                <edge id="53" source="102" target="8"/>
+                <edge id="54" source="8" target="103"/>
+                <edge id="55" source="8" target="142"/>
+                <edge id="56" source="8" target="143"/>
+                <edge id="57" source="144" target="8"/>
+                <edge id="58" source="8" target="145"/>
+                <edge id="59" source="8" target="146"/>
+                <edge id="60" source="46" target="8"/>
+                <edge id="61" source="8" target="147"/>
+                <edge id="62" source="8" target="148"/>
+                <edge id="63" source="149" target="8"/>
+                <edge id="64" source="26" target="9"/>
+                <edge id="65" source="17" target="9"/>
+                <edge id="66" source="18" target="9"/>
+                <edge id="67" source="11" target="10"/>
+                <edge id="68" source="12" target="10"/>
+                <edge id="69" source="11" target="12"/>
+                <edge id="70" source="154" target="13"/>
+                <edge id="71" source="13" target="155"/>
+                <edge id="72" source="17" target="13"/>
+                <edge id="73" source="13" target="71"/>
+                <edge id="74" source="13" target="158"/>
+                <edge id="75" source="13" target="110"/>
+                <edge id="76" source="13" target="159"/>
+                <edge id="77" source="13" target="160"/>
+                <edge id="78" source="13" target="161"/>
+                <edge id="79" source="34" target="14"/>
+                <edge id="80" source="14" target="35"/>
+                <edge id="81" source="16" target="17"/>
+                <edge id="82" source="18" target="16"/>
+                <edge id="83" source="18" target="17"/>
+                <edge id="84" source="26" target="17"/>
+                <edge id="85" source="156" target="17"/>
+                <edge id="86" source="17" target="157"/>
+                <edge id="87" source="17" target="155"/>
+                <edge id="88" source="17" target="71"/>
+                <edge id="89" source="17" target="158"/>
+                <edge id="90" source="17" target="110"/>
+                <edge id="91" source="17" target="159"/>
+                <edge id="92" source="17" target="160"/>
+                <edge id="93" source="17" target="161"/>
+                <edge id="94" source="18" target="24"/>
+                <edge id="95" source="18" target="25"/>
+                <edge id="96" source="18" target="49"/>
+                <edge id="97" source="18" target="50"/>
+                <edge id="98" source="18" target="53"/>
+                <edge id="99" source="18" target="51"/>
+                <edge id="100" source="18" target="45"/>
+                <edge id="101" source="20" target="19"/>
+                <edge id="102" source="135" target="19"/>
+                <edge id="103" source="136" target="19"/>
+                <edge id="104" source="137" target="19"/>
+                <edge id="105" source="138" target="19"/>
+                <edge id="106" source="22" target="21"/>
+                <edge id="107" source="23" target="21"/>
+                <edge id="108" source="22" target="23"/>
+                <edge id="109" source="24" target="25"/>
+                <edge id="110" source="29" target="27"/>
+                <edge id="111" source="54" target="28"/>
+                <edge id="112" source="28" target="116"/>
+                <edge id="113" source="28" target="71"/>
+                <edge id="114" source="117" target="28"/>
+                <edge id="115" source="28" target="118"/>
+                <edge id="116" source="31" target="30"/>
+                <edge id="117" source="32" target="30"/>
+                <edge id="118" source="32" target="31"/>
+                <edge id="119" source="34" target="35"/>
+                <edge id="120" source="36" target="37"/>
+                <edge id="121" source="40" target="39"/>
+                <edge id="122" source="41" target="39"/>
+                <edge id="123" source="41" target="40"/>
+                <edge id="124" source="42" target="43"/>
+                <edge id="125" source="51" target="43"/>
+                <edge id="126" source="59" target="44"/>
+                <edge id="127" source="44" target="64"/>
+                <edge id="128" source="108" target="44"/>
+                <edge id="129" source="44" target="104"/>
+                <edge id="130" source="109" target="44"/>
+                <edge id="131" source="110" target="44"/>
+                <edge id="132" source="101" target="44"/>
+                <edge id="133" source="136" target="44"/>
+                <edge id="134" source="44" target="91"/>
+                <edge id="135" source="44" target="139"/>
+                <edge id="136" source="155" target="44"/>
+                <edge id="137" source="156" target="44"/>
+                <edge id="138" source="145" target="44"/>
+                <edge id="139" source="165" target="44"/>
+                <edge id="140" source="166" target="44"/>
+                <edge id="141" source="46" target="145"/>
+                <edge id="142" source="46" target="146"/>
+                <edge id="143" source="46" target="147"/>
+                <edge id="144" source="46" target="148"/>
+                <edge id="145" source="46" target="149"/>
+                <edge id="146" source="47" target="48"/>
+                <edge id="147" source="50" target="49"/>
+                <edge id="148" source="52" target="51"/>
+                <edge id="149" source="72" target="56"/>
+                <edge id="150" source="58" target="57"/>
+                <edge id="151" source="121" target="58"/>
+                <edge id="152" source="122" target="58"/>
+                <edge id="153" source="58" target="123"/>
+                <edge id="154" source="124" target="58"/>
+                <edge id="155" source="59" target="60"/>
+                <edge id="156" source="59" target="64"/>
+                <edge id="157" source="62" target="61"/>
+                <edge id="158" source="63" target="61"/>
+                <edge id="159" source="63" target="62"/>
+                <edge id="160" source="65" target="66"/>
+                <edge id="161" source="67" target="68"/>
+                <edge id="162" source="67" target="69"/>
+                <edge id="163" source="68" target="69"/>
+                <edge id="164" source="69" target="98"/>
+                <edge id="165" source="69" target="99"/>
+                <edge id="166" source="69" target="100"/>
+                <edge id="167" source="69" target="101"/>
+                <edge id="168" source="69" target="102"/>
+                <edge id="169" source="69" target="103"/>
+                <edge id="170" source="71" target="70"/>
+                <edge id="171" source="75" target="71"/>
+                <edge id="172" source="71" target="81"/>
+                <edge id="173" source="82" target="71"/>
+                <edge id="174" source="71" target="111"/>
+                <edge id="175" source="71" target="112"/>
+                <edge id="176" source="107" target="71"/>
+                <edge id="177" source="71" target="116"/>
+                <edge id="178" source="117" target="71"/>
+                <edge id="179" source="71" target="155"/>
+                <edge id="180" source="71" target="158"/>
+                <edge id="181" source="110" target="71"/>
+                <edge id="182" source="159" target="71"/>
+                <edge id="183" source="71" target="160"/>
+                <edge id="184" source="71" target="161"/>
+                <edge id="185" source="73" target="72"/>
+                <edge id="186" source="72" target="74"/>
+                <edge id="187" source="73" target="74"/>
+                <edge id="188" source="73" target="77"/>
+                <edge id="189" source="76" target="83"/>
+                <edge id="190" source="76" target="104"/>
+                <edge id="191" source="113" target="76"/>
+                <edge id="192" source="114" target="76"/>
+                <edge id="193" source="79" target="78"/>
+                <edge id="194" source="80" target="78"/>
+                <edge id="195" source="80" target="79"/>
+                <edge id="196" source="82" target="81"/>
+                <edge id="197" source="120" target="81"/>
+                <edge id="198" source="82" target="120"/>
+                <edge id="199" source="82" target="145"/>
+                <edge id="200" source="82" target="162"/>
+                <edge id="201" source="82" target="163"/>
+                <edge id="202" source="164" target="82"/>
+                <edge id="203" source="85" target="84"/>
+                <edge id="204" source="86" target="84"/>
+                <edge id="205" source="87" target="84"/>
+                <edge id="206" source="85" target="86"/>
+                <edge id="207" source="85" target="87"/>
+                <edge id="208" source="86" target="87"/>
+                <edge id="209" source="86" target="88"/>
+                <edge id="210" source="86" target="95"/>
+                <edge id="211" source="87" target="88"/>
+                <edge id="212" source="89" target="87"/>
+                <edge id="213" source="90" target="87"/>
+                <edge id="214" source="90" target="89"/>
+                <edge id="215" source="136" target="91"/>
+                <edge id="216" source="139" target="91"/>
+                <edge id="217" source="93" target="92"/>
+                <edge id="218" source="94" target="92"/>
+                <edge id="219" source="94" target="93"/>
+                <edge id="220" source="97" target="96"/>
+                <edge id="221" source="98" target="99"/>
+                <edge id="222" source="98" target="100"/>
+                <edge id="223" source="101" target="98"/>
+                <edge id="224" source="102" target="98"/>
+                <edge id="225" source="98" target="103"/>
+                <edge id="226" source="99" target="100"/>
+                <edge id="227" source="101" target="99"/>
+                <edge id="228" source="102" target="99"/>
+                <edge id="229" source="103" target="99"/>
+                <edge id="230" source="101" target="100"/>
+                <edge id="231" source="102" target="100"/>
+                <edge id="232" source="103" target="100"/>
+                <edge id="233" source="102" target="101"/>
+                <edge id="234" source="101" target="103"/>
+                <edge id="235" source="102" target="103"/>
+                <edge id="236" source="108" target="104"/>
+                <edge id="237" source="109" target="104"/>
+                <edge id="238" source="110" target="104"/>
+                <edge id="239" source="113" target="104"/>
+                <edge id="240" source="114" target="104"/>
+                <edge id="241" source="105" target="106"/>
+                <edge id="242" source="115" target="107"/>
+                <edge id="243" source="108" target="109"/>
+                <edge id="244" source="108" target="110"/>
+                <edge id="245" source="110" target="109"/>
+                <edge id="246" source="110" target="155"/>
+                <edge id="247" source="110" target="158"/>
+                <edge id="248" source="159" target="110"/>
+                <edge id="249" source="110" target="160"/>
+                <edge id="250" source="110" target="161"/>
+                <edge id="251" source="113" target="114"/>
+                <edge id="252" source="117" target="116"/>
+                <edge id="253" source="121" target="122"/>
+                <edge id="254" source="121" target="123"/>
+                <edge id="255" source="121" target="124"/>
+                <edge id="256" source="122" target="123"/>
+                <edge id="257" source="124" target="122"/>
+                <edge id="258" source="124" target="123"/>
+                <edge id="259" source="126" target="127"/>
+                <edge id="260" source="126" target="128"/>
+                <edge id="261" source="130" target="129"/>
+                <edge id="262" source="131" target="132"/>
+                <edge id="263" source="134" target="133"/>
+                <edge id="264" source="135" target="136"/>
+                <edge id="265" source="137" target="135"/>
+                <edge id="266" source="135" target="138"/>
+                <edge id="267" source="137" target="136"/>
+                <edge id="268" source="136" target="138"/>
+                <edge id="269" source="136" target="139"/>
+                <edge id="270" source="137" target="138"/>
+                <edge id="271" source="140" target="141"/>
+                <edge id="272" source="142" target="143"/>
+                <edge id="273" source="144" target="142"/>
+                <edge id="274" source="144" target="143"/>
+                <edge id="275" source="146" target="145"/>
+                <edge id="276" source="147" target="145"/>
+                <edge id="277" source="145" target="148"/>
+                <edge id="278" source="149" target="145"/>
+                <edge id="279" source="145" target="155"/>
+                <edge id="280" source="145" target="162"/>
+                <edge id="281" source="145" target="163"/>
+                <edge id="282" source="164" target="145"/>
+                <edge id="283" source="156" target="145"/>
+                <edge id="284" source="165" target="145"/>
+                <edge id="285" source="166" target="145"/>
+                <edge id="286" source="146" target="147"/>
+                <edge id="287" source="146" target="148"/>
+                <edge id="288" source="149" target="146"/>
+                <edge id="289" source="147" target="148"/>
+                <edge id="290" source="149" target="147"/>
+                <edge id="291" source="149" target="148"/>
+                <edge id="292" source="150" target="151"/>
+                <edge id="293" source="153" target="152"/>
+                <edge id="294" source="155" target="158"/>
+                <edge id="295" source="159" target="155"/>
+                <edge id="296" source="155" target="160"/>
+                <edge id="297" source="155" target="161"/>
+                <edge id="298" source="156" target="155"/>
+                <edge id="299" source="165" target="155"/>
+                <edge id="300" source="166" target="155"/>
+                <edge id="301" source="156" target="157"/>
+                <edge id="302" source="156" target="165"/>
+                <edge id="303" source="156" target="166"/>
+                <edge id="304" source="159" target="158"/>
+                <edge id="305" source="160" target="158"/>
+                <edge id="306" source="161" target="158"/>
+                <edge id="307" source="159" target="160"/>
+                <edge id="308" source="159" target="161"/>
+                <edge id="309" source="161" target="160"/>
+                <edge id="310" source="163" target="162"/>
+                <edge id="311" source="164" target="162"/>
+                <edge id="312" source="164" target="163"/>
+                <edge id="313" source="166" target="165"/>
+            </edges>
+        </graph>
+    </gexf>
