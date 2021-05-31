@@ -27,6 +27,7 @@
     "editor.rulers": [80, 120],
     "eslint.format.enable": true,
     "jest.disabledWorkspaceFolders": ["front", "text-entities-relations"],
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "latex-workshop.latex.outDir": "../out"
   }
 }
