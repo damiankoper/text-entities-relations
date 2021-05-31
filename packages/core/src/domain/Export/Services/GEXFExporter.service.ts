@@ -1,4 +1,4 @@
-import { Service } from "typedi";
+import Container, { Service } from "typedi";
 import { Graph } from "../../Graph/Models/Graph";
 import { GEXFNodeExporter } from "./GEXFNodeExporter.service";
 import { GEXFEdgeExporter } from "./GEXFEdgeExporter.service";
@@ -10,6 +10,10 @@ export class GEXFExporter {
     private nodeExporter: GEXFNodeExporter,
     private edgeExporter: GEXFEdgeExporter
   ) {}
+
+  static get(): GEXFExporter {
+    return Container.get(GEXFExporter);
+  }
 
   public exportGEXF(graph: Graph): string {
     return `<?xml version="1.0" encoding="UTF-8"?>

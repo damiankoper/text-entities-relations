@@ -8,7 +8,7 @@
           size="small"
           ref="renameInput"
           :disabled="renameMergeVisible"
-          @keypres.enter="onRename"
+          @keypress.enter="onRename"
         />
         <el-popover
           placement="top"
@@ -17,9 +17,9 @@
           trigger="manual"
           v-model:visible="renameMergeVisible"
         >
-          Wierzchołek "{{ newName }}" już istnieje. Czy chcesz stalić "{{
-            newName
-          }}" z "{{ rename }}"?
+          Wierzchołek <b>{{ newName }}</b> już istnieje. Czy chcesz stalić
+          <b>{{ rename }}</b> z <b>{{ newName }}</b
+          >?
           <div style="text-align: right; margin: 0">
             <el-button
               size="mini"

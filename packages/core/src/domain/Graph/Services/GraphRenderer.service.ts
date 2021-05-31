@@ -115,6 +115,7 @@ export class GraphRendererService {
         n.vy = o?.vy;
         n.fx = o?.fx;
         n.fy = o?.fy;
+        n.pinned = o?.pinned;
       }
       map.set(n.id, n);
     }

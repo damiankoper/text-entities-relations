@@ -17,7 +17,7 @@
       <Filter v-model="filterParamsInner" />
     </el-tab-pane>
     <el-tab-pane label="Eksport" name="Export">
-      <Export :irs="irs" />
+      <Export :irs="irs" :graph="graph" />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -34,7 +34,7 @@ import {
 import Export from "@/components/Export.vue";
 import Filter from "@/components/Filter.vue";
 import TerAnalyse from "@/components/graph/TerAnalyse.vue";
-import { Irs, IrsParams, defaultFilterParams, FilterParams } from "core";
+import { Irs, IrsParams, defaultFilterParams, FilterParams, Graph } from "core";
 import { Progress, defaultProgress } from "@/common/constants";
 export default defineComponent({
   name: "GraphOptions",
@@ -51,6 +51,10 @@ export default defineComponent({
     },
     irs: {
       type: Object as PropType<Irs>,
+      required: false
+    },
+    graph: {
+      type: Object as PropType<Graph>,
       required: false
     },
     filterParams: {

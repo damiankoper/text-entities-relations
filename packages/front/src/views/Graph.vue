@@ -38,6 +38,7 @@
         <GraphOptions
           :terProgress="progress"
           :irs="irs"
+          :graph="graphStructureFiltered"
           v-model:filter-params="filterParams"
           @submitTer="onTerSubmit"
           @resetTer="onTerReset"
@@ -364,14 +365,11 @@ export default defineComponent({
           if (exists) {
             renameMerge.value = true;
           } else {
-            console.log(props.irs.entities.find(e => e.name === "szczurek"));
-
             const irs = irsUtilsService.renameNode(
               props.irs,
               selectedNodes.value[0] || "",
               newName
             );
-            console.log(irs.entities.find(e => e.name === "szczurekk"));
 
             graphRendererService.renameHint(
               selectedNodes.value[0] || "",
@@ -385,8 +383,8 @@ export default defineComponent({
       onRenameMerge({ name, merge }: { name: string; merge: boolean }) {
         if (merge && props.irs) {
           const irs = irsUtilsService.mergeNodes(props.irs, [
-            selectedNodes.value[0] as string,
-            name
+            name,
+            selectedNodes.value[0] as string
           ]);
           selectedNodes.value[0] = null;
           emit("irs", irs);
