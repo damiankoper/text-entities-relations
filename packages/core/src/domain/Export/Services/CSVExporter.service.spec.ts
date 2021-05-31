@@ -16,6 +16,6 @@ describe("CSVExporter", () => {
     resultAsArray.pop();
     const numberOfLines = resultAsArray.length;
 
-    expect(numberOfLines).toEqual(14);
+    expect(numberOfLines).toEqual(15);
   });
 });
