@@ -5,7 +5,7 @@
         <template #content>
           <div style="max-width:250px">
             Pokaż wierzchołki, które zawierają podane ciągi znaków, których
-            odległość Levenshteina pomiędzy nazwą wierzchołka nie przekszacza
+            odległość Levenshteina pomiędzy nazwą wierzchołka nie przekracza
             podanej liczby.
           </div>
         </template>

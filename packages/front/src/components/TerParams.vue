@@ -48,7 +48,7 @@
           <template #content>
             <div style="max-width:250px">
               Scal wierzchołki, pomiędzy którymi odległość Levenshteina nie
-              przekszacza podanej liczby.
+              przekracza podanej liczby.
             </div>
           </template>
           <el-form-item label="Scal podobne" label-width="120px">
