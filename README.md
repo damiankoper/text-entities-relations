@@ -1,6 +1,6 @@
 # Text Entities Relations - TER
 
-A client-side web application created to calculate and visualize relations between named entities located in texts. It can also display how the relations between recognized entities develops over time as we continue to read the analysed text.
+A client-side web application created to calculate and visualize relations between named entities located in texts. It can also display how the relations between recognized entities develop over time as we continue to read the analysed text.
 
 ![image](https://user-images.githubusercontent.com/28621467/120213268-46178800-c233-11eb-87e5-f0d5ec14f85e.png)
 
