@@ -295,7 +295,6 @@ export default defineComponent({
             !_.isEqual(newRange, oldRange) ||
             oldUnit !== newUnit)
         ) {
-          console.log("filter & build triggered");
           buildGraph();
         }
       },

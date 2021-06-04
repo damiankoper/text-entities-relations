@@ -58,7 +58,7 @@
         <el-tooltip placement="left">
           <template #content>
             <div style="max-width:250px">
-              Usuń wierzchołki, które mają tyle samo lub więcej relacji niż
+              Usuń wierzchołki, które mają tyle samo lub mniej relacji niż
               podana liczba.
             </div>
           </template>

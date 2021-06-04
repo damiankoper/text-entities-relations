@@ -10,6 +10,9 @@
         :auto-upload="false"
         drag
         action=""
+        :limit="1"
+        :on-exceed="handleExceed"
+        :multiple="false"
       >
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
@@ -17,8 +20,15 @@
           <em>kliknij, aby wybrać.</em>
         </div>
         <template #tip>
-          <div class="el-upload__tip">
-            zip, doc, docx, pptx, xlsx, odt, pdf, html, rtf, txt
+          <div class="el-upload__tip text-wrap">
+            <p v-if="exceededLimit" class="danger">
+              Możesz załączyć tylko jeden plik/archiwum!<br /><br />
+              Jeśli chcesz wybrać inny plik, usuń najpierw obecny.<br /><br />Aby
+              przeanalizować wiele plików spakuje je w archiwum i zaimportuj.
+            </p>
+            Niektóre z dostępnych formatów: zip, doc, docx, pptx, xlsx, odt,
+            pdf,<br />
+            html, rtf, txt
           </div>
         </template>
       </el-upload>
@@ -38,6 +48,9 @@
 .file {
   margin-bottom: 24px;
 }
+.danger {
+  color: #f56c6c;
+}
 </style>
 
 <script lang="ts">
@@ -47,17 +60,25 @@ export default defineComponent({
   components: {},
   setup(_, { emit }) {
     const file = ref<File | null>(null);
+    const exceededLimit = ref(false);
     return {
       onFileChange({ raw }: { raw: File }) {
         file.value = raw;
+        exceededLimit.value = false;
       },
       submit() {
         emit("submit", file.value);
       },
       remove() {
         file.value = null;
+        exceededLimit.value = false;
       },
-      file
+      handleExceed() {
+        console.log("exceeded");
+        exceededLimit.value = true;
+      },
+      file,
+      exceededLimit
     };
   }
 });

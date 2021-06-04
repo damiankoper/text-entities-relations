@@ -25,7 +25,8 @@ export class TaskObserver {
       try {
         const response = await axios.get(URL);
         data = response.data;
-        if (data.status != Status.PROCESSING) break;
+        if (data.status != Status.PROCESSING && data.status !== Status.QUEUE)
+          break;
         this.eventDispatcher.dispatchProgress(data.value);
         await this.timeout(this.interval);
       } catch (error) {
