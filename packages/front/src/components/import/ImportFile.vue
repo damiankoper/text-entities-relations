@@ -74,7 +74,6 @@ export default defineComponent({
         exceededLimit.value = false;
       },
       handleExceed() {
-        console.log("exceeded");
         exceededLimit.value = true;
       },
       file,
