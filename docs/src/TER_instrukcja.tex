@@ -9,6 +9,10 @@
 \usepackage{float}
 \usepackage{hyperref}
 
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
 % Margins
 \topmargin=-0.45in
 \evensidemargin=0in
@@ -47,6 +51,7 @@ W poniższym dokumencie opisano wszystkie dostępne funkcjonalności zrealizowan
     \centering
     \includegraphics[width=\linewidth]{images/homepage.png}
     \caption{Widok startowy}
+    \label{main-view}
 \end{figure}
 
 \textbf{Opcja 1, import z pliku} -- Naciskamy przycisk jeśli chcemy wczytać własny tekst i poddać go analizie.\\
@@ -60,6 +65,8 @@ W poniższym dokumencie opisano wszystkie dostępne funkcjonalności zrealizowan
 \subsection{Widok importu plików}
 
 W tej sekcji konfigurujemy wszystkie parametry, które konieczne są podczas analizy importowanego tekstu oraz wykorzystywane są do identyfikacji i modyfikacji relacji pomiędzy odnalezionymi w tekście bytami.
+
+W instrukcji poddamy analizie dostępne publicznie opowiadanie Władysława Szlengela pod tytułem \textit{Co czytałem umarłym}. Plik z opowiadaniem został dołączony do instrukcji, tak aby każdy mógł na bieżąco podążać z zawartymi instrukcjami.
 
 \subsubsection{Dane wejściowe}
 
@@ -79,11 +86,11 @@ Po naciśnięciu w zadane miejsce ukaże nam się okno systemowe, gdzie wybieram
 
 Zgodnie z informacją załączyć zawsze możemy \textit{jeden} plik lub archiwum. Jeśli chcemy dokonać analizy tekstów, które znajdują się w różnych plikach, należy je wszystkie spakować do archiwum o rozszerzeniu zip i zaimportować uzyskane archiwum do aplikacji. Oczywiście teksty nie muszą być spokrewnione lub pochodzić od jednego autora, narzędzie NER automatycznie dokona ekstrakcji tekstu z przesłanych plików i przeanalizuje dokument jako jedną całość. Dzięki temu możemy przykładowo odnaleźć powiązania między bohaterami z różnych części sagi lub inne analogiczne relacje.
 
-Jeśli popełniliśmy błąd i chcemy wybrać inny plik do zaimportowania, należy najechać na nazwę pliku, który już zaimportowaliśmy (na zrzucie ekranu \textit{tekst.txt}), po czym ukaże nam się krzyżyk po prawej stronie, pozwalający na usunięcie pliku.
+Jeśli popełniliśmy błąd i chcemy wybrać inny plik do zaimportowania, należy najechać na nazwę pliku, który już zaimportowaliśmy (na zrzucie ekranu \textit{szlengel-co-czytalem-umarlym.pdf}), po czym ukaże nam się krzyżyk po prawej stronie, pozwalający na usunięcie pliku.
 
 Wybierając przycisk \textit{Dalej}, który dostępny jest wyłącznie po wcześniejszym zaimportowaniu pliku/archiwum przechodzimy do ustalenia końcowych parametrów potrzebnych do analizy.
 
-\subsubsection{Parametry analizy}
+\subsubsection{Parametry analizy}\label{parametry-analizy}
 
 \begin{figure}[H]
     \centering
@@ -146,11 +153,171 @@ Po poprawnie zakończonej analizie, przy pomocy przycisku wyświetl wizualizacj�
     \caption{Poprawnie zakończona analiza}
 \end{figure}
 
-
 \subsection{Widok grafu prezentującego wizualizację}\label{section:graph}
 
+Przedstawiony poniżej graf jest wynikiem wcześniej przeprowadzonej analizy(z dokładnie takimi samymi parametrami jak na wcześniejszych zrzutach ekranu na opowiadaniu pod tytułem \textit{Co czytałem umarłym}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graf-main.png}
+    \caption{Początkowy widok grafu}
+    \label{graf-main}
+\end{figure}
+
+Jak widzimy na zrzucie \ref{graf-main}, po poprawnie zakończonej analizie w wcześniejszych krokach uzyskujemy graf, w którym byty z największą ilością relacji mają odpowiednio ciemniejszą barwę oraz są większe od pozostałych zidentyfikowanych encji. Dodatkowo połączenia pomiędzy bytami również mają różną grubość i widoczność, które zależne są od siły danej relacji, czyli tego jak często pojawiła się ona w przeanalizowanym tekście.\\
+
+\subsubsection{Szczegóły wierzchołka, 1}
+
+Po najechaniu na wybrany wierzchołek uzyskujemy dodatkowe informacje na jego temat. Przykładowo najeżdżając na wierzchołek o nazwie \textit{gestapo} ukazuje nam się następujący wynik.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graph-gestapo.png}
+    \caption{Szczegóły wierzchołka \textit{gestapo}}
+\end{figure}
+
+\noindent\textbf{Typ wierzchołka} określany jest przez serwis NER i ze względu na trudność w identyfikacji poszczególnych bytów, wartość ta może być nieprawidłowa.\\\\
+\textbf{Liczba sąsiadów} stanowi ilość bytów, która jest w relacji z obserwowanym przez nas wierzchołku.\\\\
+\textbf{Liczba relacji} natomiast mówi o tym ile razy relacje pojawiły się w tekście. Jeśli liczba relacji jest większa od liczby sąsiadów oznacza to, że niektóre z tych relacji musiały pojawić się kilka razy w tekście. Dla podanego przykładu możemy zauważyć, że relacja między bytami \textit{gestapo} i \textit{warszawski} wystąpiła częściej niż pozostałe, ponieważ na grafie połączenie to jest znacznie grubsze.\\\\
+\textbf{Kolorowanie na podstawie liczby relacji} jest graficzną reprezentacją liczby relacji. Przedział dla podanego przykładu wynosi od $1$ do $14$ co oznacza, że dane byty w przeanalizowanym tekście miały minimum $1$ relację oraz jedna z relacji wystąpiła $14$ razy.
+
+\subsubsection{Poruszanie się po grafie, 2}\label{graph-movement}
+
+Domyślnie po inicjalizacji grafu automatycznie wybrana zostaje opcja, przeciągania wierzchołków w dowolny punkt. Dodatkowo zaimplementowano możliwość przybliżania i oddalania całego widoku przy pomocy kółka myszy. Podwójne kliknięcie w miejsce w którym \textit{nie} znajduje się żaden wierzchołek spowoduje przybliżenie wybranej części grafu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graph-menu.png}
+    \caption{Menu grafu}
+    \label{graph-menu}
+\end{figure}
+
+\noindent \textbf{Opcja 1, wyśrodkuj} -- Po naciśnięciu pozwala nam dopasować obecny wygląd grafu do szerokości okna przeglądarki. Zalecane jest aby użyć tej funkcji po inicjalizacji grafu, ponieważ wyśrodkuje ona cały układ i pozwoli dokładnie zobaczyć całość. Funkcję można też wykorzystywać kiedy tylko chcemy szybko dopasować widok do wszystkich wierzchołków.\\
+
+\noindent \textbf{Opcja 2, przypnij} -- Wierzchołki grafu domyślnie są nieprzypięte, dzięki czemu rozkładają się tak aby całość była czytelna i po przeciągnięciu w dane miejsce starają się wrócić do swoich sąsiadów. Jeśli będziemy mieli zaznaczoną opcję numer $2$ (tak jak na zrzucie ekranu, zaznaczenie określane jest przez kolor niebieski wybranej opcji) w momencie przeciągnięcia wierzchołka zostaje on przypięty i nie będzie się on już poruszał. Aby odpiąć wierzchołek należy dwukrotnie na niego kliknąć.\\
+
+\noindent \textbf{Opcja 3, usuń} -- Po wybraniu opcji, kliknięcie na wierzchołek usuwa go z grafu i automatycznie przelicza wszystkie pozostałe relacje, tak aby poprawnie zaktualizować stan grafu.\\
+
+\noindent \textbf{Opcja 4, scal} -- Jeśli w grafie znajdują się wierzchołki, które zostały zidentyfikowane jako osobne byty a w rzeczywistości są one na przykład jednym bohaterem, po wybraniu tej opcji możemy przy pomocy klikania na odpowiednie wierzchołki scalić je w jeden, dzięki czemu relacje zostaną odpowiednio zaktualizowane tak aby usunąć potencjalny szum z grafu.
+
+Proces scalania obejmuje zawsze dwa wierzchołki i polega na scaleniu pierwszego wybranego wierzchołka z kolejnym wybranym. Aby ułatwić ten proces, po wybraniu opcji numer $4$ i kliknięciu w wybrany wierzchołek pokazuje nam się animacja, która prezentuje byt do którego będziemy scalać nasz kolejny wybór. W uzyskanym grafie widzimy, że zidentyfikowane zostały byty \textit{żyd} i \textit{żydowski}, które w rzeczywistości reprezentują tą samą encję. W celu scalenia, wybieramy opcję numer $4$ i następnie klikamy na wierzchołek \textit{żyd}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graph-jew-highlight.png}
+    \caption{Podświetlony wierzchołek \textit{żyd}}
+\end{figure}
+
+Następnie klikamy w wierzchołek \textit{żydowski} i widzimy jak automatycznie relacje z bytu \textit{żydowski} zostały przepięte do wierzchołka \textit{żyd}. Jeśli pomyliliśmy się w wyborze wierzchołka, może na niego kliknąć ponownie aby go odznaczyć lub nacisnąć klawisz \textit{ESC}.
+
+Aby ułatwić dalszy proces scalania wierzchołków zaimplementowano możliwość zaznaczania wierzchołka z przytrzymanym klawiszem \textit{shift}, dzięki czemu po pierwszej operacji scalenia, nasz bazowy wierzchołek jest ciągle zaznaczony i możemy od razu przejść do połączenia kolejnych wierzchołków.\\
+
+\noindent \textbf{Opcja 5, zmień nazwę} -- Część bytów może mieć niedokończone nazwy, bądź będą one niepoprawne. Po wybraniu tej opcji i naciśnięciu na interesujący nas wierzchołek, ukazuje nam się animacja oraz okno dialogowe w którym możemy nadać nową nazwę encji. Przykładowo w naszym grafie widzimy encję o nazwie \textit{ul .} i chcielibyśmy aby wierzchołek ten nazywał się \textit{ulica}. Wybieramy więc opcję numer $5$, wpisujemy nową nazwę i zatwierdzamy wybór strzałką z prawej strony jak na zrzucie ekranu poniżej.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graph-ulica.png}
+    \caption{Zmiana nazwy wierzchołka \textit{ul .}}
+\end{figure}
+
+Oczywiście może dojść do sytuacji, w której zmienimy nazwę wierzchołka na taką, która już obecnie występuje w grafie, w takiej sytuacji aplikacja zapyta nas, czy chcemy dokonać automatycznego scalenia wierzchołków i jeśli potwierdzimy nasz wybór, całość zakończy się poprawnie. Przykładowo jeśli spróbujemy zmienić nazwę wierzchołka \textit{heller} na \textit{Heller} pojawi nam się stosowny komunikat. Wybranie przycisku tak dokona automatycznego scalenia.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graph-change-name-heller.png}
+    \caption{Zmiana nazwy wierzchołka \textit{heller}}
+\end{figure}
 
 
+\noindent \textbf{Opcja 6, przypnij wszystkie} -- Jeśli chcemy szybko unieruchomić obecny stan grafu, po najechaniu na strzałkę w prawym dolnym rogu menu z zrzutu ekranu \ref{graph-menu} ukazują nam się dodatkowe opcje i pierwsza z nich pozwala zablokować cały układ. Opcja przydaje się podczas pracy na grafie, ponieważ wierzchołki po usunięciu lub scaleniu nie będą dążyły do zbliżenia się do swoich sąsiadów.\\
+
+\noindent \textbf{Opcja 7, odepnij wszystkie} -- Jest to funkcjonalność przeciwna do tej z poprzedniego punktu, pozwalająca na ożywienie całego układu i spowodowania wzajemne przyciągania wierzchołków.
+
+\noindent \textbf{Opcja 8, resetuj układ} -- Jeśli dokonaliśmy wielu modyfikacji i nasz graf uległ znacznemu zniekształceniu i chcielibyśmy zresetować jego układ(\textit{nie zmienione dane}), wybieramy tę opcję, dzięki czemu wierzchołki rozłożą się od nowa.
+
+\subsubsection{Zakładka boczna, 3}
+
+W zakładce tej umieszczone zostały wszystkie pozostałe operacje, które możemy realizować z poziomu grafu.
+
+\subsubsubsection{Zakładka TER}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{images/graph-ter.png}
+\end{figure}
+
+Jest to widok, który znamy już z sekcji \ref{parametry-analizy} i oferuje on dokładnie te same możliwości, które zostały dokładnie opisane wcześniej. Funkcja ta pozwala szybko ponowić analizę \textit{TER} a więc tylko część odpowiedzialną za wykrywanie relacji między bytami a nie ich identyfikację w tekście przy pomocy serwisu NER. Jest to przydatne narzędzie, gdy uzyskany przez nas początkowy graf nas nie satysfakcjonuje, dokonaliśmy błędnego wyboru parametrów lub zapomnieliśmy zaznaczyć pewnych opcji. Należy pamiętać, że ponowna analiza \textbf{usunie dokonane przez nas dotychczas zmiany} o czym zostaniemy poinformowani w stosownym komunikacie, przedstawionym poniżej.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{images/graph-ter-erase.png}
+\end{figure}
+
+\subsubsubsection{Zakładka Filtry}
+
+Widok ten pozwala nam dynamicznie filtrować wierzchołki o interesujących nas nazwach i właściwościach.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{images/graph-filters.png}
+\end{figure}
+
+\noindent \textbf{Opcja 1, Nazwa} --  Filtr został zbudowany w taki sposób, że możemy wpisywać wiele fraz i wyświetlone zostaną wierzchołki, których nazwy zawierają filtrowane frazy.\\
+
+\noindent \textbf{Opcja 2, Max. odległość} -- Po najechaniu na opcję ukazuje nam się komunikat \textit{Pokaż wierzchołki, które zawierają podane ciągi znaków, których odległość Levenshteina pomiędzy nazwą wierzchołka nie przekracza podanej liczby.} Jest to uzupełnienie opcji numer $1$ o rozszerzenie filtracji, nie tylko po dokładnie zadanych nazwach ale również odległości Levenshteina dla filtrowanych fraz.\\
+
+\noindent \textbf{Opcja 3, Minimum relacji} -- Chcemy zobaczyć wyłącznie wierzchołki, które mają zadaną liczbę relacji lub większą od podanej.
+
+\subsubsubsection{Zakładka Export}
+
+Ostatnia zakłada pozwala na wyeksportowanie obecnego stanu grafu do jednego z trzech formatów:
+
+\begin{enumerate}
+    \item \textbf{TER} -- jest to format pliku używany przez aplikację. Plik ten można wczytać na ekranie startowym aplikacji przedstawionym na zrzucie \ref{main-view}, tak aby od razu przejść do widoku grafu i pominąć analizę. Format ten jest najprostszym sposobem podzielenia się naszą pracą z innymi osobami, które również chciałyby pracować z aplikacją.
+    \item \textbf{GEPHI} -- możliwość wyeksportowania stanu aplikacji do popularnego sposobu reprezentacji grafów, przy pomocy plików XML. Plik ten może zostać później wczytany do wybranego narzędzia obsługującego ten format.
+    \item \textbf{CSV} -- Plik tekstowy w którym zawarte są wszystkie dane odnośnie wierzchołków oraz ich relacji.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{images/graph-export.png}
+\end{figure}
+
+\subsubsection{Górna nawigacja, 4}
+
+Ta część interfejsu pozwala nam korygować nasze błędy oraz przywracać wcześniejsze modyfikacje. Po dokonaniu operacji usunięcie wierzchołka lub scalenia go z innym, zawsze mamy możliwość cofnięcia się do poprzedniego stanu grafu. Opcja ta aktywuje się wyłącznie pod dokonaniu modyfikacji, przykładowo, po operacji scalenia i usunięcia wierzchołków z poprzednich kroków możemy zauważyć następującą zmianę w interfejsie.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graph-top-navigation.png}
+    \caption{Historia operacji}
+\end{figure}
+
+\noindent Niebieskie dymki mówią nam o tym ile akcji możemy cofnąć lub przewinąć do przodu. Funkcjonalność ta jest analogiczna do tej dostępnej w wordzie, gdzie cofamy, bądź przywracamy dokonane przez nas operacje. Dodatkowo opcja numer $3$ pozwala całkowicie schować boczny panel tak aby graf zajął całe dostępne w przeglądarce miejsce(warto wtedy ponownie wyśrodkować graf tak aby, dostosował się on do nowego większego ekranu).
+
+\subsubsection{Dynamiczna wizualizacja, opcje 5 i 6}
+
+Przełącznik w dolnej części interfejsu pozwala odblokować możliwość przeglądania grafu w czasie, to znaczy pomiędzy wybranymi zakresami zdań/słów/paragrafów, które konfigurujemy w opcji numer $6$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graph-down-menu.png}
+    \caption{Opcja dynamicznego grafu}
+\end{figure}
+
+Gdy naciśniemy na przełącznik numer $5$ odblokowany zostanie pasek z prawej strony, na którym zobaczymy zakres w którym możemy się poruszać wraz z wyborem jednostki. Po najechaniu na końce zakończone okręgami zobaczymy numer, który mówi o tym od jakiego zdania/słowa/paragrafu obecnie widzimy byty i ich relacje. Przykładowo jeśli chcemy zobaczyć jakie byty zostały znalezione od $20$ paragrafu do $40$ naszego opowiadania, wybieramy w opcji numer $6$ jednostkę paragraf i następnie adekwatnie przesuwany zakres na suwaku, tak jak na zrzucie poniżej.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/graph-dynamic.png}
+    \caption{Wynik wizualizacji dynamicznej}
+\end{figure}
+
+Jak widzimy opcja ta jest przydatna gdy chcemy wizualizować sposób w jaki dochodziło do interakcji między danymi bytami na przestrzeni konkretnych miejsc w analizowanym tekście. Opcja modyfikacji grafu na widoku dynamicznym jest \textbf{wyłączona}, ponieważ każda zmiana w danych grafu propaguje się na pozostałe wierzchołki i powoduje jego przebudowanie aby uzyskać poprawny efekt końcowy. Niemniej jednak na grafie dynamicznym, możemy dokonywać wszystkich operacji związanych z wizualizacją układu, w tym między innymi zresetowania układu tak jak opisano to wcześniej w sekcji \ref{graph-movement} oraz przypinania czy odpinania wierzchołków. 
+
+\subsubsection{Powrót do startowego widoku aplikacji, 7}
+
+Górne logo pozwala nam w prosty sposób wrócić do widoku, od którego rozpoczęliśmy pracę z aplikacją. Załączone do instrukcji pliki \textit{szlengel-co-czytalem-umarlym.pdf} oraz \textit{co-czytalem-umarlym.ter} mogą zostać bezpośrednio wczytane do aplikacji tak aby móc dokładnie śledzić całą instrukcję.
 
 
 %--/Paper--
