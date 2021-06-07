@@ -8,6 +8,7 @@
         :on-change="onFileChange"
         :on-remove="remove"
         :auto-upload="false"
+        :limit="1"
         drag
         action=""
         :limit="1"

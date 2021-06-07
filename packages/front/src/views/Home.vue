@@ -8,7 +8,6 @@
           </el-col>
           <el-col :span="16" class="logo-text">
             <div>TER</div>
-            <!--<div>Analyse the shit out of your books</div>-->
             <div>Może nie najlepiej, ale jako tako.</div>
           </el-col>
         </el-row>
@@ -117,10 +116,18 @@
   min-height: calc(100vh - 32px); // 100% - footer
   .logo {
     &-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       :first-child {
         font-size: 96px;
         font-weight: 900;
+        line-height: 0.9em;
       }
+    }
+    :deep(.el-image) img {
+      aspect-ratio: 1;
+      min-width: 140px;
     }
   }
   .home-button {
@@ -128,8 +135,6 @@
   }
   .el-col {
     margin-bottom: 20px;
-  }
-  .author {
   }
 }
 </style>
