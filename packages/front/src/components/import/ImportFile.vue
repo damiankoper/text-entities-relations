@@ -8,7 +8,6 @@
         :on-change="onFileChange"
         :on-remove="remove"
         :auto-upload="false"
-        :limit="1"
         drag
         action=""
         :limit="1"
@@ -23,9 +22,9 @@
         <template #tip>
           <div class="el-upload__tip text-wrap">
             <p v-if="exceededLimit" class="danger">
-              Możesz załączyć tylko jeden plik/archiwum!<br /><br />
-              Jeśli chcesz wybrać inny plik, usuń najpierw obecny.<br /><br />Aby
-              przeanalizować wiele plików spakuje je w archiwum i zaimportuj.
+              Możesz załączyć tylko jeden plik/archiwum! Jeśli chcesz wybrać
+              inny plik, usuń najpierw obecny. Aby przeanalizować wiele plików
+              spakuje je w archiwum i zaimportuj.
             </p>
             Niektóre z dostępnych formatów: zip, doc, docx, pptx, xlsx, odt,
             pdf,<br />
@@ -51,6 +50,7 @@
 }
 .danger {
   color: #f56c6c;
+  max-width: 360px;
 }
 </style>
 
