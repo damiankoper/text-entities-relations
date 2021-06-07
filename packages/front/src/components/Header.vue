@@ -49,7 +49,6 @@ export default defineComponent({
   }
 
   &-text {
-    margin-top: 6px;
     font-weight: 900;
     font-size: 40px;
   }
