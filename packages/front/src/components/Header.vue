@@ -44,12 +44,12 @@ export default defineComponent({
   color: inherit;
   text-decoration: none !important;
   &-img {
-    height: 40px;
     width: 40px;
     margin-right: 12px;
   }
 
   &-text {
+    margin-top: 6px;
     font-weight: 900;
     font-size: 40px;
   }

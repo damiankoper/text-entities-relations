@@ -39,7 +39,7 @@
 import { defineComponent, reactive } from "vue";
 
 import { units, languages, NerParams } from "@/common/constants";
-import { Language, IrsParams, TextUnit, defaultIrsParams } from "core";
+import { Language, IrsParams, defaultIrsParams } from "core";
 import TerParams from "../TerParams.vue";
 
 export interface Params {
