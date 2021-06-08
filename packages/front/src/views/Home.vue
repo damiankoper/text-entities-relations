@@ -42,7 +42,7 @@
           <el-col :span="24">
             <el-row style="text-align:center">
               <el-col :span="24" style="margin-bottom:8px;">
-                <el-image :src="logoClarin" />
+                <el-image :src="logoClarin" class="logo-clarin" />
               </el-col>
               <el-col :span="24" style="margin-bottom:4px;">
                 Dzięki ciężkiej pracy w pocie czoła
@@ -133,6 +133,9 @@
   .home-button {
     width: 100%;
   }
+  .logo-clarin {
+    width: 40%;
+  }
   .el-col {
     margin-bottom: 20px;
   }
@@ -171,7 +174,7 @@ export default defineComponent({
 
     return {
       logoImg: require("@/assets/books.svg"),
-      logoClarin: require("@/assets/logo-small.png"),
+      logoClarin: require("@/assets/clarin-logo.png"),
       terFileInput,
       terSession,
       terSessionNotification,
