@@ -19,9 +19,7 @@ export function useTer() {
         if (params == null) {
           throw new Error("Cannot analyse with TER: parameters are null");
         }
-        const t = performance.now();
         irs.value = irsService.calculateRelations(chunkList, params);
-        console.log("TER time", performance.now() - t);
 
         progress.value.percentage = 100;
         progress.value.status = "success";

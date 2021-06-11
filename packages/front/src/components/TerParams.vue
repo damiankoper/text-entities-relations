@@ -48,7 +48,7 @@
           <template #content>
             <div style="max-width:250px">
               Scal wierzchołki, pomiędzy którymi odległość Levenshteina nie
-              przekszacza podanej liczby.
+              przekracza podanej liczby.
             </div>
           </template>
           <el-form-item label="Scal podobne" label-width="120px">
@@ -58,8 +58,7 @@
         <el-tooltip placement="left">
           <template #content>
             <div style="max-width:250px">
-              Usuń wierzchołki, które mają tyle samo lub więcej relacji niż
-              podana liczba.
+              Usuń wierzchołki, które mają mniej relacji niż podana liczba.
             </div>
           </template>
           <el-form-item label="Minimum relacji" label-width="120px">

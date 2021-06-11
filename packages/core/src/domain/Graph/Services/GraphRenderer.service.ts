@@ -160,7 +160,6 @@ export class GraphRendererService {
           if (d.highlighted) highlightLoop(c);
         });
     };
-    console.log(graph.nodes.find((n) => n.id == "Kwaśniewski")?.highlighted);
     this._state.nodeSelection = this._state.nodeSelection
       .data<Node>(graph.nodes, (d) => d.id)
       .join<SVGSVGElement, Node>(

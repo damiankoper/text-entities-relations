@@ -6,6 +6,7 @@ export enum APIUrls {
 }
 
 export enum Status {
+  QUEUE = "QUEUE",
   PROCESSING = "PROCESSING",
   DONE = "DONE",
   ERROR = "ERROR",
