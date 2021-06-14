@@ -17,7 +17,7 @@
           trigger="manual"
           v-model:visible="renameMergeVisible"
         >
-          Wierzchołek <b>{{ newName }}</b> już istnieje. Czy chcesz stalić
+          Wierzchołek <b>{{ newName }}</b> już istnieje. Czy chcesz scalić
           <b>{{ rename }}</b> z <b>{{ newName }}</b
           >?
           <div style="text-align: right; margin: 0">
